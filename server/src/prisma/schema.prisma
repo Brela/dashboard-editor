@@ -1,11 +1,12 @@
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  // shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  schemas  = ["public", "inventory-copilot"]
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
 }
 
 model Product {
@@ -24,6 +25,8 @@ model Product {
   itemUsageSpeed String?
   deletedAt      DateTime?
   orders         Order[] // Relation to Order model
+
+  @@schema("public")
 }
 
 model Order {
@@ -38,16 +41,23 @@ model Order {
   totalCost        Float
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
+
+  @@schema("public")
 }
 
 model User {
-  id        String    @id @default(cuid())
-  username  String    @unique
-  password  String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  tokens    Token[]
-  products  Product[]
+  id              String            @id @default(cuid())
+  username        String            @unique
+  password        String
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  tokens          Token[]
+  products        Product[]
+  dashboard       Dashboard[]
+  dashboardWidget DashboardWidget[]
+  customWidget    CustomWidget[]
+
+  @@schema("public")
 }
 
 model Token {
@@ -58,12 +68,69 @@ model Token {
   user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@schema("public")
 }
 
-// since this db is shared with 'orderly', we need to specify the schema name
+// -------------------------------------------------------
 
-// model NewModel {
-//   // fields...
+model Dashboard {
+  id        Int      @id @default(autoincrement())
+  name      String
+  isDefault Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
 
-//   @@schema("new_schema_name")
-// }
+  userId  String
+  user    User              @relation(fields: [userId], references: [id])
+  widgets DashboardWidget[]
+
+  @@schema("inventory-copilot")
+}
+
+model DashboardWidget {
+  id            Int    @id @default(autoincrement())
+  name          String
+  entity        String // inventory, finance, tasks, finance, or any module
+  criteria      String // like late tasks, in transit cars, late issues, pending tasks, on estimates and etc.
+  displayType   String // count, total 
+  icon          String
+  color         String
+  navigationUrl String
+
+  i String // this is the key for react-grid-layout
+  x Int // kept these as separate columns because react-grid-layout takes these from the widget object directly
+  y Float
+  w Float
+  h Float
+
+  userId      String
+  dashboardId Int
+
+  user      User      @relation(fields: [userId], references: [id])
+  dashboard Dashboard @relation(fields: [dashboardId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@schema("inventory-copilot")
+}
+
+// CustomWidget is for the user's custom widget options in dashboard editor sidebar, not for widgets on dashboard
+model CustomWidget {
+  id          Int    @id @default(autoincrement())
+  name        String
+  entity      String // inventory, finance, tasks, finance, or any module
+  criteria    String // like late tasks, in transit cars, late issues, pending tasks, on estimates and etc.
+  displayType String // is it a count or total
+  icon        String
+  color       String
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@schema("inventory-copilot")
+}

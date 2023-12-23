@@ -14,7 +14,7 @@
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^3.0.1",
-    "prisma": "^5.1.1"
+    "prisma": "^5.7.1"
   },
   "dependencies": {
     "@prisma/client": "^5.1.1",
