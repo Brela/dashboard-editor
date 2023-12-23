@@ -24,12 +24,7 @@ import EmptyDashboard from "./components/EmptyDashboard";
 // this has to go outside of the DashboardLayout  function
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-const DashboardLayout = ({
-  isEditMode,
-  widgets,
-  onWidgetMoved,
-  onRemoveItem,
-}) => {
+const DashboardLayout = ({ dashboards, widgets, isEditMode }) => {
   const [smLayout, setSmLayout] = useState();
   const [xxsLayout, setXxsLayout] = useState();
 
@@ -53,10 +48,15 @@ const DashboardLayout = ({
     ); */
   }, [widgets]);
 
-  if (!isEditMode && (!widgets || widgets.length === 0)) {
-    return <EmptyDashboard />;
+  if (!dashboards || dashboards.length === 0) {
+    return (
+      <EmptyDashboard message="No dashboards found. To add a dashboard, click the settings icon above." />
+    );
+  } else if (!isEditMode && (!widgets || widgets.length === 0)) {
+    return (
+      <EmptyDashboard message="You don't have any widgets on this dashboard! Click dashboard settings above to add some widgets." />
+    );
   }
-
   return (
     <section
       className={twMerge(

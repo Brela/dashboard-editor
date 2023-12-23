@@ -2,11 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
-  font-family: 'Inter', sans-serif;
-  -webkit-font-smoothing: antialiased; 
-  -moz-osx-font-smoothing: grayscale; 
-  text-rendering: optimizeLegibility; 
-  background-color: rgb(164, 164, 164);
+  font-family: "Inter", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  background-color: rgb(226, 226, 226);
+}
+
+.custom-underline {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }

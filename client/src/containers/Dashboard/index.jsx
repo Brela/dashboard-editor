@@ -54,7 +54,7 @@ const DashboardHome = () => {
 
   return (
     <>
-      <div className="w-full min-h-screen">
+      <div className="w-full pb-10">
         <div className="flex  items-center justify-center gap-x-2 p-2 mt-3">
           <Select
             options={dashboards?.map((dashboard) => ({
@@ -87,7 +87,11 @@ const DashboardHome = () => {
         </div>
 
         <div className="lg:px-4 rounded-md">
-          <DashboardLayout widgets={widgets} isEditMode={false} />
+          <DashboardLayout
+            dashboards={dashboards}
+            widgets={widgets}
+            isEditMode={false}
+          />
         </div>
       </div>
     </>

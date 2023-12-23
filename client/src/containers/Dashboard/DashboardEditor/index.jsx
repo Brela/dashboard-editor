@@ -98,7 +98,9 @@ const DashboardEditor = () => {
     error: dashboardsError,
   } = useQuery("dashboards", getDashboards, {
     onError: (error) =>
-      notifyError(`Error loading dashboards: ${error.message}`),
+      notifyError(
+        `Error loading dashboards: ${error.message}. The server may be down.`,
+      ),
   });
   const dashboards = dashboardsData ? dashboardsData.items : [];
 

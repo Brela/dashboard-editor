@@ -16,28 +16,29 @@ function InventoryPage() {
   const [activeTab, setActiveTab] = useState("dashboard");
 
   return (
-    <div className=" max-w-screen-2xl mx-auto ">
-      <div className=" max-w-screen-2xl mx-2 md:mx-4 mb-2 md:mb-3 px-2 md:px-6 flex gap-2 flex-col rounded-3xl">
+    <div className=" max-w-screen-2xl mx-auto px-4">
+      {/* <div className=" max-w-screen-2xl mx-2 md:mx-4 mb-2 md:mb-3 px-2 md:px-6 flex gap-2 flex-col rounded-3xl"> */}
+      <div className="flex items-center justify-between">
+        <NavigationBar activeTab={activeTab} setActiveTab={setActiveTab} />
+
         <Header />
-        <section className="relative bg-zinc-50 rounded-2xl p-2 md:p-4 overflow-x-auto min-h-[85vh]">
-          <NavigationBar activeTab={activeTab} setActiveTab={setActiveTab} />
-          {activeTab === "dashboard" && <Dashboard />}
-          {activeTab === "inventory" && <Inventory />}
-          {activeTab === "Active Orders" && <ActiveOrders />}
-          {activeTab === "Order History" && <OrderHistory />}
-          {/*     <InventoryContent
+      </div>
+      <section className="relative min-h-[86vh] bg-white/80 rounded-2xl p-2 md:p-4 overflow-x-auto">
+        {activeTab === "dashboard" && <Dashboard />}
+        {activeTab === "inventory" && <Inventory />}
+        {activeTab === "Active Orders" && <ActiveOrders />}
+        {activeTab === "Order History" && <OrderHistory />}
+        {/*     <InventoryContent
             inventoryListScrollRef={inventoryListScrollRef}
             ordersListScrollRef={ordersListScrollRef}
             rowHeightState={rowHeightState}
           /> */}
 
-          <PaginationWrapper activeTab={activeTab} />
-        </section>
-        {/* <Stats /> */}
-        <DemoControls />
-        <div className=" flex justify-center  my-4">
-          <Footer />
-        </div>
+        <PaginationWrapper activeTab={activeTab} />
+      </section>
+      <DemoControls />
+      <div className=" flex justify-center  my-4">
+        <Footer />
       </div>
     </div>
   );

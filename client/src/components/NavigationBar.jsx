@@ -1,5 +1,4 @@
-import React, { useState, useContext } from "react";
-
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArchive,
@@ -8,69 +7,35 @@ import {
   faTable,
 } from "@fortawesome/free-solid-svg-icons";
 
+const buttons = [
+  { label: "Dashboard", icon: faTable, value: "dashboard" },
+  { label: "Inventory", icon: faBox, value: "inventory" },
+  { label: "Active Orders", icon: faShoppingCart, value: "Active Orders" },
+  { label: "Order History", icon: faArchive, value: "Order History" },
+];
+
 export default function NavigationBar({ activeTab, setActiveTab }) {
   return (
     <div>
-      <>
-        <div className="flex mb-4 gap-x-4 sm:gap-x-1 font-semibold text-zinc-800 md:px-2">
+      <div className="flex mt-4  mb-2 gap-x-4 sm:gap-x-1 font-semibold text-zinc-800 md:px-2">
+        {buttons.map((button) => (
           <button
-            className={`w-1/3 sm:w-auto flex flex-col items-center sm:flex-row gap-1 sm:gap-0 px-1 sm:px-4 py-2 text-sm sm:text-base ${
-              activeTab === "dashboard"
-                ? "bg-cyan-700/20 rounded-xl "
-                : "text-zinc-700"
+            key={button.value}
+            className={`w-1/3 sm:w-auto flex flex-col items-center sm:flex-row gap-1 sm:gap-0 px-1 sm:px-4 py-1  ${
+              activeTab === button.value
+                ? " text-cyan-800 text-md rounded-md "
+                : "text-zinc-500 text-md"
             }`}
-            onClick={() => setActiveTab("dashboard")}
+            onClick={() => setActiveTab(button.value)}
           >
             <FontAwesomeIcon
-              icon={faTable}
+              icon={button.icon}
               className="mr-1 sm:mr-2 text-xs sm:text-base text-zinc-500"
             />{" "}
-            Dashboard
+            {button.label}
           </button>
-          <button
-            className={`w-1/3 sm:w-auto flex flex-col items-center sm:flex-row gap-1 sm:gap-0 px-1 sm:px-4 py-2 text-sm sm:text-base ${
-              activeTab === "inventory"
-                ? "bg-cyan-700/20 rounded-xl "
-                : "text-zinc-700"
-            }`}
-            onClick={() => setActiveTab("inventory")}
-          >
-            <FontAwesomeIcon
-              icon={faBox}
-              className="mr-1 sm:mr-2 text-xs sm:text-base text-zinc-500"
-            />{" "}
-            Inventory
-          </button>
-          <button
-            className={`w-1/3 sm:w-auto flex flex-col items-center sm:flex-row gap-1 sm:gap-0 px-1 sm:px-4 py-2 text-sm sm:text-base ${
-              activeTab === "Active Orders"
-                ? "bg-cyan-700/20 rounded-xl "
-                : "text-zinc-700"
-            }`}
-            onClick={() => setActiveTab("Active Orders")}
-          >
-            <FontAwesomeIcon
-              icon={faShoppingCart}
-              className="mr-1 sm:mr-2 text-xs sm:text-base text-zinc-500"
-            />{" "}
-            Active Orders
-          </button>
-          <button
-            className={`w-1/3 sm:w-auto flex flex-col items-center sm:flex-row gap-1 sm:gap-0 px-1 sm:px-4 py-2 text-sm sm:text-base ${
-              activeTab === "Order History"
-                ? "bg-cyan-700/20 rounded-xl "
-                : "text-zinc-700"
-            }`}
-            onClick={() => setActiveTab("Order History")}
-          >
-            <FontAwesomeIcon
-              icon={faArchive}
-              className="mr-1 sm:mr-2 text-sm sm:text-base text-zinc-500"
-            />{" "}
-            Order History
-          </button>
-        </div>
-      </>
+        ))}
+      </div>
     </div>
   );
 }

@@ -70,11 +70,11 @@ export default function DemoControls() {
   };
 
   return (
-    <div className="flex lg:justify-center items-center w-auto bg-white/50 border-2 border-orange-400/50 mt-4 p-2 rounded-2xl ">
-      <div className="flex gap-1 items-center px-4 p-2 ">
+    <div className="flex  gap-10 lg:justify-center items-center w-auto  border-2 bg-white lg:mx-[15vw] mt-4 px-2 py-3 rounded-2xl ">
+      <div className="flex gap-3 items-center px-4 p-2 ">
         <div className="flex items-center gap-2">
           <span className="text-md text-slate-700">
-            Automate Stock Usage and Order Deliveries here:
+            Automate Stock Usage and Order Deliveries:
           </span>
         </div>
         <div className="flex items-center hover:cursor-pointer">
@@ -99,47 +99,57 @@ export default function DemoControls() {
         </div>
       </div>
 
-      <div className="flex gap-2 items-center">
-        <p className="text-base font-semibold text-zinc-700">Use Stock:</p>
-        <button
-          className={`px-1 w-auto h-7.5 ${isPlaying ? "" : ""}`}
-          onClick={togglePlayStop}
-        >
-          <FontAwesomeIcon
-            icon={isPlaying ? faPause : faPlay}
-            className="text-base text-zinc-600 hover:scale-125 transition-all duration-300 ease-linear"
-          />
-        </button>
-        <button
-          className={`px-1 w-auto h-7.5 ${resetActive ? "" : ""}`}
-          onClick={resetInventoryWithState}
-        >
-          <FontAwesomeIcon
-            icon={faRotateLeft}
-            className="text-base text-zinc-600 hover:scale-125 transition-all duration-300 ease-linear"
-          />
-        </button>
-        <p className="text-base font-semibold text-zinc-700">Deliveries:</p>
-        <label
-          htmlFor="deliveriesToggle"
-          aria-label="toggle deliveries on or off"
-          className="flex items-center cursor-pointer"
-        >
-          <div className="relative">
-            <input
-              id="deliveriesToggle"
-              type="checkbox"
-              className="sr-only"
-              checked={deliveriesOn}
-              onChange={handleDeliveriesToggleChange}
+      <div className="flex flex-col lg:flex-row lg:items-center gap-6 px-4">
+        <div className="flex items-center gap-2">
+          <p className="text-base font-semibold text-zinc-700">Use Stock:</p>
+          <button
+            className={`px-1 w-auto h-7.5 ${isPlaying ? "" : ""}`}
+            onClick={togglePlayStop}
+          >
+            <FontAwesomeIcon
+              icon={isPlaying ? faPause : faPlay}
+              className="text-base text-zinc-600 hover:scale-125 transition-all duration-300 ease-linear"
             />
-            <div className="block bg-cyan-700/40 w-10 h-6 rounded-full"></div>
-            <div
-              className={`absolute left-1 top-1 bg-zinc-50 w-4 h-4 rounded-full transition-transform duration-300 ease-in-out 
-                      ${deliveriesOn ? " translate-x-full" : ""}`}
-            ></div>
-          </div>
-        </label>
+          </button>
+        </div>
+        <div className="flex items-center gap-2">
+          <p className="text-base font-semibold text-zinc-700">Reset Stock:</p>
+          <button
+            className={`px-1 w-auto h-7.5 ${resetActive ? "" : ""}`}
+            onClick={resetInventoryWithState}
+          >
+            <FontAwesomeIcon
+              icon={faRotateLeft}
+              className="text-base text-zinc-600 hover:scale-125 transition-all duration-300 ease-linear"
+            />
+          </button>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <p className="text-base font-semibold text-zinc-700">
+            Deliveries On:
+          </p>
+          <label
+            htmlFor="deliveriesToggle"
+            aria-label="toggle deliveries on or off"
+            className="flex items-center cursor-pointer"
+          >
+            <div className="relative">
+              <input
+                id="deliveriesToggle"
+                type="checkbox"
+                className="sr-only"
+                checked={deliveriesOn}
+                onChange={handleDeliveriesToggleChange}
+              />
+              <div className="block bg-cyan-700/40 w-10 h-6 rounded-full"></div>
+              <div
+                className={`absolute left-1 top-1 bg-zinc-50 w-4 h-4 rounded-full transition-transform duration-300 ease-in-out 
+              ${deliveriesOn ? " translate-x-full" : ""}`}
+              ></div>
+            </div>
+          </label>
+        </div>
       </div>
     </div>
   );
