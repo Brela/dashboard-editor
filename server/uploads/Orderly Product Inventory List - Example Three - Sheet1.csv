@@ -1,0 +1,11 @@
+sku,brand,productName,description,inStock,reorderAt,orderQty,unitPrice
+ELEC1116,Logitech,MX Master 3,"Advanced wireless mouse with Darkfield Tracking, MagSpeed scroll wheel, and up to 70 days of battery life",50,20,30,99.99
+ELEC1117,Razer,Huntsman Elite,"Gaming keyboard with Razer Opto-Mechanical Switches, Chroma RGB lighting, and wrist rest",35,15,20,199.99
+ELEC1118,Corsair,Void RGB Elite Wireless,"Gaming headset with 7.1 surround sound, Discord-certified microphone, and up to 16 hours of battery life",40,25,20,99.99
+ELEC1119,Canon,EOS R6,"Mirrorless camera with 20.1-megapixel full-frame sensor, 4K video recording, and in-body image stabilization",25,10,15,2499
+ELEC1120,DJI,Mavic Air 2S,"Drone with 1-inch CMOS sensor, 5.4K video recording, and up to 31 minutes of flight time",30,15,20,999
+ELEC1121,Bose,SoundLink Revolve+,"Portable Bluetooth speaker with 360-degree sound, up to 17 hours of battery life, and water resistance",20,10,15,299
+ELEC1122,Sonos,Beam,"Smart soundbar with Alexa voice control, HDMI connectivity, and immersive sound for TV, movies, music, and more",40,20,30,399
+ELEC1123,Amazon,Echo Dot (4th Gen),"Smart speaker with Alexa voice control, compact design, and improved sound quality",60,30,40,49.99
+ELEC1124,TP-Link,Archer AX6000,"Wi-Fi 6 router with 8 Gigabit LAN ports, 2.5Gbps WAN port, and 1.8GHz quad-core CPU",45,15,20,299.99
+ELEC1125,Western Digital,My Passport SSD,"External SSD with up to 2TB storage, USB 3.2 Gen 2 interface, and password protection",70,30,40,379.99

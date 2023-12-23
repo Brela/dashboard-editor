@@ -1,0 +1,532 @@
+[
+  {
+    "sku": "23456",
+    "brand": "Dell",
+    "productName": "XPS 13",
+    "description": "Laptop, 13.3in, i5",
+    "inStock": 13,
+    "reorderAt": 6,
+    "orderQty": 10,
+    "priceEA": 900
+  },
+  {
+    "sku": "34567",
+    "brand": "LG",
+    "productName": "NANO90",
+    "description": "TV, 55in, 4K, Smart TV",
+    "inStock": 9,
+    "reorderAt": 4,
+    "orderQty": 5,
+    "priceEA": 800
+  },
+  {
+    "sku": "45678",
+    "brand": "Asus",
+    "productName": "ROG Zephyrus G15",
+    "description": "Gaming laptop, 15.6in, Ryzen 9",
+    "inStock": 6,
+    "reorderAt": 3,
+    "orderQty": 5,
+    "priceEA": 1600
+  },
+  {
+    "sku": "56789",
+    "brand": "Samsung",
+    "productName": "Galaxy Watch Active 2",
+    "description": "Smartwatch, 44mm, Rose Gold",
+    "inStock": 18,
+    "reorderAt": 8,
+    "orderQty": 10,
+    "priceEA": 250
+  },
+  {
+    "sku": "67890",
+    "brand": "Acer",
+    "productName": "Swift 5",
+    "description": "Laptop, 14in, i7, 16GB RAM",
+    "inStock": 7,
+    "reorderAt": 3,
+    "orderQty": 5,
+    "priceEA": 1300
+  },
+  {
+    "sku": "78901",
+    "brand": "LG",
+    "productName": "UltraFine 27UN850-W",
+    "description": "Monitor, 27in, 4K, USB-C",
+    "inStock": 10,
+    "reorderAt": 5,
+    "orderQty": 5,
+    "priceEA": 700
+  },
+  {
+    "sku": "89012",
+    "brand": "Samsung",
+    "productName": "Galaxy Book Pro 360",
+    "description": "2-in-1 laptop, 13.3in, i5",
+    "inStock": 11,
+    "reorderAt": 5,
+    "orderQty": 10,
+    "priceEA": 1100
+  },
+  {
+    "sku": "23456",
+    "brand": "Nura",
+    "productName": "NuraLoop",
+    "description": "Wireless Earbuds",
+    "inStock": 12,
+    "reorderAt": 6,
+    "orderQty": 10,
+    "priceEA": 200
+  },
+  {
+    "sku": "12345",
+    "brand": "Logitech",
+    "productName": "K380 Bluetooth Keyboard",
+    "description": "Compact, type to three devices",
+    "inStock": 20,
+    "reorderAt": 10,
+    "orderQty": 5,
+    "priceEA": 40
+  },
+  {
+    "sku": "23456",
+    "brand": "Samsung",
+    "productName": "T5 Portable SSD",
+    "description": "Fast external SSD",
+    "inStock": 12,
+    "reorderAt": 6,
+    "orderQty": 3,
+    "priceEA": 150
+  },
+  {
+    "sku": "34567",
+    "brand": "Apple",
+    "productName": "AirPods Pro",
+    "description": "Wireless earbuds, noise cancellation",
+    "inStock": 15,
+    "reorderAt": 7,
+    "orderQty": 4,
+    "priceEA": 240
+  },
+  {
+    "sku": "45678",
+    "brand": "Razer",
+    "productName": "Gaming Mouse",
+    "description": "High-precision mouse, RGB lighting",
+    "inStock": 18,
+    "reorderAt": 9,
+    "orderQty": 4,
+    "priceEA": 60
+  },
+  {
+    "sku": "56789",
+    "brand": "Seagate",
+    "productName": "16TB External Hard Drive",
+    "description": "Large capacity drive",
+    "inStock": 6,
+    "reorderAt": 3,
+    "orderQty": 2,
+    "priceEA": 300
+  },
+  {
+    "sku": "67890",
+    "brand": "Amazon",
+    "productName": "Echo Dot (4th Gen)",
+    "description": "Smart speaker with Alexa voice control",
+    "inStock": 24,
+    "reorderAt": 12,
+    "orderQty": 6,
+    "priceEA": 45
+  },
+  {
+    "sku": "192021",
+    "brand": "Apple",
+    "productName": "Magic Keyboard",
+    "description": "Wireless, Rechargeable, English US",
+    "inStock": 25,
+    "reorderAt": 10,
+    "orderQty": 8,
+    "priceEA": 80
+  },
+  {
+    "sku": "78901",
+    "brand": "Corsair",
+    "productName": "Platinum XT Keyboard",
+    "description": "Full-sized, per-key RGB lighting",
+    "inStock": 10,
+    "reorderAt": 5,
+    "orderQty": 3,
+    "priceEA": 199
+  },
+  {
+    "sku": "89012",
+    "brand": "Samsung",
+    "productName": "Galaxy Watch Active2",
+    "description": "Smartwatch, fitness, wireless charging",
+    "inStock": 14,
+    "reorderAt": 7,
+    "orderQty": 3,
+    "priceEA": 249
+  },
+  {
+    "sku": "90123",
+    "brand": "Western Digital",
+    "productName": "My Passport SSD",
+    "description": "Portable, hardware encryption",
+    "inStock": 8,
+    "reorderAt": 4,
+    "orderQty": 2,
+    "priceEA": 129
+  },
+  {
+    "sku": "34567",
+    "brand": "Vava",
+    "productName": "4K Laser Projector",
+    "description": "Ultra-Short Throw, 2500 Lumens",
+    "inStock": 5,
+    "reorderAt": 3,
+    "orderQty": 3,
+    "priceEA": 2800
+  },
+  {
+    "sku": "45678",
+    "brand": "Oculus",
+    "productName": "Quest 2",
+    "description": "All-In-One VR Headset, 256GB",
+    "inStock": 8,
+    "reorderAt": 4,
+    "orderQty": 5,
+    "priceEA": 500
+  },
+  {
+    "sku": "56789",
+    "brand": "Anker",
+    "productName": "Nebula Capsule II",
+    "description": "Portable Projector, 200 Lumens",
+    "inStock": 10,
+    "reorderAt": 5,
+    "orderQty": 8,
+    "priceEA": 400
+  },
+  {
+    "sku": "67890",
+    "brand": "Wyze",
+    "productName": "Robot Vacuum",
+    "description": "Smart Vacuum, LiDAR, App Control",
+    "inStock": 4,
+    "reorderAt": 2,
+    "orderQty": 2,
+    "priceEA": 300
+  },
+  {
+    "sku": "90123",
+    "brand": "Apple",
+    "productName": "MacBook Air",
+    "description": "Laptop, 13.3in, M1, 8GB RAM",
+    "inStock": 14,
+    "reorderAt": 6,
+    "orderQty": 10,
+    "priceEA": 1000
+  },
+  {
+    "sku": "67890",
+    "brand": "Samsung",
+    "productName": "Galaxy Watch 4",
+    "description": "Smartwatch, 44mm, Black",
+    "inStock": 15,
+    "reorderAt": 5,
+    "orderQty": 10,
+    "priceEA": 400
+  },
+  {
+    "sku": "78901",
+    "brand": "Canon",
+    "productName": "EOS R5",
+    "description": "Mirrorless camera, 45MP",
+    "inStock": 3,
+    "reorderAt": 1,
+    "orderQty": 3,
+    "priceEA": 4000
+  },
+  {
+    "sku": "34567",
+    "brand": "Nintendo",
+    "productName": "Switch OLED",
+    "description": "Console, OLED display",
+    "inStock": 7,
+    "reorderAt": 3,
+    "orderQty": 5,
+    "priceEA": 350
+  },
+  {
+    "sku": "45678",
+    "brand": "Bose",
+    "productName": "SoundLink Revolve+",
+    "description": "Bluetooth speaker, 360 sound",
+    "inStock": 14,
+    "reorderAt": 6,
+    "orderQty": 8,
+    "priceEA": 250
+  },
+  {
+    "sku": "67890",
+    "brand": "GoPro",
+    "productName": "Hero10 Black",
+    "description": "Action camera, 5.3K video",
+    "inStock": 9,
+    "reorderAt": 4,
+    "orderQty": 5,
+    "priceEA": 500
+  },
+  {
+    "sku": "78901",
+    "brand": "Apple",
+    "productName": "AirPods Pro",
+    "description": "Wireless earbuds, ANC",
+    "inStock": 16,
+    "reorderAt": 7,
+    "orderQty": 10,
+    "priceEA": 250
+  },
+  {
+    "sku": "90123",
+    "brand": "Samsung",
+    "productName": "Galaxy Tab S7+",
+    "description": "Tablet, 12.4in, 256GB, Wi-Fi",
+    "inStock": 5,
+    "reorderAt": 2,
+    "orderQty": 5,
+    "priceEA": 800
+  },
+  {
+    "sku": "01234",
+    "brand": "HP",
+    "productName": "Spectre x360",
+    "description": "Laptop, 14in, i7, 16GB RAM",
+    "inStock": 11,
+    "reorderAt": 5,
+    "orderQty": 10,
+    "priceEA": 1400
+  },
+  {
+    "sku": "89012",
+    "brand": "DJI",
+    "productName": "Mavic 3",
+    "description": "Drone, 8K camera, 60min flight",
+    "inStock": 2,
+    "reorderAt": 1,
+    "orderQty": 2,
+    "priceEA": 2000
+  },
+  {
+    "sku": "90123",
+    "brand": "Apple",
+    "productName": "iPad Pro",
+    "description": "11in, 1TB, Wi-Fi + Cellular",
+    "inStock": 6,
+    "reorderAt": 3,
+    "orderQty": 5,
+    "priceEA": 1500
+  },
+  {
+    "sku": "01234",
+    "brand": "Microsoft",
+    "productName": "Surface Pro 8",
+    "description": "Tablet, 13in, i7, 16GB RAM",
+    "inStock": 8,
+    "reorderAt": 4,
+    "orderQty": 4,
+    "priceEA": 1700
+  },
+  {
+    "sku": "12345",
+    "brand": "Apple",
+    "productName": "iPhone 14",
+    "description": "6.7-inch display, 256GB, Blue",
+    "inStock": 10,
+    "reorderAt": 5,
+    "orderQty": 5,
+    "priceEA": null
+  },
+  {
+    "sku": "23456",
+    "brand": "Samsung",
+    "productName": "Galaxy S22",
+    "description": "6.2-inch display, 128GB, Gray",
+    "inStock": 20,
+    "reorderAt": 10,
+    "orderQty": 10,
+    "priceEA": null
+  },
+  {
+    "sku": "34567",
+    "brand": "Sony",
+    "productName": "PlayStation 5",
+    "description": "Console DualSense Wireless Controller",
+    "inStock": 5,
+    "reorderAt": 2,
+    "orderQty": 5,
+    "priceEA": 700
+  },
+  {
+    "sku": "45678",
+    "brand": "LG",
+    "productName": "OLED TV",
+    "description": "77-inch OLED 4K UHD Smart TV",
+    "inStock": 8,
+    "reorderAt": 3,
+    "orderQty": 5,
+    "priceEA": 980
+  },
+  {
+    "sku": "56789",
+    "brand": "Bose",
+    "productName": "QuietComfort Earbuds",
+    "description": "Wireless noise cancelling earbuds",
+    "inStock": 12,
+    "reorderAt": 5,
+    "orderQty": 8,
+    "priceEA": 190
+  },
+  {
+    "sku": "23456",
+    "brand": "Dell",
+    "productName": "XPS 13",
+    "description": "Laptop, 13.3in, i5, 8GB RAM",
+    "inStock": 13,
+    "reorderAt": 6,
+    "orderQty": 10,
+    "priceEA": 900
+  },
+  {
+    "sku": "34567",
+    "brand": "LG",
+    "productName": "NANO90",
+    "description": "TV, 55in, 4K, Smart TV",
+    "inStock": 9,
+    "reorderAt": 4,
+    "orderQty": 5,
+    "priceEA": 800
+  },
+  {
+    "sku": "45678",
+    "brand": "Asus",
+    "productName": "ROG Zephyrus G15",
+    "description": "Gaming laptop, 15.6in, Ryzen 9",
+    "inStock": 6,
+    "reorderAt": 3,
+    "orderQty": 5,
+    "priceEA": 1600
+  },
+  {
+    "sku": "56789",
+    "brand": "Samsung",
+    "productName": "Galaxy Watch Active 2",
+    "description": "Smartwatch, 44mm, Rose Gold",
+    "inStock": 18,
+    "reorderAt": 8,
+    "orderQty": 10,
+    "priceEA": 250
+  },
+  {
+    "sku": "67890",
+    "brand": "Acer",
+    "productName": "Swift 5",
+    "description": "Laptop, 14in, i7, 16GB RAM",
+    "inStock": 7,
+    "reorderAt": 3,
+    "orderQty": 5,
+    "priceEA": 1300
+  },
+  {
+    "sku": "78901",
+    "brand": "LG",
+    "productName": "UltraFine 27UN850-W",
+    "description": "Monitor, 27in, 4K, USB-C",
+    "inStock": 10,
+    "reorderAt": 5,
+    "orderQty": 5,
+    "priceEA": 700
+  },
+  {
+    "sku": "89012",
+    "brand": "Samsung",
+    "productName": "Galaxy Book Pro 360",
+    "description": "2-in-1 laptop, 13.3in, i5, 8GB RAM",
+    "inStock": 11,
+    "reorderAt": 5,
+    "orderQty": 10,
+    "priceEA": 1100
+  },
+  {
+    "sku": "90123",
+    "brand": "Apple",
+    "productName": "MacBook Air",
+    "description": "Laptop, 13.3in, M1, 8GB RAM",
+    "inStock": 14,
+    "reorderAt": 6,
+    "orderQty": 10,
+    "priceEA": 1000
+  },
+  {
+    "sku": "67890",
+    "brand": "Acer",
+    "productName": "Swift 5",
+    "description": "Laptop, 14in, i7, 16GB RAM",
+    "inStock": 7,
+    "reorderAt": 3,
+    "orderQty": 5,
+    "priceEA": 1300
+  },
+  {
+    "sku": "23456",
+    "brand": "DJI",
+    "productName": "Mavic Air 2S",
+    "description": "Drone, 5.4K Camera, 31 min flight",
+    "inStock": 4,
+    "reorderAt": 2,
+    "orderQty": 3,
+    "priceEA": 1000
+  },
+  {
+    "sku": "34567",
+    "brand": "Parrot",
+    "productName": "Anafi USA",
+    "description": "Drone, 4K HDR Camera, 31 min flight",
+    "inStock": 7,
+    "reorderAt": 3,
+    "orderQty": 5,
+    "priceEA": 1700
+  },
+  {
+    "sku": "45678",
+    "brand": "Autel Robotics",
+    "productName": "EVO II",
+    "description": "Drone, 8K Camera, 40 Min flight",
+    "inStock": 3,
+    "reorderAt": 1,
+    "orderQty": 2,
+    "priceEA": 2000
+  },
+  {
+    "sku": "56789",
+    "brand": "DJI",
+    "productName": "Mavic Mini 2",
+    "description": "Drone, 4K Camera, 31 min flight",
+    "inStock": 8,
+    "reorderAt": 4,
+    "orderQty": 5,
+    "priceEA": 450
+  },
+  {
+    "sku": "67890",
+    "brand": "Yuneec",
+    "productName": "Typhoon H Plus",
+    "description": "Drone, 4K Camera, 28 min flight",
+    "inStock": 2,
+    "reorderAt": 1,
+    "orderQty": 1,
+    "priceEA": 1500
+  }
+]

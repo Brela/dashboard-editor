@@ -1,0 +1,26 @@
+sku,brand,productName,description,inStock,reorderAt,orderQty,unitPrice
+ELEC151,Logitech,MX Master 3,"Advanced wireless mouse with Darkfield Tracking, MagSpeed scroll wheel, and up to 70 days of battery life",47,45,20,100
+ELEC152,Razer,Huntsman Elite,"Gaming keyboard with Razer Opto-Mechanical Switches, Chroma RGB lighting, and wrist rest",33,30,20,200
+ELEC153,Corsair,Void RGB Elite Wireless,"Gaming headset with 7.1 surround sound, Discord-certified microphone, and up to 16 hours of battery life",40,35,20,100
+ELEC154,Canon,EOS R6,"Mirrorless camera with 20.1-megapixel full-frame sensor, 4K video recording, and in-body image stabilization",25,20,15,2500
+ELEC155,DJI,Mavic Air 2S,"Drone with 1-inch CMOS sensor, 5.4K video recording, and up to 31 minutes of flight time",30,25,20,1000
+ELEC156,Bose,SoundLink Revolve+,"Portable Bluetooth speaker with 360-degree sound, up to 17 hours of battery life, and water resistance",20,15,15,300
+ELEC157,Sonos,Beam,"Smart soundbar with Alexa voice control, HDMI connectivity, and immersive sound for TV, movies, music, and more",40,35,30,400
+ELEC158,Amazon,Echo Dot (4th Gen),"Smart speaker with Alexa voice control, compact design, and improved sound quality",60,55,40,50
+ELEC159,TP-Link,Archer AX6000,"Wi-Fi 6 router with 8 Gigabit LAN ports, 2.5Gbps WAN port, and 1.8GHz quad-core CPU",45,40,20,300
+ELEC160,Western Digital,My Passport SSD,"External SSD with up to 2TB storage, USB 3.2 Gen 2 interface, and password protection",70,65,40,380
+ELEC161,Apple,iPad Air,"10.9-inch tablet with A14 Bionic chip, Liquid Retina display, and support for Apple Pencil and Magic Keyboard",50,45,30,600
+ELEC162,Samsung,Galaxy S23,"Android smartphone with 6.4-inch Dynamic AMOLED display, 5G connectivity, and 108MP primary camera",40,35,20,1100
+ELEC163,Microsoft,Surface Laptop 4,"Laptop with 13.5-inch PixelSense display, Intel Core i7 processor, and up to 1TB SSD storage",30,25,20,1400
+ELEC164,Sony,WH-1000XM4,"Noise-canceling headphones with Bluetooth connectivity, 30-hour battery life, and touch controls",45,40,25,350
+ELEC165,Philips,Hue White and Color Ambiance,"Smart LED bulb starter kit with 4 bulbs, bridge, and app control for customizable lighting",60,55,40,200
+ELEC166,Oculus,Quest 2,"All-in-one virtual reality headset with 256GB storage, 1832x1920 resolution per eye, and touch controllers",50,45,30,400
+ELEC167,Asus,ROG Strix G15,"Gaming laptop with 15.6-inch FHD display, NVIDIA GeForce RTX 3060 GPU, and 10th Gen Intel Core i7 processor",30,25,20,1500
+ELEC168,GoPro,HERO9 Black,"Action camera with 5K video recording, 20MP photos, HyperSmooth 3.0 stabilization, and waterproof design",40,35,25,430
+ELEC169,Audio-Technica,AT-LP120XUSB,"Direct-drive turntable with USB output, built-in phono preamp, and adjustable dynamic anti-skate",45,40,20,300
+ELEC170,Apple,Watch Series 7,"Smartwatch with always-on Retina display, GPS, ECG app, and swim-proof design",55,50,35,400
+ELEC171,Anker,PowerCore III Elite,"Portable charger with 25,600mAh capacity, 87W USB-C output, and 3 USB-A ports for simultaneous charging",60,55,40,130
+ELEC172,Google,Nest WiFi,"Mesh Wi-Fi system with router and 2 access points for up to 5,400 sq ft coverage and smart home integration",40,35,20,300
+ELEC173,HP,Sprocket Studio,"Compact photo printer with 4x6-inch prints, Bluetooth connectivity, and customizable templates via app",35,30,20,160
+ELEC174,Belkin,Wemo Mini,"Smart plug with Wi-Fi connectivity, app control, and compatibility with Alexa, Google Assistant, and Apple HomeKit",50,45,30,40
+ELEC175,Netgear,Nighthawk MK83,"Tri-band mesh Wi-Fi 6 system with 1 router and 2 satellites, providing up to 6,000 sq ft coverage and 4.2Gbps speed",35,30,20,450

@@ -1,0 +1,16 @@
+sku,brand,productName,description,inStock,reorderAt,orderQty,unitPrice
+GUEST1,Apple,iPhone 13 Pro Max,"Smartphone with A15 Bionic chip, 5G connectivity, Pro camera system, and Ceramic Shield front cover",50,20,30,1099
+GUEST2,Samsung,Galaxy S21 Ultra,"Smartphone with Exynos 2100 chip, 5G connectivity, quad camera setup, and 6.8-inch AMOLED display",35,15,20,1199.99
+GUEST3,Google,Pixel 6 Pro,"Smartphone with Tensor chip, 5G connectivity, advanced camera system, and 6.7-inch OLED display",40,25,20,1099
+GUEST4,Microsoft,Surface Laptop 4,"Laptop with 11th Gen Intel Core processors, 13.5-inch touchscreen, and up to 19 hours of battery life",25,10,15,999.99
+GUEST5,Apple,MacBook Air M1,"Laptop with Apple M1 chip, 13.3-inch Retina display, and up to 18 hours of battery life",30,15,20,999
+GUEST6,HP,Spectre x360 14,"Laptop with 11th Gen Intel Core processors, 13.5-inch touchscreen, and up to 17 hours of battery life",20,10,15,1199.99
+GUEST7,Dell,XPS 13,"Laptop with 11th Gen Intel Core processors, 13.4-inch InfinityEdge display, and up to 14 hours of battery life",40,20,30,999.99
+GUEST8,Sony,WH-1000XM4,"Noise-cancelling headphones with 30-hour battery life, touch controls, and Bluetooth connectivity",60,30,40,349.99
+GUEST9,Bose,QuietComfort Earbuds,"True wireless earbuds with noise cancellation, up to 18 hours of battery life, and IPX4 water resistance",45,15,20,279
+GUEST10,Apple,AirPods Pro,"True wireless earbuds with active noise cancellation, transparency mode, and up to 4.5 hours of battery life",70,30,40,249
+GUEST11,Fitbit,Versa 3,"Smartwatch with built-in GPS, heart rate monitoring, and up to 6+ days of battery life",30,10,15,229.95
+GUEST12,Garmin,Forerunner 945,GPS running and triathlon smartwatch with heart rate monitoring and up to 36 hours of battery life,20,10,10,599.99
+GUEST13,Oculus,Quest 2,"Virtual reality headset with up to 256GB storage, 90Hz refresh rate, and six degrees of freedom tracking",15,5,10,399
+GUEST14,Apple,iPad Pro (2021),"Tablet with M1 chip, 12.9-inch Liquid Retina XDR display, and 5G connectivity",25,10,15,1099
+GUEST15,Samsung,Galaxy Tab S7+,"Tablet with Snapdragon 865+ chip, 12.4-inch Super AMOLED display, and up to 14 hours of battery life",30,15,20,899

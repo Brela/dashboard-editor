@@ -1,0 +1,11 @@
+sku,brand,productName,description,inStock,reorderAt,orderQty,unitPrice,companyID
+ELEC01,Sony,Sony Wireless Headphones,Noise-canceling wireless headphones with 30-hour battery life,50,20,2,99.99,12345
+ELEC02,Samsung,Samsung 4K TV,65-inch 4K TV with HDR and built-in smart features,15,5,1,1199.99,12345
+ELEC03,Bose,Bose SoundLink Speaker,Portable Bluetooth speaker with up to 8 hours of battery life,30,10,3,149.99,12345
+ELEC04,Apple,Apple AirPods Pro,True wireless earbuds with active noise cancellation,75,30,2,249,12345
+ELEC05,LG,LG Ultrawide Monitor,34-inch curved ultrawide monitor with QHD resolution,20,10,1,799.99,12345
+ELEC06,Logitech,Logitech MX Master 3,Wireless mouse with customizable buttons and gestures,40,15,2,99.99,12345
+ELEC07,Dell,Dell XPS 13 Laptop,13-inch laptop with 11th Gen Intel Core processor,10,5,1,1299.99,12345
+ELEC08,AmazonBasics,AmazonBasics Keyboard,Full-size wired keyboard with numeric keypad,50,20,3,19.99,12345
+ELEC09,Microsoft,Microsoft Surface Book,2-in-1 laptop and tablet with detachable keyboard,5,2,1,1599.99,12345
+ELEC10,Razer,Razer BlackWidow Elite,Mechanical gaming keyboard with customizable RGB lighting,25,10,2,169.99,12345

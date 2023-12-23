@@ -1,0 +1,10 @@
+.error-boundary {
+    margin-top: 20vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.error-boundary p {
+    color: rgb(6, 6, 6);
+}
