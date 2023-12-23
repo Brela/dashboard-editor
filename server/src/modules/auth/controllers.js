@@ -4,11 +4,11 @@ import {
   ACCESS_TOKEN_SECRET,
   REFRESH_TOKEN_SECRET,
   IS_DEV_MODE,
-} from "../config/envConfig.js";
-import { HTTP_STATUS, TOKEN_TYPES } from "../config/constants.js";
-import { createToken } from "../utils/authUtils.js";
-import { authenticateJWT } from "../middleware/jwtAuth.js";
-import prisma from "../config/prismaClient.js";
+} from "../../config/envConfig.js";
+import { HTTP_STATUS, TOKEN_TYPES } from "../../config/constants.js";
+import { createToken } from "../../utils/authUtils.js";
+import { authenticateJWT } from "../../middleware/jwtAuth.js";
+import prisma from "../../config/prismaClient.js";
 
 const isDevMode = IS_DEV_MODE === "true";
 
@@ -109,4 +109,3 @@ export const getToken = async (req, res) => {
       .json({ accessToken, newRefreshToken });
   });
 };
-  

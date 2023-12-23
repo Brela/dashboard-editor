@@ -1,7 +1,6 @@
-import prisma from "../config/prismaClient.js";
-import { formatDate } from "../utils/formatDate.js";
-import { createRandomArrivalDate } from "../utils/createRandomArrivalDate.js";
-
+import prisma from "../../config/prismaClient.js";
+import { formatDate } from "../../utils/formatDate.js";
+import { createRandomArrivalDate } from "../../utils/createRandomArrivalDate.js";
 
 export const getAllOrders = async (req, res) => {
   let orderList;
@@ -9,7 +8,7 @@ export const getAllOrders = async (req, res) => {
   try {
     orderList = await prisma.Order.findMany({
       include: {
-        product: true, 
+        product: true,
       },
     });
 
@@ -42,7 +41,7 @@ export const getOrderItem = async (req, res) => {
         id: Number(id),
       },
       include: {
-        product: true, 
+        product: true,
       },
     });
     orderItem = getOrderItem;
@@ -75,7 +74,7 @@ export const createOrder = async (req, res) => {
 
   let orderItem;
   try {
-    const randomArrivalDate = createRandomArrivalDate(); 
+    const randomArrivalDate = createRandomArrivalDate();
     const createOrderItem = await prisma.Order.create({
       data: {
         schedArrivalDate: randomArrivalDate,
@@ -154,13 +153,19 @@ export const deleteAllOrderHistory = async (req, res) => {
     if (deletedOrders.count === 0) {
       return res.status(404).json({ message: "No orders to delete." });
     }
-    return res.json({ message: `Successfully deleted ${deletedOrders.count} orders.` });
+    return res.json({
+      message: `Successfully deleted ${deletedOrders.count} orders.`,
+    });
   } catch (err) {
     console.log("Error Found: ", err);
-    return res.status(500).json({ message: "An error occurred while trying to delete orders.", error: err.message });
+    return res
+      .status(500)
+      .json({
+        message: "An error occurred while trying to delete orders.",
+        error: err.message,
+      });
   }
 };
-
 
 export const deleteAllActiveOrders = async (req, res) => {
   try {

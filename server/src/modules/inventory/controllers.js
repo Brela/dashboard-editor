@@ -1,6 +1,6 @@
-import prisma from "../config/prismaClient.js";
+import prisma from "../../config/prismaClient.js";
 import csvtojson from "csvtojson";
-import uploadCSV from "../middleware/multerMiddleware.js";
+import uploadCSV from "../../middleware/multerMiddleware.js";
 
 export const getInventoryList = async (req, res) => {
   // console.log("req.user.id in inventory controller", req.user.id);
@@ -146,15 +146,15 @@ export const createManyInventoryItems = async (req, res) => {
 export const createManyInventoryItemsInternally = async (products, user) => {
   if (!user) {
     console.log(
-      "user is not defined in createManyInv Internally - inventory.js"
+      "user is not defined in createManyInv Internally - inventory.js",
     );
   }
 
   if (!Array.isArray(products)) {
     throw new Error(
       `Expected an array, received ${typeof products}: ${JSON.stringify(
-        products
-      )}`
+        products,
+      )}`,
     );
   }
 
@@ -192,11 +192,11 @@ export const createManyInventoryItemsInternally = async (products, user) => {
 
     if (err.code === "P2002") {
       throw new Error(
-        "There is a unique constraint violation, a new product cannot be created with this sku"
+        "There is a unique constraint violation, a new product cannot be created with this sku",
       );
     } else if (err.code === "P2009") {
       throw new Error(
-        "Unable to match input value to any allowed input type for the field"
+        "Unable to match input value to any allowed input type for the field",
       );
     }
 
@@ -305,7 +305,7 @@ export const getInventoryStats = async (req, res) => {
 
     const userSKUs = userProducts.map((product) => product.sku);
     const filteredProducts = userProducts.filter(
-      (product) => product.deletedAt === null
+      (product) => product.deletedAt === null,
     );
     const totalDistinctItems = filteredProducts.length;
 

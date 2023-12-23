@@ -101,7 +101,9 @@ const DashboardEditor = () => {
       notifyError(
         `Error loading dashboards: ${error.message}. The server may be down.`,
       ),
+    retry: 3, // Adjust this number to the maximum number of retry attempts you want
   });
+
   const dashboards = dashboardsData ? dashboardsData.items : [];
 
   // Fetch widgets for the selected dashboard
@@ -109,7 +111,7 @@ const DashboardEditor = () => {
     ["widgets", dashboard?.id],
     () => getDashboardWidgets(dashboard?.id),
     {
-      enabled: !!dashboard, // the query will only run if dashboard is truthy.
+      enabled: !!dashboard && !isDashboardsLoading, // the query will only run if dashboard is truthy and dashboards are not loading.
       onError: (error) =>
         notifyError(`Error loading widgets: ${error.message}`),
     },
@@ -117,6 +119,7 @@ const DashboardEditor = () => {
 
   // Update localWidgets state when widgetsData changes
   useEffect(() => {
+    console.log("widgetsData useEffect");
     if (widgetsData) {
       setWidgets(widgetsData.items);
     }
@@ -135,6 +138,7 @@ const DashboardEditor = () => {
 
   // Initialize with the dashboard from local storage when dashboards are loaded
   useEffect(() => {
+    console.log("Dashboards useEffect");
     if (dashboards.length > 0) {
       const storedDashboardId = localStorage.getItem("lastSelectedDashboardId");
       const storedDashboardExists =
@@ -164,6 +168,7 @@ const DashboardEditor = () => {
 
   // When a dashboard is deleted, select the first dashboard if available
   useEffect(() => {
+    console.log("Dashboards, dashboard useEffect");
     if (!dashboard || !dashboards.find((d) => d.id === dashboard.id)) {
       const storedDashboardId = localStorage.getItem("lastSelectedDashboardId");
       const storedDashboardExists = dashboards.some(

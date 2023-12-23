@@ -1,5 +1,5 @@
-import express from 'express';
-import * as ordersController from '../controllers/orders.js';
+import express from "express";
+import * as ordersController from "./controllers.js";
 
 const router = express();
 
@@ -7,14 +7,14 @@ const router = express();
 router.get("/", ordersController.getAllOrders);
 // router.get('/:id', ordersController.getOrderItem);
 
-router.post('/', ordersController.createOrder);
+router.post("/", ordersController.createOrder);
 
-router.patch('/:id', ordersController.updateOrderItem);
+router.patch("/:id", ordersController.updateOrderItem);
 
-router.delete('/clearactiveorders', ordersController.deleteAllActiveOrders);
-router.delete('/clearhistory', ordersController.deleteAllOrderHistory);
+router.delete("/clearactiveorders", ordersController.deleteAllActiveOrders);
+router.delete("/clearhistory", ordersController.deleteAllOrderHistory);
 
-router.delete('/:id', ordersController.deleteOrderItem);
+router.delete("/:id", ordersController.deleteOrderItem);
 
 export default router;
 

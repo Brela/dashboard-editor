@@ -1,8 +1,11 @@
-import prisma from "../config/prismaClient.js";
+import prisma from "../../config/prismaClient.js";
 import argon2 from "argon2";
-import { createMockProducts } from "../utils/createMockProducts.js";
-import { createManyInventoryItemsInternally } from "../controllers/inventory.js";
-import { generateAccessToken, generateRefreshToken } from "./authentication.js";
+import { createMockProducts } from "../../utils/createMockProducts.js";
+import { createManyInventoryItemsInternally } from "../inventory/controllers.js";
+import {
+  generateAccessToken,
+  generateRefreshToken,
+} from "../auth/controllers.js";
 
 export const getUsers = async (req, res) => {
   let users;
@@ -127,7 +130,6 @@ export const updateUser = async (req, res) => {
   return res.json(user);
 };
 
-
 export const getLoggedInUser = async (req, res) => {
   try {
     const userData = await prisma.User.findUnique({
@@ -143,6 +145,8 @@ export const getLoggedInUser = async (req, res) => {
     return res.json(userData);
   } catch (err) {
     console.log("Error Found: ", err);
-    return res.status(500).json({ message: "Internal server error", error: err });
+    return res
+      .status(500)
+      .json({ message: "Internal server error", error: err });
   }
 };

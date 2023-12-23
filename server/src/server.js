@@ -2,10 +2,12 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { CORS_ORIGIN, PORT } from "./config/envConfig.js";
-import inventoryRoutes from "./routes/inventoryRoutes.js";
-import ordersRoutes from "./routes/ordersRoutes.js";
-import userRoutes from "./routes/userRoutes.js";
-import authenticationRoutes from "./routes/authenticationRoutes.js";
+import inventoryRoutes from "./modules/inventory/routes.js";
+import ordersRoutes from "./modules/orders/routes.js";
+import userRoutes from "./modules/users/routes.js";
+import authenticationRoutes from "./modules/auth/routes.js";
+import dashboardRoutes from "./modules/auth/routes.js";
+import customWidgetRoutes from "./modules/customWidgets/routes.js";
 
 const app = express();
 
@@ -25,10 +27,14 @@ app.use((req, res, next) => {
 });
 
 app.use(cookieParser());
+app.use("/authentication", authenticationRoutes);
+app.use("/user", userRoutes);
+
+app.use("/dashboards", dashboardRoutes);
+app.use("/customWidgets", customWidgetRoutes);
+
 app.use("/inventory", inventoryRoutes);
 app.use("/orders", ordersRoutes);
-app.use("/user", userRoutes);
-app.use("/authentication", authenticationRoutes);
 
 app.listen(PORT, () => {
   console.log(`server is running on port: ${PORT}`);
