@@ -82,7 +82,7 @@ const dashboardWidgetSchema = Joi.object({
   h: Joi.number().required(),
 
   value: Joi.number(),
-  userId: Joi.number().integer(),
+  userId: Joi.string(),
   companyId: Joi.number().integer(),
   createdAt: Joi.date(),
   updatedAt: Joi.date(),

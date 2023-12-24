@@ -8,6 +8,8 @@ import ActiveOrders from "../../containers/Orders/ActiveOrders.jsx";
 import Inventory from "../../containers/Inventory/Inventory.jsx";
 import PaginationWrapper from "./PaginationWrapper.jsx";
 import DemoControls from "../../containers/DemoControls.jsx";
+import { twMerge } from "tailwind-merge";
+import { dashboardBg } from "../../css/globalTailwindVars.js";
 
 function InventoryPage() {
   const inventoryListScrollRef = useRef(null);
@@ -19,11 +21,17 @@ function InventoryPage() {
     <div className=" max-w-screen-2xl mx-auto px-4">
       {/* <div className=" max-w-screen-2xl mx-2 md:mx-4 mb-2 md:mb-3 px-2 md:px-6 flex gap-2 flex-col rounded-3xl"> */}
       <div className="flex items-center justify-between">
+        <div></div>
         <NavigationBar activeTab={activeTab} setActiveTab={setActiveTab} />
 
         <Header />
       </div>
-      <section className="relative min-h-[86vh] bg-white/80 rounded-2xl p-2 md:p-4 overflow-x-auto">
+      <section
+        className={twMerge(
+          "relative min-h-[86vh] rounded-2xl p-2 md:p-4 overflow-x-auto",
+          activeTab === "dashboard" ? dashboardBg : "bg-white",
+        )}
+      >
         {activeTab === "dashboard" && <Dashboard />}
         {activeTab === "inventory" && <Inventory />}
         {activeTab === "Active Orders" && <ActiveOrders />}

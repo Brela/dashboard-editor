@@ -25,7 +25,7 @@ import DashboardLayout from "../DashboardLayout";
 import EditDashboardNameModal from "./dashboardModals/EditDashboardName";
 import AddNewDashboardModal from "./dashboardModals/AddNewDashboard";
 import DeleteDashboardModal from "./dashboardModals/DeleteDashboard";
-import { notifySuccess, notifyError } from "../../../utils/notificationWrapper";
+import { toast } from "react-hot-toast";
 
 import { getNewXandYCoords } from "../helpers/layoutUtils";
 import WidgetsSidebar from "./WidgetsSidebar/WidgetsSidebar";
@@ -79,12 +79,12 @@ const DashboardEditor = () => {
         // Invalidate and refetch widgets to update the local cache
         queryClient.invalidateQueries(["widgets", dashboard?.id]);
 
-        notifySuccess(`${dashboard?.name} saved.`);
+        toast.success(`${dashboard?.name} saved.`);
 
         resolve(`${dashboard?.name} saved.`); // Resolve the promise with a success message
       } catch (error) {
         console.error("error: ", error);
-        notifyError(
+        toast.error(
           `Could not save ${dashboard?.name}: ${error.message}. Please try again`,
         );
         reject(error); // Reject the promise with the error
@@ -359,9 +359,10 @@ const DashboardEditor = () => {
             </Button>
             <Button
               onClick={handleSave}
-              size="sm"
+              size="large"
               variant="light"
-              className={"ml-3"}
+              className={"ml-3 py-1"}
+              isLoading={loading}
             >
               Save
             </Button>

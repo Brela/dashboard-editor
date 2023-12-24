@@ -20,6 +20,7 @@ import { chartDisplayTypes } from "./DashboardEditor/WidgetsSidebar/widgetsLibra
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { ICON_MAP } from "./helpers/iconMap";
 import EmptyDashboard from "./components/EmptyDashboard";
+import { dashboardBg } from "../../css/globalTailwindVars";
 
 // this has to go outside of the DashboardLayout  function
 const ResponsiveGridLayout = WidthProvider(Responsive);
@@ -69,7 +70,7 @@ const DashboardLayout = ({
     <section
       className={twMerge(
         "col-span-8 lg:col-span-10 mr-3 mt-1 ml-1 rounded-md ",
-        isEditMode && "bg-gray-200",
+        isEditMode && dashboardBg,
       )}
     >
       {widgets && widgets.length !== 0 ? (
@@ -179,7 +180,9 @@ const DashboardLayout = ({
             })}
         </ResponsiveGridLayout>
       ) : (
-        <div>No widgets available</div>
+        <div className="flex justify-center pt-12">
+          Add some widgets from left sidebar.
+        </div>
       )}
     </section>
   );

@@ -4,8 +4,7 @@ import { Spinner } from "./index";
 
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
-
-let PRIMARY_COLOR = "#FF0000";
+import { primaryColor } from "../css/globalTailwindVars";
 
 function Button({
   children,
@@ -68,44 +67,51 @@ function Button({
   const getSizeClass = () => {
     switch (size) {
       case "xs":
-        return "px-1.5 py-0.5 text-xs";
+        return "text-xs";
       case "sm":
-        return "px-2 py-1 text-sm";
+        return "text-sm";
       case "md":
-        return "px-3 py-2 text-sm";
+        return "text-sm";
       case "lg":
-        return "px-4 py-2 text-base";
+        return "text-base";
       case "xl":
-        return "px-5 py-3 text-lg";
+        return "text-lg";
       default:
-        return "px-3 py-2 text-sm";
+        return "text-sm";
     }
   };
 
   const buttonClass = twMerge(
     `transition rounded font-semibold cursor-pointer hover:bg-opacity-75 focus-visible:outline-0 ${getVariantClass()} ${getSizeClass()} ${
       disabled ? "opacity-50 cursor-not-allowed" : ""
-    }`,
+    } p-2 px-3`,
     className,
   );
 
-  return variant === "primary" || !variant ? (
+  const buttonStyle =
+    variant === "primary" || !variant
+      ? {
+          backgroundColor:
+            mode === "solid" && hover
+              ? primaryColor + "90"
+              : mode === "outlined"
+              ? hover
+                ? primaryColor
+                : ""
+              : primaryColor,
+          opacity: isLoading || disabled ? 0.5 : 1,
+          border: mode === "solid" ? "" : `1px solid ${primaryColor}`,
+          color: mode === "solid" || hover ? "white" : primaryColor,
+          cursor: disabled ? "not-allowed" : "pointer",
+        }
+      : {
+          cursor: disabled ? "not-allowed" : "pointer",
+        };
+
+  return (
     <button
       type={type}
-      style={{
-        backgroundColor:
-          mode === "solid" && hover
-            ? PRIMARY_COLOR + "90"
-            : mode === "outlined"
-            ? hover
-              ? PRIMARY_COLOR
-              : ""
-            : PRIMARY_COLOR,
-        opacity: isLoading || disabled ? 0.5 : 1,
-        border: mode === "solid" ? "" : `1px solid ${PRIMARY_COLOR}`,
-        color: mode === "solid" || hover ? "white" : PRIMARY_COLOR,
-        cursor: disabled ? "not-allowed" : "pointer",
-      }}
+      style={buttonStyle}
       className={buttonClass}
       disabled={disabled}
       aria-pressed={active}
@@ -118,35 +124,15 @@ function Button({
       onClick={onClick}
       {...rest}
     >
-      {isLoading ? (
-        <div className="flex items-center justify-center">
-          <Spinner size="sm" className="" />
-          {loadingText && <span className="ml-2">{loadingText}</span>}
-        </div>
-      ) : (
-        children
-      )}
-    </button>
-  ) : (
-    <button
-      type={type}
-      className={buttonClass}
-      disabled={disabled}
-      aria-pressed={active}
-      style={{
-        cursor: disabled ? "not-allowed" : "pointer",
-      }}
-      onClick={onClick}
-      {...rest}
-    >
-      {isLoading ? (
-        <div className="flex items-center justify-center">
-          <Spinner size="sm" className="" />
-          {loadingText && <span className="ml-2">{loadingText}</span>}
-        </div>
-      ) : (
-        children
-      )}
+      <div className="relative flex items-center justify-center space-x-2">
+        {isLoading && (
+          <div className="absolute flex items-center space-x-2">
+            <Spinner size="medium" />
+            <span>{loadingText}</span>
+          </div>
+        )}
+        <span className={isLoading ? "invisible" : ""}>{children}</span>
+      </div>
     </button>
   );
 }

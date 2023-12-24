@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import ReactSelect from "react-select";
 import { isArray } from "lodash";
 import { twMerge } from "tailwind-merge";
+import { primaryColor } from "../css/globalTailwindVars";
 
 const Select = ({
   label,
@@ -57,19 +58,19 @@ const Select = ({
               ...provided,
               boxShadow: "none",
               "&:focus": {
-                borderColor: "#FF0000",
+                borderColor: primaryColor,
               },
               "&:hover": {
                 boxShadow: "none",
               },
               "&active": {
-                borderColor: "#FF0000",
+                borderColor: primaryColor,
               },
               "&:disabled": {
                 borderColor: "lightgray",
               },
               "&:focus-within": {
-                borderColor: "#FF0000",
+                borderColor: primaryColor,
               },
 
               cursor: "pointer",
@@ -86,14 +87,14 @@ const Select = ({
             ...provided,
             backgroundColor: state.isSelected
               ? isPastel
-                ? `${getPastelColor("#FF0000")}`
-                : "#FF0000"
+                ? `${getPastelColor(primaryColor)}`
+                : primaryColor
               : "white",
             color: state.isSelected ? "white" : "black",
             "&:hover": {
               backgroundColor: isPastel
-                ? `${getPastelColor("#FF0000")}`
-                : "#FF0000",
+                ? `${getPastelColor(primaryColor)}`
+                : primaryColor,
               color: "white",
             },
             cursor: "pointer",

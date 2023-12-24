@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
+import { primaryColor } from "../css/globalTailwindVars";
 
 const Input = ({
   id,
@@ -41,7 +42,7 @@ const Input = ({
           htmlFor={name}
           className={`${labelClassname} my-2 block text-sm font-medium`}
           style={{
-            color: "#FF0000",
+            color: primaryColor,
           }}
         >
           {label}
@@ -64,7 +65,7 @@ const Input = ({
           readOnly && "cursor-not-allowed",
         )}
         style={{
-          borderColor: `${(focus && "#FF0000") || ""}`,
+          borderColor: `${(focus && primaryColor) || ""}`,
           color: `black`,
         }}
         onFocus={() => {
