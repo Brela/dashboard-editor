@@ -3,6 +3,7 @@ import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { Tooltip } from "../../../components";
 import { useNavigate } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
+import { primaryColor } from "../../../css/globalTailwindVars";
 
 const WidgetContent = ({ isEditMode, block, IconComponent }) => {
   const [linkHover, setLinkHover] = useState();
@@ -14,7 +15,7 @@ const WidgetContent = ({ isEditMode, block, IconComponent }) => {
         <div
           className="absolute rounded-md p-2 md:p-3 hidden sm:block "
           style={{
-            backgroundColor: "red",
+            backgroundColor: primaryColor,
           }}
         >
           {IconComponent ? (
@@ -24,7 +25,7 @@ const WidgetContent = ({ isEditMode, block, IconComponent }) => {
           )}
         </div>
         {/* <p className="ml-0 sm:ml-16 truncate text-sm font-medium text-gray-500"> */}
-        <p className="ml-0 sm:ml-16 whitespace-wrap text-sm font-medium text-gray-500">
+        <p className="ml-0 sm:ml-16 whitespace-wrap text-md font-medium text-gray-800">
           {block.name}
         </p>
       </dt>
@@ -40,7 +41,12 @@ const WidgetContent = ({ isEditMode, block, IconComponent }) => {
               type="light"
               className="w-[200px] text-xs ml-10"
             >
-              <ExclamationTriangleIcon className="h-3 w-3 text-red-500 mt-2 ml-1" />
+              <ExclamationTriangleIcon
+                className="h-3 w-3 mt-2 ml-1"
+                style={{
+                  color: `${primaryColor}`,
+                }}
+              />
             </Tooltip>
           </div>
         )}
@@ -53,7 +59,8 @@ const WidgetContent = ({ isEditMode, block, IconComponent }) => {
                 !isEditMode ? "cursor-pointer" : "",
               )}
               style={{
-                color: linkHover === block.i ? `${"#FF0000"}90` : "#FF0000",
+                color:
+                  linkHover === block.i ? `${primaryColor}90` : primaryColor,
               }}
               onMouseEnter={() => {
                 // using block.i as a key
