@@ -63,11 +63,11 @@ const Header = () => {
     <div className="">
       <Popover
         trigger={
-          <button className="bg-zinc-300 hover:bg-slate-400/80 p-3 h-10 w-10 rounded-full  focus:outline-none focus:bg-slate-400 flex items-center justify-center">
+          <div className="bg-zinc-300 hover:bg-slate-400/80 p-3 h-10 w-10 rounded-full  focus:outline-none focus:bg-slate-400 flex items-center justify-center">
             <span className="text-xl font-bold uppercase text-gray-700">
               {loggedInUser?.username?.charAt(0)}
             </span>
-          </button>
+          </div>
         }
         contentClassName="mr-2 px-8"
         content={

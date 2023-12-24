@@ -12,7 +12,7 @@ const Spinner = ({ size = "medium", className = "" }) => {
             ? "h-5 w-5"
             : "h-3 w-3"
         }`}
-        style={{ fill: `${PRIMARY_COLOR}` }}
+        style={{ fill: `blue` }}
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

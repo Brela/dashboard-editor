@@ -13,7 +13,7 @@ import {
 import DeleteCustomWidgetModal from "../customWidgetModals/DeleteCustomWidget";
 import AddCustomWidgetModal from "../customWidgetModals/AddCustomWidget";
 import EditWidgetPopover from "../customWidgetModals/WidgetOptionsPopover";
-import { getCustomWidgets } from "../../api";
+import { getCustomWidgets } from "../../../../services/dashboardAPIcalls";
 
 const WidgetsSidebar = ({
   handleAddItem,

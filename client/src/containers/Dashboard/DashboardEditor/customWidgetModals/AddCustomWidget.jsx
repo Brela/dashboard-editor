@@ -7,7 +7,7 @@ import InputField from "../../../../components/formFields/InputField";
 import ColorPicker from "./ColorPicker";
 
 import { iconOptions } from "../../helpers/iconMap";
-import { createCustomWidget } from "../../api";
+import { createCustomWidget } from "../../../../services/dashboardAPIcalls";
 
 const AddCustomWidgetModal = ({ open, closeModal, fetchCustomWidgets }) => {
   const [dataLoading, setDataLoading] = useState(false);

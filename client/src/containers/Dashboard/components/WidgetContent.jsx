@@ -36,7 +36,7 @@ const WidgetContent = ({ isEditMode, block, IconComponent }) => {
               content={block.error}
               position="bottom"
               effect="solid"
-              border={true}
+              // border={true}
               type="light"
               className="w-[200px] text-xs ml-10"
             >

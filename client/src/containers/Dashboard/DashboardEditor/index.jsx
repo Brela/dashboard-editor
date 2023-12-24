@@ -11,13 +11,17 @@ import {
 } from "@heroicons/react/24/outline";
 
 import { useQueryClient, useQuery } from "react-query";
-import { getDashboardWidgets, getDashboards, updateManyWidgets } from "../api";
+import {
+  getDashboardWidgets,
+  getDashboards,
+  updateManyWidgets,
+} from "../../../services/dashboardAPIcalls";
 
 import { chartDisplayTypes } from "./WidgetsSidebar/widgetsLibrary";
 import { v4 as uuidv4 } from "uuid";
 import { Select, Button } from "../../../components";
 
-import Dashboard from "../DashboardLayout";
+import DashboardLayout from "../DashboardLayout";
 import EditDashboardNameModal from "./dashboardModals/EditDashboardName";
 import AddNewDashboardModal from "./dashboardModals/AddNewDashboard";
 import DeleteDashboardModal from "./dashboardModals/DeleteDashboard";
@@ -287,9 +291,12 @@ const DashboardEditor = () => {
     // console.table(updatedWidgets);
   };
 
-  if (isDashboardsLoading || isWidgetsLoading) {
-    return <div>Loading...</div>;
+  if (!dashboards) {
+    return <div></div>;
   }
+  /*   if (isDashboardsLoading || isWidgetsLoading) {
+    return <div>Loading...</div>;
+  } */
   if (dashboardsError) {
     return (
       <div>
@@ -370,9 +377,10 @@ const DashboardEditor = () => {
             />
           </div>
           {/* this is the actual react-grid-layout dashboard - besides here, it is called from CompanyDashboard and SoftwareDashboard */}
-          <Dashboard
+          <DashboardLayout
+            dashboards={dashboards}
+            widgets={widgets || widgetsData?.items}
             isEditMode={true}
-            widgets={widgets}
             onWidgetMoved={handleWidgetMoved}
             onRemoveItem={handleRemoveItem}
           />

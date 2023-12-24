@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Modal, InfoCard, Button, Input } from "../../../../components";
-import { updateDashboard } from "../../api";
+import { updateDashboard } from "../../../../services/dashboardAPIcalls";
 import { notifySuccess } from "../../../../utils/notificationWrapper";
 import { useQueryClient } from "react-query";
 

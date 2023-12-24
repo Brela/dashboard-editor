@@ -5,7 +5,10 @@ import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { Tooltip, Select, Button } from "../../components";
 
 import { useQuery } from "react-query";
-import { getDashboardWidgets, getDashboards } from "./api";
+import {
+  getDashboardWidgets,
+  getDashboards,
+} from "../../services/dashboardAPIcalls";
 
 const DashboardHome = () => {
   const navigate = useNavigate();
@@ -73,7 +76,7 @@ const DashboardHome = () => {
             content="Edit Dashboards"
             position="bottom"
             effect="solid"
-            border={true}
+            // border={true}
             type="light"
           >
             <Button

@@ -1,8 +1,7 @@
-// not using this for this demo - using context instead
-
-import API from "../../utils/api";
+import { API } from "./config";
 
 export const getDashboards = async (queryParams) => {
+  console.log("fn");
   try {
     const response = await API("/dashboards").get("/", { params: queryParams });
     return response.data;
