@@ -7,40 +7,24 @@ import {
   updateDashboard,
   deleteDashboard,
   getOneDashboard,
-} from "./dashboards/controllers";
+} from "./dashboards/controllers.js";
 
 import {
   getWidgetsByDashboard,
   updateManyWidgets,
-} from "./widgets/controllers";
+} from "./widgets/controllers.js";
 
-import { companyIdProvided } from "../middleware/company";
-import { dashboardIdProvided } from "./middleware";
+import { dashboardIdProvided } from "./middleware.js";
 
 // dashboard routes
-router.get("/", companyIdProvided, getAllDashboards);
-router.post("/", companyIdProvided, createDashboard);
+router.get("/", getAllDashboards);
+router.post("/", createDashboard);
 router.patch("/:dashboardId", dashboardIdProvided, updateDashboard);
 router.delete("/:dashboardId", dashboardIdProvided, deleteDashboard);
-router.get(
-  "/:dashboardId",
-  companyIdProvided,
-  dashboardIdProvided,
-  getOneDashboard,
-);
+router.get("/:dashboardId", dashboardIdProvided, getOneDashboard);
 
 // widgets routes
-router.get(
-  "/:dashboardId/widgets",
-  companyIdProvided,
-  dashboardIdProvided,
-  getWidgetsByDashboard,
-);
-router.patch(
-  "/:dashboardId/widgets",
-  companyIdProvided,
-  dashboardIdProvided,
-  updateManyWidgets,
-);
+router.get("/:dashboardId/widgets", dashboardIdProvided, getWidgetsByDashboard);
+router.patch("/:dashboardId/widgets", dashboardIdProvided, updateManyWidgets);
 
 export default router;

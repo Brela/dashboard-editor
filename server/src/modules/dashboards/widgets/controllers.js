@@ -1,18 +1,17 @@
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
-import { extractStackTraceInfo, generateMeta } from "../../utils";
+import { extractStackTraceInfo, generateMeta } from "../../../utils/index.js";
 import {
   getDashboardWidgetsQuery,
   getEachWidgetValue,
   createManyDashboardWidgetsQuery,
   updateDashboardWidgetQuery,
   deleteManyDashboardWidgetsQuery,
-} from "./repository";
+} from "./repository.js";
 
-import { validateWidgetArraySchema } from "./validators";
-import { merge } from "lodash";
-import { getOneDashboardQuery } from "../dashboards/repository";
+import { validateWidgetArraySchema } from "./validators.js";
+import { getOneDashboardQuery } from "../dashboards/repository.js";
 
 const getWidgetsByDashboard = async (req, res) => {
   const userId = req?.userId;
@@ -36,7 +35,10 @@ const getWidgetsByDashboard = async (req, res) => {
       const newItems = await getEachWidgetValue(widgets, req);
 
       return {
-        items: merge(newItems, widgets),
+        items: widgets.map((widget, index) => ({
+          ...widget,
+          ...newItems[index],
+        })),
       };
     });
 

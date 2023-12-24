@@ -1,4 +1,4 @@
-import { extractStackTraceInfo } from "../utils";
+import { extractStackTraceInfo } from "../../utils/index.js";
 const dashboardIdProvided = async (req, res, next) => {
   const id = req?.params?.dashboardId;
   const parsedId = parseInt(id);

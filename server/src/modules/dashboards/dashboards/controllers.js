@@ -5,29 +5,28 @@ import {
   updateDashboardQuery,
   deleteDashboardQuery,
   getOneDashboardQuery,
-} from "./repository";
+} from "./repository.js";
 
-import { deleteManyDashboardWidgetsQuery } from "../widgets/repository";
+import { deleteManyDashboardWidgetsQuery } from "../widgets/repository.js";
 
 import {
   dashboardOrderSchema,
   dashboardCreateSchema,
   dashboardUpdateSchema,
-} from "./validators";
+} from "./validators.js";
 
 import {
   parseQueryParams,
   generateMeta,
   extractStackTraceInfo,
   generateSearchQueries,
-} from "../../utils";
+} from "../../../utils/index.js";
 
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
 const getAllDashboards = async (req, res) => {
-  const companyId = req?.companyId;
   const userId = req?.user?.id;
 
   const { page, size, offset, orderBy, search } = parseQueryParams(req);
@@ -60,7 +59,6 @@ const getAllDashboards = async (req, res) => {
         {
           where: {
             userId: userId,
-            companyId: companyId,
             OR: searchQueries,
           },
           orderBy,
@@ -75,7 +73,7 @@ const getAllDashboards = async (req, res) => {
         {
           where: {
             userId: userId,
-            companyId: companyId,
+
             OR: searchQueries,
           },
         },
@@ -110,7 +108,6 @@ const getOneDashboard = async (req, res) => {
     const part = await getOneDashboardQuery({
       where: {
         id: req?.dashboardId,
-        companyId: req?.companyId,
       },
     });
 
@@ -157,7 +154,6 @@ const createDashboard = async (req, res) => {
     const existingDashboard = await prisma.dashboard.findFirst({
       where: {
         name: payload.name,
-        companyId: req?.companyId,
       },
     });
 
@@ -171,7 +167,6 @@ const createDashboard = async (req, res) => {
       data: {
         ...payload,
         userId: req?.user?.id,
-        companyId: req?.companyId,
       },
     });
     return res.status(201).json(newDashboard);
