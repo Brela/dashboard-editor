@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import Header from "../../containers/Header/Header.jsx";
 import Footer from "../../containers/Footer/Footer.jsx";
 import NavigationBar from "../../components/NavigationBar.jsx";
-import Dashboard from "../../containers/Dashboard";
+
 import OrderHistory from "../../containers/Orders/OrderHistory.jsx";
 import ActiveOrders from "../../containers/Orders/ActiveOrders.jsx";
 import Inventory from "../../containers/Inventory/Inventory.jsx";
@@ -32,7 +32,6 @@ function InventoryPage() {
           activeTab === "dashboard" ? dashboardBg : "bg-white",
         )}
       >
-        {activeTab === "dashboard" && <Dashboard />}
         {activeTab === "inventory" && <Inventory />}
         {activeTab === "Active Orders" && <ActiveOrders />}
         {activeTab === "Order History" && <OrderHistory />}

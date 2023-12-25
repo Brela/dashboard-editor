@@ -9,6 +9,7 @@ import {
   getDashboardWidgets,
   getDashboards,
 } from "../../services/dashboardAPIcalls";
+import DashboardHeader from "./DashboardHeader";
 
 const DashboardHome = () => {
   const navigate = useNavigate();
@@ -57,6 +58,7 @@ const DashboardHome = () => {
 
   return (
     <>
+      <DashboardHeader />
       <div className="w-full pb-10">
         <div className="flex  items-center justify-center gap-x-2 p-2 mt-3">
           <Select
@@ -82,7 +84,7 @@ const DashboardHome = () => {
             <Button
               size="sm"
               variant="ghost"
-              onClick={() => navigate(`/dashboard-editor`)}
+              onClick={() => navigate(`/dashboard/editor`)}
             >
               <Cog6ToothIcon className="h-5 w-5 text-gray-500" />
             </Button>

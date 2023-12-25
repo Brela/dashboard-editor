@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../contexts/auth.context";
 import { createUser, loginUser } from "../../services/userAPIcalls";
 import { useNavigate } from "react-router-dom";
@@ -22,6 +22,29 @@ export default function () {
   const [userAddedErrorPrompt, setUserAddedErrorPrompt] = useState("");
   const { reloadInventory } = useContext(InventoryContext);
 
+  // google oath -------
+
+  const handleCredentialResponse = (response) => {
+    console.log("Encoded JWT ID Token:  ", response);
+  };
+  useEffect(() => {
+    google.accounts.id.initialize({
+      client_id:
+        "785322521849-am635dvee0bhsm2jqcl7c0h0cip0rum6.apps.googleusercontent.com",
+      callback: handleCredentialResponse,
+    });
+
+    google.accounts.id.renderButton(
+      document.getElementById("g_signin_button"),
+      {
+        theme: "outline",
+        size: "large",
+        text: "continue_with",
+      },
+    );
+  }, []);
+  // ------------------
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
@@ -37,8 +60,8 @@ export default function () {
 
         if (userData.user) {
           setIsLoggedIn(true);
-          reloadInventory();
-          navigate("/");
+          // reloadInventory();
+          navigate("/copilot/");
         } else {
           setUserLoginErrorPrompt(userData.message);
           toast.error(userData.message);
@@ -153,7 +176,7 @@ export default function () {
             ) : (
               <>
                 <p className="px-2 font-bold justify-center flex text-zinc-700">
-                  {login ? "Welcome Back" : "Get Started"}
+                  {login ? "Welcome" : "Get Started"}
                 </p>
                 <input
                   className="bg-zinc-50 border border-zinc-300 rounded-lg h-12 px-4 text-zinc-800 text-lg outline-cyan-800/70"
@@ -191,7 +214,7 @@ export default function () {
                 </button>
                 <div className="flex justify-center">
                   <p
-                    className="hover:cursor-pointer mt-3 text-sm"
+                    className="hover:cursor-pointer text-sm"
                     onClick={() => {
                       setLogin(!login);
                     }}
@@ -203,6 +226,10 @@ export default function () {
                 </div>
               </>
             )}
+            <span className="font-bold mx-auto"> - or - </span>
+            <section className="flex justify-center">
+              <div id="g_signin_button"></div>
+            </section>
           </>
         )}
       </form>
