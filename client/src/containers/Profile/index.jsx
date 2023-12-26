@@ -18,7 +18,7 @@ import HeaderModal from "./HeaderModal";
 import NavigationBar from "../../components/NavigationBar";
 import { Popover, Modal } from "../../components";
 
-const Header = () => {
+const Profile = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState({ username: "" });
   const dropdownRef = useRef(null);
@@ -63,7 +63,7 @@ const Header = () => {
     <div className="">
       <Popover
         trigger={
-          <div className="bg-zinc-300 hover:bg-slate-400/80 p-3 h-10 w-10 rounded-full  focus:outline-none focus:bg-slate-400 flex items-center justify-center">
+          <div className="bg-cyan-700/20 hover:bg-slate-200/80 p-3 h-10 w-10 rounded-full  focus:outline-none focus:bg-slate-400 flex items-center justify-center">
             <span className="text-xl font-bold uppercase text-gray-700">
               {loggedInUser?.username?.charAt(0)}
             </span>
@@ -99,4 +99,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Profile;
