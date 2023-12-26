@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import Header from "../../containers/Header/Header.jsx";
+import Profile from "../../containers/Profile/index.jsx";
 import Footer from "../../containers/Footer/Footer.jsx";
 import NavigationBar from "../../components/NavigationBar.jsx";
 
@@ -15,20 +15,22 @@ function InventoryPage() {
   const inventoryListScrollRef = useRef(null);
   const ordersListScrollRef = useRef(null);
   const [rowHeightState, setRowHeightState] = useState(null);
-  const [activeTab, setActiveTab] = useState("dashboard");
+  const [activeTab, setActiveTab] = useState("inventory");
 
   return (
-    <div className=" max-w-screen-2xl mx-auto px-4">
+    <div className="flex flex-col 2xl:items-center">
       {/* <div className=" max-w-screen-2xl mx-2 md:mx-4 mb-2 md:mb-3 px-2 md:px-6 flex gap-2 flex-col rounded-3xl"> */}
-      <div className="flex items-center justify-between">
-        <div></div>
-        <NavigationBar activeTab={activeTab} setActiveTab={setActiveTab} />
+      <section className=" w-full bg-slate-400/10 rounded-b-md px-4 border-b">
+        <div className="flex items-center justify-between ">
+          <div></div>
+          <NavigationBar activeTab={activeTab} setActiveTab={setActiveTab} />
 
-        <Header />
-      </div>
+          <Profile />
+        </div>
+      </section>
       <section
         className={twMerge(
-          "relative min-h-[86vh] rounded-2xl p-2 md:p-4 overflow-x-auto",
+          "2xl:w-[75vw] relative min-h-[84vh] p-2 md:p-4 ",
           activeTab === "dashboard" ? dashboardBg : "bg-white",
         )}
       >

@@ -70,7 +70,7 @@ export default function DemoControls() {
   };
 
   return (
-    <div className="flex  gap-10 lg:justify-center items-center w-auto  border-2 bg-white lg:mx-[15vw] mt-4 px-2 py-3 rounded-2xl ">
+    <div className="flex  gap-10 lg:justify-center items-center w-auto  border-2 bg-slate-500/10 lg:mx-[15vw] mt-4 px-2 py-3 rounded-2xl ">
       <div className="flex gap-3 items-center px-4 p-2 ">
         <div className="flex items-center gap-2">
           <span className="text-md text-slate-700">

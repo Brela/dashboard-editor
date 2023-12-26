@@ -8,7 +8,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const buttons = [
-  { label: "Dashboard", icon: faTable, value: "dashboard" },
   { label: "Inventory", icon: faBox, value: "inventory" },
   { label: "Active Orders", icon: faShoppingCart, value: "Active Orders" },
   { label: "Order History", icon: faArchive, value: "Order History" },

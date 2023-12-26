@@ -26,7 +26,7 @@ import Order from "./modals/OrderNow";
 import { createOrderItem } from "../../services/ordersAPIcalls";
 import { useAutomaticOrders } from "../../hooks/useAutomaticOrders";
 import { OrdersContext } from "../../contexts/orders.context";
-import AddProductButton from "./modals/AddProductButton";
+import AddProductButtons from "./modals/AddProductButtons";
 import OrderHistory from "../Orders/OrderHistory";
 import ActiveOrders from "../Orders/ActiveOrders";
 import SelectedRowsModal from "./modals/SelectedRows";
@@ -278,67 +278,72 @@ export default function Inventory() {
                 </button>
               )}
             </div>
-            <AddProductButton />
+            <AddProductButtons />
           </div>
-          <table
-            {...getTableProps()}
-            id="inventory"
-            className="w-full table-auto text-black/80"
-          >
-            <thead className="border-b border-zinc-200 h-14 text-sm ">
-              {headerGroups.map((headerGroup) => (
-                <tr {...headerGroup.getHeaderGroupProps()}>
-                  {headerGroup.headers.map((column) => (
-                    <th
-                      {...column.getHeaderProps(column.getSortByToggleProps())}
-                      className="px-1 font-semibold"
-                    >
-                      {column.render("Header")}
-                      <span className="">
-                        {column.id !== "selection" && column.id !== "order" ? (
-                          column.isSorted ? (
-                            column.isSortedDesc ? (
-                              <FontAwesomeIcon
-                                icon={faSortDown}
-                                className="text-zinc-400 ml-2"
-                              />
+          <section className="overflow-x-auto">
+            <table
+              {...getTableProps()}
+              id="inventory"
+              className="w-full table-auto text-black/80 mt-4"
+            >
+              <thead className="border-b border-zinc-200 h-14 text-sm ">
+                {headerGroups.map((headerGroup) => (
+                  <tr {...headerGroup.getHeaderGroupProps()}>
+                    {headerGroup.headers.map((column) => (
+                      <th
+                        {...column.getHeaderProps(
+                          column.getSortByToggleProps(),
+                        )}
+                        className="px-1 font-semibold"
+                      >
+                        {column.render("Header")}
+                        <span className="">
+                          {column.id !== "selection" &&
+                          column.id !== "order" ? (
+                            column.isSorted ? (
+                              column.isSortedDesc ? (
+                                <FontAwesomeIcon
+                                  icon={faSortDown}
+                                  className="text-zinc-400 ml-2"
+                                />
+                              ) : (
+                                <FontAwesomeIcon
+                                  icon={faSortUp}
+                                  className="text-zinc-400 ml-2"
+                                />
+                              )
                             ) : (
                               <FontAwesomeIcon
-                                icon={faSortUp}
+                                icon={faSort}
                                 className="text-zinc-400 ml-2"
                               />
                             )
-                          ) : (
-                            <FontAwesomeIcon
-                              icon={faSort}
-                              className="text-zinc-400 ml-2"
-                            />
-                          )
-                        ) : null}
-                      </span>
-                    </th>
-                  ))}
-                </tr>
-              ))}
-            </thead>
-            <tbody {...getTableBodyProps()} className="tracking-wide">
-              {page.map((row) => {
-                prepareRow(row);
-                return (
-                  <tr
-                    {...row.getRowProps()}
-                    className="text-sm h-12 border-b last:border-none border-zinc-200 hover:bg-zinc-50"
-                  >
-                    {row.cells.map((cell) => (
-                      <td {...cell.getCellProps()} className="px-5">
-                        {cell.render("Cell")}
-                      </td>
+                          ) : null}
+                        </span>
+                      </th>
                     ))}
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                ))}
+              </thead>
+              <tbody {...getTableBodyProps()} className="tracking-wide">
+                {page.map((row) => {
+                  prepareRow(row);
+                  return (
+                    <tr
+                      {...row.getRowProps()}
+                      className="text-sm h-12 border-b last:border-none border-zinc-200 hover:bg-zinc-50"
+                    >
+                      {row.cells.map((cell) => (
+                        <td {...cell.getCellProps()} className="px-5">
+                          {cell.render("Cell")}
+                        </td>
+                      ))}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </section>
 
           <PaginationWrapper>
             <div className="flex gap-4 justify-between p-2 mt-2">
@@ -375,7 +380,7 @@ export default function Inventory() {
                 onChange={(e) => {
                   setPageSize(Number(e.target.value));
                 }}
-                className="rounded-lg bg-zinc-300 text-zinc-800 text-sm outline-none p-1"
+                className="rounded-lg bg-zinc-100 text-zinc-800 text-sm outline-none p-1"
               >
                 {[10, 20, 30, 50].map((pageSize) => (
                   <option key={pageSize} value={pageSize}>

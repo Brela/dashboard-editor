@@ -1,12 +1,12 @@
 import React, { useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { InventoryContext } from "../../../contexts/inventory.context";
+import { InventoryContext } from "../../../contexts/inventory.context.jsx";
 import { faFileImport, faBox } from "@fortawesome/free-solid-svg-icons";
-import { sendCSVfile } from "../../../services/inventoryAPIcalls";
+import { sendCSVfile } from "../../../services/inventoryAPIcalls.js";
 import AddProductPopup from "./AddProductPopup.jsx";
-import CSVModal from "./CsvModal";
+import CSVModal from "./CsvModal.jsx";
 
-export default function AddProductButton({ data }) {
+export default function AddProductButtons({ data }) {
   const { reloadInventory, userData } = useContext(InventoryContext);
 
   const [isCSVModalOpen, setIsCSVModalOpen] = useState(false);
@@ -43,7 +43,7 @@ export default function AddProductButton({ data }) {
   return (
     <div className="flex  ml-1 md:ml-0 gap-1 md:gap-4 text-zinc-700 font-semibold text-sm">
       <button
-        className="bg-zinc-200 hover:bg-zinc-300/70 p-2 px-4 rounded-full flex items-center gap-2"
+        className=" hover:bg-zinc-200/70 py-1 px-4 rounded-md flex items-center gap-2"
         onClick={openPopup}
       >
         <FontAwesomeIcon icon={faBox} className="text-base text-zinc-400" />
@@ -51,7 +51,7 @@ export default function AddProductButton({ data }) {
       </button>
 
       <button
-        className="bg-zinc-200 hover:bg-zinc-300/70 p-2 px-4 rounded-full flex items-center gap-2"
+        className=" hover:bg-zinc-200/70 py-1 px-4 rounded-md flex items-center gap-2"
         onClick={openCSVPopup}
       >
         <FontAwesomeIcon
