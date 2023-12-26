@@ -26,15 +26,18 @@ import EditDashboardNameModal from "./dashboardModals/EditDashboardName";
 import AddNewDashboardModal from "./dashboardModals/AddNewDashboard";
 import DeleteDashboardModal from "./dashboardModals/DeleteDashboard";
 import { toast } from "react-hot-toast";
+import useWindowSize from "../../../hooks/useWindowSize";
 
 import { getNewXandYCoords } from "../helpers/layoutUtils";
 import WidgetsSidebar from "./WidgetsSidebar/WidgetsSidebar";
 import ConfirmUnsavedChanges from "./dashboardModals/ConfirmUnsavedChanges";
+import DashboardHeader from "../DashboardHeader/DashboardHeader";
 
 const DashboardEditor = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const isWindowSmall = useWindowSize(1460);
 
   const [modal, setModal] = useState({ name: null, id: null });
   const closeModal = () => setModal({ name: null, id: null });
@@ -307,6 +310,21 @@ const DashboardEditor = () => {
 
   return (
     <>
+      {isWindowSmall && (
+        <div className=" p-10 absolute top-0 left-0 w-full h-full bg-gray-900/70 text-white flex flex-col gap-5 items-center justify-center z-30">
+          <section className="md:w-[60vw] text-center">
+            <h4 className="font-semibold text-2xl mb-6">
+              Please increase screen width to use editor.
+            </h4>
+            <p className="text-lg">
+              Although these dashboards are responsive once created, they must
+              be full screen (4 widgets wide) for the algorithms to work
+              correctly while editing.
+            </p>
+          </section>
+        </div>
+      )}
+      <DashboardHeader />
       <div className="w-full min-h-screen">
         <section className="flex justify-between items-center p-3">
           <button
@@ -316,7 +334,7 @@ const DashboardEditor = () => {
                 : navigate("/dashboard");
             }}
             variant="light"
-            className="border rounded-md px-2 m-2 py-1 text-slate-700 font-medium text-sm hover:text-slate-60 hover:bg-white"
+            className="z-50 bg-gray-200  border rounded-md px-2 m-2 py-1 text-slate-700 font-medium text-sm hover:text-slate-60 hover:bg-white"
           >
             <div className="flex items-center gap-1">
               <ArrowLeftCircleIcon className="h-4 w-4" />

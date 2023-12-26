@@ -37,10 +37,11 @@ app.use("/authentication", authenticationRoutes);
 // for some reason, orders doesn't work when it is after authenticateJWT middleware
 app.use("/orders", ordersRoutes);
 
-app.use(authenticateJWT);
-
-app.use("/user", userRoutes);
+// dashboard routes get authenticated separately, since get req is public
 app.use("/dashboards", dashboardRoutes);
+
+app.use(authenticateJWT);
+app.use("/user", userRoutes);
 app.use("/customWidgets", customWidgetRoutes);
 app.use("/inventory", inventoryRoutes);
 
