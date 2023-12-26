@@ -9,6 +9,7 @@ import {
   getDashboardWidgets,
   getDashboards,
 } from "../../services/dashboardAPIcalls";
+import DashboardHeader from "./DashboardHeader/DashboardHeader";
 
 const DashboardHome = () => {
   const navigate = useNavigate();
@@ -57,36 +58,42 @@ const DashboardHome = () => {
 
   return (
     <>
+      <DashboardHeader />
       <div className="w-full pb-10">
         <div className="flex  items-center justify-center gap-x-2 p-2 mt-3">
-          <Select
-            options={dashboards?.map((dashboard) => ({
-              value: dashboard.id,
-              label: dashboard.name,
-            }))}
-            isDisabled={isDashboardsLoading}
-            value={String(dashboard?.id)}
-            className="m-0 inline-flex md:w-4/12 lg:w-2/12 text-md mr-2"
-            onChange={(value) => {
-              handleSelectionChange(value);
-            }}
-          />
-
-          <Tooltip
-            content="Edit Dashboards"
-            position="bottom"
-            effect="solid"
-            // border={true}
-            type="light"
-          >
-            <Button
-              size="sm"
-              variant="ghost"
-              onClick={() => navigate(`/dashboard-editor`)}
-            >
-              <Cog6ToothIcon className="h-5 w-5 text-gray-500" />
-            </Button>
-          </Tooltip>
+          <section className="flex text-gray-500 flex-col gap-1 w-[50vw] md:w-[30vw] xl:w-[15vw]">
+            {/* <span className="text-sm">Select Dashboard</span> */}
+            <div className="flex items-center gap-1">
+              <Select
+                // label="Select Dashboard"
+                options={dashboards?.map((dashboard) => ({
+                  value: dashboard.id,
+                  label: dashboard.name,
+                }))}
+                isDisabled={isDashboardsLoading}
+                value={String(dashboard?.id)}
+                className="w-full m-0 inline-flex text-md mr-2"
+                onChange={(value) => {
+                  handleSelectionChange(value);
+                }}
+              />
+              {/*  <Tooltip
+                content="Edit Dashboards"
+                position="bottom"
+                effect="solid"
+                // border={true}
+                type="light"
+              >
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => navigate(`/dashboard/editor`)}
+                >
+                  <Cog6ToothIcon className="h-5 w-5 text-green-500" />
+                </Button>
+              </Tooltip> */}
+            </div>
+          </section>
         </div>
 
         <div className="lg:px-4 rounded-md">

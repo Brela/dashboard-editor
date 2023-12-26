@@ -40,8 +40,10 @@ export const OrdersProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    const onlyActive = orders.filter((item) => item.orderStatus === "active");
-    setActiveOrders(onlyActive);
+    if (orders.length > 0) {
+      const onlyActive = orders.filter((item) => item.orderStatus === "active");
+      setActiveOrders(onlyActive);
+    }
   }, [orders]);
 
   // -----------------------------------

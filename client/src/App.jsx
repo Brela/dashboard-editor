@@ -1,26 +1,87 @@
-import React, { useState, useContext } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import React, { useState, useContext } from "react";
+import {
+  Navigate,
+  Route,
+  BrowserRouter as Router,
+  Routes,
+} from "react-router-dom";
 import {
   InventoryProvider,
   InventoryContext,
-} from './contexts/inventory.context';
+} from "./contexts/inventory.context";
 import { AuthProvider } from "./contexts/auth.context";
-import AppRouterContent from "./AppRouterContent";
-
+import { AuthContext } from "./contexts/auth.context.jsx";
+import { Toaster } from "react-hot-toast";
+import DashboardEditorRoutes from "./DashboardEditorRoutes";
+import InventoryCopilotRoutes from "./InventoryCopilotRoutes";
+import LoginPage from "./pages/LoginPage.jsx";
+import DashboardHome from "./containers/Dashboard/index.jsx";
+import DashboardEditor from "./containers/Dashboard/DashboardEditor/index.jsx";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
-
+  const { isLoggedIn } = useContext(AuthContext);
   return (
     <>
       <Router>
-    
-            <AuthProvider>
-              <InventoryProvider>
-                  <AppRouterContent />
-              </InventoryProvider>
-            </AuthProvider>
-  
+        <Routes>
+          {/* dashboard editor routes */}
+          <Route path="/dashboard" element={<DashboardHome />} />
+          <Route path="/dashboard/editor" element={<DashboardEditor />} />
+          <Route path="/*" element={<Navigate to="/copilot" />} />
+          {/* inventory copilot routes */}
+          {isLoggedIn ? (
+            <Route path="/copilot/*" element={<InventoryCopilotRoutes />} />
+          ) : (
+            <>
+              <Route path="/copilot/login" element={<LoginPage />} />
+              <Route
+                path="/copilot/*"
+                element={<Navigate to="/copilot/login" />}
+              />
+            </>
+          )}
+        </Routes>
       </Router>
+      {/* new notification */}
+      {/* <ToastContainer /> */}
+      <ToastContainer
+        position="top-center"
+        autoClose={false}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+
+      {/* old notification */}
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+        gutter={8}
+        containerStyle={{}}
+        toastOptions={{
+          className: "",
+          duration: 5000,
+          style: {
+            background: "#FFF",
+            borderRadius: "9999px",
+            color: "#333",
+          },
+          success: {
+            duration: 3000,
+            theme: {
+              primary: "green",
+              secondary: "black",
+            },
+          },
+        }}
+      />
     </>
   );
 };
