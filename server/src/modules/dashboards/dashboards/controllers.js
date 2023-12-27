@@ -27,7 +27,14 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 const getAllDashboards = async (req, res) => {
-  const userId = req?.user?.id;
+  let userId = req?.user?.id;
+
+  // used for demo to view dashboards and widgets
+  if (!userId) {
+    // this is the userId for xrp777
+    userId = "clqo28ney003c9hm2scapd7sh";
+  }
+
   console.log("userId", userId);
   const { page, size, offset, orderBy, search } = parseQueryParams(req);
 
@@ -59,7 +66,7 @@ const getAllDashboards = async (req, res) => {
         {
           where: {
             userId: userId,
-            OR: searchQueries,
+            // OR: searchQueries,
           },
           orderBy,
           skip: offset,
@@ -79,6 +86,8 @@ const getAllDashboards = async (req, res) => {
         },
         tx,
       );
+
+      console.log("items", items);
 
       return { items, total_filtered };
     });

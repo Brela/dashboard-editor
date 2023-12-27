@@ -43,6 +43,8 @@ const Profile = () => {
     }
   };
 
+  console.log(loggedInUser?.id);
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
