@@ -12,6 +12,7 @@ import {
 import EditPopup from "./EditPopup";
 import { useTable, useSortBy, usePagination } from "react-table";
 import PaginationWrapper from "../../pages/Home/PaginationWrapper";
+import AddProductButtons from "../Inventory/modals/AddProductButtons";
 
 function ActiveOrders() {
   const { orders, activeOrders, reloadOrders, deliveriesOn } =
@@ -142,10 +143,14 @@ function ActiveOrders() {
   return (
     <>
       <div className="px-4 ">
-        <section className="overflow-x-auto">
+        {/* this comp used as hidden just to take up space like other tables have */}
+        <div className="invisible">
+          <AddProductButtons />
+        </div>
+        <section className="overflow-x-auto h-[65vh]">
           <table
             {...getTableProps()}
-            className="table-auto w-full text-black/80 "
+            className="table-auto w-full  text-black/80 "
           >
             <thead>
               {headerGroups.map((headerGroup) => (
@@ -156,7 +161,7 @@ function ActiveOrders() {
                   {headerGroup.headers.map((column) => (
                     <th
                       {...column.getHeaderProps(column.getSortByToggleProps())}
-                      className="px-4"
+                      className=" px-5 text-left font-semibold"
                     >
                       {column.render("Header")}
                       <span className="">

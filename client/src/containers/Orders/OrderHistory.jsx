@@ -12,6 +12,7 @@ import {
   faCircleChevronLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import PaginationWrapper from "../../pages/Home/PaginationWrapper";
+import { twMerge } from "tailwind-merge";
 
 function OrderHistory() {
   const { orders, reloadOrders } = useContext(OrdersContext);
@@ -95,15 +96,18 @@ function OrderHistory() {
         </button>
       </div>
 
-      <section className="overflow-x-auto">
+      <section className="overflow-x-auto h-[65vh]">
         <table {...getTableProps()} className="w-full table-auto text-black/80">
           <thead className="border-b border-zinc-200 text-sm font-semibold">
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()} className="h-14 ">
-                {headerGroup.headers.map((column) => (
+                {headerGroup.headers.map((column, index) => (
                   <th
                     {...column.getHeaderProps(column.getSortByToggleProps())}
-                    className="px-1 font-semibold"
+                    className={twMerge(
+                      "px-5 pl-10 text-left font-semibold",
+                      // index === 0 ? "pl-10" : "",
+                    )}
                   >
                     {column.render("Header")}
                     <span className="">
