@@ -100,9 +100,14 @@ function OrderHistory() {
         <table {...getTableProps()} className="w-full table-auto text-black/80">
           <thead className="border-b border-zinc-200 text-sm font-semibold">
             {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()} className="h-14 ">
+              <tr
+                key={headerGroup.id}
+                {...headerGroup.getHeaderGroupProps()}
+                className="h-14 "
+              >
                 {headerGroup.headers.map((column, index) => (
                   <th
+                    key={column.id}
                     {...column.getHeaderProps(column.getSortByToggleProps())}
                     className={twMerge(
                       "px-5 pl-10 text-left font-semibold",
@@ -144,10 +149,15 @@ function OrderHistory() {
               return (
                 <tr
                   {...row.getRowProps()}
+                  key={row.id}
                   className="h-12 border-b last:border-none border-zinc-200 hover:bg-zinc-50"
                 >
                   {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()} className="px-10">
+                    <td
+                      key={cell.id}
+                      {...cell.getCellProps()}
+                      className="px-10"
+                    >
                       {cell.render("Cell")}
                     </td>
                   ))}

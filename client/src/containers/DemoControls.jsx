@@ -93,13 +93,13 @@ export default function DemoControls() {
           <Tooltip id="my-tooltip-children-multiline">
             <div style={{ display: "flex", flexDirection: "column" }}>
               <p className="w-80">
-                Select a few products from the inventory then hit play. This
+                {`Select a few products from the inventory then hit play. This
                 will run down the stock for those products. When the "Stock"
                 hits the "Target", you should see an order created for that
                 product. You can turn deliveries on (this delivers orders at
                 random times between 2 and 20 seconds) or manually deliver each
                 order with the edit icon in the 'Active Orders' tab. Click the
-                reset icon to reset with the original stock numbers.
+                reset icon to reset with the original stock numbers.`}
               </p>
             </div>
           </Tooltip>

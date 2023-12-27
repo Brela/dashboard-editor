@@ -72,15 +72,15 @@ export const InventoryProvider = ({ children }) => {
   }, [isLoggedIn, userId]);
 
   // call the tempInStock hook that takes care of decreasing the inventory
-    useTempInStock(
-      inventory,
-      isUsingStock,
-      setIsUsingStock,
-      tempInStock,
-      setTempInStock,
-      useSelectedOnlyOn,
-      selectedItems
-    ); 
+  useTempInStock(
+    inventory,
+    isUsingStock,
+    setIsUsingStock,
+    tempInStock,
+    setTempInStock,
+    useSelectedOnlyOn,
+    selectedItems,
+  );
 
   // -----------------------  toggle selected items ---------------------
   const getInventoryIndex = (itemId) => {
@@ -96,18 +96,19 @@ export const InventoryProvider = ({ children }) => {
         // Remove the item from the selected items array
         console.log(
           "1) prevSelectedItemsArray before removing:  ",
-          prevSelectedItemsArray
+          prevSelectedItemsArray,
         );
         prevSelectedItemsArray.splice(itemIndexInSelected, 1);
         console.log(
           "2) prevSelectedItemsArray after removing:  ",
-          prevSelectedItemsArray
+          prevSelectedItemsArray,
         );
       } else {
         // Add the item to the selected items array in the correct order based on the inventory
         const inventoryIndex = getInventoryIndex(itemId);
         const insertIndex = prevSelectedItemsArray.findIndex(
-          (selectedItemId) => inventoryIndex < getInventoryIndex(selectedItemId)
+          (selectedItemId) =>
+            inventoryIndex < getInventoryIndex(selectedItemId),
         );
         if (insertIndex !== -1) {
           prevSelectedItemsArray.splice(insertIndex, 0, itemId);
@@ -117,7 +118,8 @@ export const InventoryProvider = ({ children }) => {
       }
       // Filter out invalid item IDs
       const validSelectedItemsArray = prevSelectedItemsArray.filter(
-        (selectedItemId) => inventory.some((item) => item.id === selectedItemId)
+        (selectedItemId) =>
+          inventory.some((item) => item.id === selectedItemId),
       );
 
       // return the array
