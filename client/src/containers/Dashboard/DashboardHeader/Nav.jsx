@@ -34,7 +34,7 @@ const NavButton = ({ currentPath, button }) => {
     <button
       key={button.value}
       className={twMerge(
-        "w-1/3 sm:w-auto flex flex-col items-center sm:flex-row gap-1 sm:gap-0 px-1 sm:px-4 py-1",
+        "w-1/3 sm:w-auto hover:text-cyan-700/70 flex flex-col items-center sm:flex-row gap-1 sm:gap-0 px-1 sm:px-4 py-1",
         isActive ? "text-cyan-800  text-md " : "text-zinc-500 text-md",
         pathSegments.includes("editor") && isWindowSmall ? "text-white" : "",
       )}

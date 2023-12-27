@@ -21,6 +21,7 @@ import {
 import { chartDisplayTypes } from "./WidgetsSidebar/widgetsLibrary";
 import { v4 as uuidv4 } from "uuid";
 import { Select, Button } from "../../../components";
+import { Tooltip } from "react-tooltip";
 
 import DashboardLayout from "../DashboardLayout";
 import EditDashboardNameModal from "./dashboardModals/EditDashboardName";
@@ -335,7 +336,7 @@ const DashboardEditor = () => {
       )}
       <DashboardHeader />
       <div className="w-full min-h-screen">
-        <section className="flex justify-center items-center p-3">
+        <section className="flex justify-between items-center p-3">
           {/*  <button
             onClick={() => {
               hasUnsavedChanges
@@ -362,37 +363,56 @@ const DashboardEditor = () => {
                 handleSelectionChange(value);
               }}
             />
+
+            <Tooltip variant="info" id="editName">
+              Edit Dashboard Name
+            </Tooltip>
             <Button
+              data-tooltip-id="editName"
               size="sm"
               variant="ghost"
               onClick={() => setModal({ name: "editDashboard" })}
             >
               <PencilSquareIcon className="h-5 w-5" />
             </Button>
+
+            <Tooltip variant="info" id="addDash">
+              Add New Dashboard
+            </Tooltip>
             <Button
+              data-tooltip-id="addDash"
               size="sm"
               variant="ghost"
               onClick={() => setModal({ name: "addDashboard" })}
             >
               <PlusIcon className="h-5 w-5" />
             </Button>
+
+            <Tooltip variant="info" id="deleteDash">
+              Delete Dashboard
+            </Tooltip>
             <Button
+              data-tooltip-id="deleteDash"
               size="sm"
               variant="ghost"
               onClick={() => setModal({ name: "deleteDashboard" })}
             >
               <TrashIcon className="h-5 w-5" />
             </Button>
-            <Button
-              onClick={handleSave}
-              size="large"
-              variant="light"
-              className={"ml-3 py-1"}
-              isLoading={loading}
-            >
-              Save
-            </Button>
           </div>
+          <Tooltip variant="info" id="saveDash">
+            Save Dashboard Layout
+          </Tooltip>
+          <Button
+            data-tooltip-id="saveDash"
+            onClick={handleSave}
+            size="large"
+            variant="light"
+            className={"ml-3 py-1"}
+            isLoading={loading}
+          >
+            Save
+          </Button>
           {/* <div className="invisible"></div> */}
         </section>
         <div className="grid grid-cols-12 h-[85vh]">

@@ -87,14 +87,12 @@ const Select = ({
             ...provided,
             backgroundColor: state.isSelected
               ? isPastel
-                ? `${getPastelColor(primaryColor)}`
+                ? primaryColor
                 : primaryColor
               : "white",
             color: state.isSelected ? "white" : "black",
             "&:hover": {
-              backgroundColor: isPastel
-                ? `${getPastelColor(primaryColor)}`
-                : primaryColor,
+              backgroundColor: isPastel ? primaryColor : primaryColor,
               color: "white",
             },
             cursor: "pointer",

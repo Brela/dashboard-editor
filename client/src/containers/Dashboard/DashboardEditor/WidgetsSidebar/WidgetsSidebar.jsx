@@ -14,6 +14,8 @@ import DeleteCustomWidgetModal from "../customWidgetModals/DeleteCustomWidget";
 import AddCustomWidgetModal from "../customWidgetModals/AddCustomWidget";
 import EditWidgetPopover from "../customWidgetModals/WidgetOptionsPopover";
 import { getCustomWidgets } from "../../../../services/dashboardAPIcalls";
+import { twMerge } from "tailwind-merge";
+import { headerBg } from "../../../../css/globalTailwindVars";
 
 const WidgetsSidebar = ({
   handleAddItem,
@@ -116,11 +118,16 @@ const WidgetsSidebar = ({
 
   return (
     <div className=" flex flex-col px-3 h-full">
-      <section className="mb-10 h-[53vh]">
+      <section className="mb-10 h-[75vh]">
         <h3 className="text-gray-500 tracking-wider text-xs font-medium pb-1 pt-2  px-2">
           Standard Widgets
         </h3>
-        <div className=" rounded-md p-0 h-full overflow-auto border bg-gray-100">
+        <div
+          className={twMerge(
+            " rounded-md p-0 h-full overflow-auto border",
+            headerBg,
+          )}
+        >
           {widgetLibraries?.map((library) => (
             <div key={library.name}>
               <h4 className="text-center font-semibold text-gray-600 mx-5 text-sm mt-2">
@@ -130,7 +137,7 @@ const WidgetsSidebar = ({
                 {library.widgets.map((widgetOption) => (
                   <li
                     key={widgetOption.id}
-                    className="min-h-[30px] cursor-pointer border rounded-md bg-white text-gray-800 border-gray-400 mb-2 mx-2 p-2 hover:bg-slate-100 flex gap-2 justify-start items-center overflow-hidden whitespace-wrap text-overflow-ellipsis"
+                    className="min-h-[30px] cursor-pointer border rounded-md bg-white text-gray-800 border-gray-400 mb-2 mx-2 p-2 hover:bg-cyan-100/10 flex gap-2 justify-start items-center overflow-hidden whitespace-wrap text-overflow-ellipsis"
                     onClick={() => handleAddItem(widgetOption)}
                   >
                     <div
@@ -166,7 +173,8 @@ const WidgetsSidebar = ({
           ))}
         </div>
       </section>
-      <section className="mb-6 h-[22vh] relative">
+      {/* custom widgets */}
+      {/* <section className="mb-6 h-[22vh] relative">
         <h3 className="text-gray-500 tracking-wider text-xs font-medium pb-1 pt-2  px-2">
           Custom Widgets
         </h3>
@@ -230,7 +238,7 @@ const WidgetsSidebar = ({
             </Button>
           </Tooltip>
         </div>
-      </section>
+      </section> */}
       <DeleteCustomWidgetModal
         open={modal.name === "deleteWidget"}
         closeModal={closeModal}

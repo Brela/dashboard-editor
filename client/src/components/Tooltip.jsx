@@ -34,7 +34,6 @@ const Tooltip = ({
   eventOff,
   isCapture,
   globalEventOff,
-  getContent,
   afterShow,
   afterHide,
   overridePosition,
@@ -51,7 +50,11 @@ const Tooltip = ({
   const data_id = id || uniqueId(`tooltip-${uuidv4()}`);
   return (
     <Fragment>
-      <div data-tip data-for={data_id} className={twMerge(triggerClassName)}>
+      <div
+        data-tooltip-content
+        data-tooltip-id={data_id}
+        className={twMerge(triggerClassName)}
+      >
         {children}
       </div>
       <ReactTooltip
@@ -80,7 +83,6 @@ const Tooltip = ({
         eventOff={eventOff}
         isCapture={isCapture}
         globalEventOff={globalEventOff}
-        getContent={getContent}
         afterShow={afterShow}
         afterHide={afterHide}
         overridePosition={overridePosition}
