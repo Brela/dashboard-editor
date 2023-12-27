@@ -349,12 +349,8 @@ export default function Inventory() {
                       key={row.id}
                       className="text-sm h-12 border-b last:border-none border-zinc-200 hover:bg-zinc-50"
                     >
-                      {row.cells.map((cell) => (
-                        <td
-                          {...cell.getCellProps()}
-                          key={cell.id}
-                          className="px-5"
-                        >
+                      {row.cells.map((cell, idx) => (
+                        <td {...cell.getCellProps()} key={idx} className="px-5">
                           {cell.render("Cell")}
                         </td>
                       ))}

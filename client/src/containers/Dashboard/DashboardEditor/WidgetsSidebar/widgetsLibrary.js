@@ -112,9 +112,9 @@ const inventoryWidgetsList = [
   },
   {
     id: "13",
-    name: "Open Vehicle Issues",
+    name: "Open Issues",
     entity: "inventory",
-    criteria: "openVehicleIssues",
+    criteria: "openIssues",
     displayType: "count",
     icon: "Ticket",
     color: "#000000",
@@ -122,9 +122,9 @@ const inventoryWidgetsList = [
   },
   {
     id: "14",
-    name: "Vehicle Issues in Progress",
+    name: "Issues in Progress",
     entity: "inventory",
-    criteria: "vehicleIssuesInProgress",
+    criteria: "issuesInProgress",
     displayType: "count",
     icon: "Ticket",
     color: "#000000",

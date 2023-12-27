@@ -23,8 +23,8 @@ const criteriaOptions = [
   "pendingCheckIn",
   "pendingCheckOut",
   "salesThisWeek",
-  "openVehicleIssues",
-  "vehicleIssuesInProgress",
+  "openIssues",
+  "issuesInProgress",
 
   // finance
   "lateInvoicesTotal",

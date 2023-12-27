@@ -41,6 +41,7 @@ const DashboardEditor = () => {
 
   const [modal, setModal] = useState({ name: null, id: null });
   const closeModal = () => setModal({ name: null, id: null });
+  const [autoAddNewOpen, setAutoAddNewOpen] = useState(true);
 
   const [dashboard, setDashboard] = useState();
   const [widgets, setWidgets] = useState();
@@ -118,6 +119,7 @@ const DashboardEditor = () => {
       enabled: !!dashboard && !isDashboardsLoading, // the query will only run if dashboard is truthy and dashboards are not loading.
       onError: (error) =>
         toast.error(`Error loading widgets: ${error.message}`),
+      retry: 3,
     },
   );
 
@@ -142,8 +144,9 @@ const DashboardEditor = () => {
 
   // Initialize with the dashboard from local storage when dashboards are loaded
   useEffect(() => {
+    if (dashboards.length === 0) return;
     console.log("Dashboards useEffect");
-    if (dashboards.length > 0) {
+    if (dashboards && dashboards.length > 0) {
       const storedDashboardId = localStorage.getItem("lastSelectedDashboardId");
       const storedDashboardExists =
         storedDashboardId &&
@@ -165,14 +168,16 @@ const DashboardEditor = () => {
         );
       }
     } else {
-      // if no dashboards
-      setModal({ name: "addDashboard" });
+      if (autoAddNewOpen) {
+        setModal({ name: "addDashboard" });
+      }
     }
   }, [dashboards]);
 
   // When a dashboard is deleted, select the first dashboard if available
   useEffect(() => {
     console.log("Dashboards, dashboard useEffect");
+    if (dashboards.length < 1) return;
     if (!dashboard || !dashboards.find((d) => d.id === dashboard.id)) {
       const storedDashboardId = localStorage.getItem("lastSelectedDashboardId");
       const storedDashboardExists = dashboards.some(
@@ -404,6 +409,7 @@ const DashboardEditor = () => {
         <AddNewDashboardModal
           open={modal.name === "addDashboard"}
           closeModal={closeModal}
+          setAutoAddNewOpen={setAutoAddNewOpen}
           dashboards={dashboards}
           handleSelectionChange={handleSelectionChange}
         />

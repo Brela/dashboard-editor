@@ -26,17 +26,31 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+const getDemoDashboards = async (req, res) => {
+  // used for demo to view dashboards and widgets
+  // this is the userId for xrp777
+  const userId = "clqih62ev00009heqsyfi5a16";
+  try {
+    const items = await prisma.dashboard.findMany({
+      where: {
+        userId: userId,
+      },
+    });
+
+    return res.status(200).json({
+      items: items,
+    });
+  } catch (error) {
+    console.error("Error retrieving items:", error);
+    return res.status(500).json({
+      message: error.message || "Internal server error",
+    });
+  }
+};
+
 const getAllDashboards = async (req, res) => {
   let userId = req?.user?.id;
-
-  // used for demo to view dashboards and widgets
-  if (!userId) {
-    // this is the userId for xrp777
-    userId = "clqo28ney003c9hm2scapd7sh";
-  }
-
-  console.log("userId", userId);
-  const { page, size, offset, orderBy, search } = parseQueryParams(req);
+  const { page, size, orderBy, search } = parseQueryParams(req);
 
   const { error } = dashboardOrderSchema.validate(orderBy, {
     abortEarly: false,
@@ -66,11 +80,9 @@ const getAllDashboards = async (req, res) => {
         {
           where: {
             userId: userId,
-            // OR: searchQueries,
+            OR: searchQueries,
           },
           orderBy,
-          skip: offset,
-          take: size,
         },
         tx,
       );
@@ -265,6 +277,7 @@ const deleteDashboard = async (req, res) => {
 };
 
 export {
+  getDemoDashboards,
   getAllDashboards,
   createDashboard,
   updateDashboard,

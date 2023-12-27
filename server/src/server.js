@@ -10,7 +10,7 @@ import userRoutes from "./modules/users/routes.js";
 import authenticationRoutes from "./modules/auth/routes.js";
 import dashboardRoutes from "./modules/dashboards/routes.js";
 import customWidgetRoutes from "./modules/customWidgets/routes.js";
-import { authenticateJWT } from "./modules/auth/jwtAuth.js";
+import { authenticateJWT } from "./modules/auth/authenticateJWT.js";
 
 const app = express();
 

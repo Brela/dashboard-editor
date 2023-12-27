@@ -7,6 +7,7 @@ import { useQueryClient } from "react-query";
 const AddNewDashboardModal = ({
   open,
   closeModal,
+  setAutoAddNewOpen,
   dashboards,
   handleSelectionChange,
 }) => {
@@ -87,7 +88,14 @@ const AddNewDashboardModal = ({
           )}
 
           <div className="mt-5 sm:mt-4 flex gap-3 justify-end">
-            <Button size="sm" variant="ghost" onClick={() => closeModal()}>
+            <Button
+              size="sm"
+              variant="ghost"
+              onClick={() => {
+                closeModal();
+                setAutoAddNewOpen(false);
+              }}
+            >
               Cancel
             </Button>
             <Button size="sm" isLoading={loading} onClick={handleAddDashboard}>

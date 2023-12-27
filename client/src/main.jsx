@@ -5,8 +5,7 @@ import App from "./App";
 import * as Sentry from "@sentry/react";
 import "./css/index.css";
 import ErrorBoundary from "./containers/Errors/ErrorBoundary";
-import { InventoryProvider } from "./contexts/inventory.context.jsx";
-import { OrdersProvider } from "./contexts/orders.context.jsx";
+
 import { AuthProvider } from "./contexts/auth.context.jsx";
 
 Sentry.init({
@@ -18,13 +17,9 @@ const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById("root")).render(
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
-      <InventoryProvider>
-        <OrdersProvider>
-          <ErrorBoundary>
-            <App />
-          </ErrorBoundary>
-        </OrdersProvider>
-      </InventoryProvider>
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
     </AuthProvider>
   </QueryClientProvider>,
 );

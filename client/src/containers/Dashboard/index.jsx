@@ -1,26 +1,31 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DashboardLayout from "./DashboardLayout";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
+import { AuthContext } from "../../contexts/auth.context";
 import { Tooltip, Select, Button } from "../../components";
 
 import { useQuery } from "react-query";
 import {
   getDashboardWidgets,
   getDashboards,
+  getDemoDashboards,
 } from "../../services/dashboardAPIcalls";
 import DashboardHeader from "./DashboardHeader/DashboardHeader";
 
 const DashboardHome = () => {
+  const { isLoggedIn, authLoading } = useContext(AuthContext);
   const navigate = useNavigate();
   const [dashboard, setDashboard] = useState();
 
   // Fetch dashboards
   const { data: dashboardsData, isLoading: isDashboardsLoading } = useQuery(
     "dashboards",
-    getDashboards,
+    () => (authLoading || !isLoggedIn ? getDemoDashboards() : getDashboards()),
+    // () => getDashboards(),
     { retries: 2 },
   );
+
   const dashboards = dashboardsData ? dashboardsData.items : [];
 
   // Fetch widgets for the selected dashboard
@@ -59,7 +64,7 @@ const DashboardHome = () => {
   return (
     <>
       <DashboardHeader />
-      <div className="w-full pb-10">
+      <div className="mx-auto w-[90vw] lg:w-[85vw] pb-10">
         <div className="flex  items-center justify-center gap-x-2 p-2 mt-3">
           <section className="flex text-gray-500 flex-col gap-1 w-[50vw] md:w-[30vw] xl:w-[15vw]">
             {/* <span className="text-sm">Select Dashboard</span> */}
