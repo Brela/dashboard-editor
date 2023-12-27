@@ -131,7 +131,7 @@ export default function Inventory() {
         Cell: ({ value }) => <span className="">{value}</span>,
       },
       {
-        Header: "Description",
+        Header: "Desc",
         accessor: "description",
         Cell: ({ value }) => <span className="">{value}</span>,
       },
@@ -280,7 +280,7 @@ export default function Inventory() {
             </div>
             <AddProductButtons />
           </div>
-          <section className="overflow-x-auto">
+          <section className="overflow-x-auto h-[65vh]">
             <table
               {...getTableProps()}
               id="inventory"
@@ -294,7 +294,7 @@ export default function Inventory() {
                         {...column.getHeaderProps(
                           column.getSortByToggleProps(),
                         )}
-                        className="px-1 font-semibold"
+                        className=" px-5 text-left font-semibold"
                       >
                         {column.render("Header")}
                         <span className="">

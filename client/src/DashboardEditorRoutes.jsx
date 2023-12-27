@@ -8,7 +8,7 @@ import OrderedDeliveredPopup from "./containers/Inventory/modals/OrderedDelivere
 import Dashboard from "./containers/Dashboard";
 import DashboardEditor from "./containers/Dashboard/DashboardEditor/index.jsx";
 import { Toaster } from "react-hot-toast";
-import Header from "./containers/Header/Header.jsx";
+import Profile from "./containers/Profile/index.jsx";
 
 export default function DashboardEditorRoutes() {
   const { isLoggedIn } = useContext(AuthContext);
@@ -21,7 +21,7 @@ export default function DashboardEditorRoutes() {
             path="/"
             element={
               <div>
-                <Header />
+                <Profile />
                 <Dashboard />
               </div>
             }

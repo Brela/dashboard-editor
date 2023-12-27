@@ -9,7 +9,7 @@ import Inventory from "../../containers/Inventory/Inventory.jsx";
 import PaginationWrapper from "./PaginationWrapper.jsx";
 import DemoControls from "../../containers/DemoControls.jsx";
 import { twMerge } from "tailwind-merge";
-import { dashboardBg } from "../../css/globalTailwindVars.js";
+import { dashboardBg, headerBg } from "../../css/globalTailwindVars.js";
 
 function InventoryPage() {
   const inventoryListScrollRef = useRef(null);
@@ -20,7 +20,9 @@ function InventoryPage() {
   return (
     <div className="flex flex-col 2xl:items-center">
       {/* <div className=" max-w-screen-2xl mx-2 md:mx-4 mb-2 md:mb-3 px-2 md:px-6 flex gap-2 flex-col rounded-3xl"> */}
-      <section className=" w-full bg-slate-400/10 rounded-b-md px-4 border-b">
+      <section
+        className={twMerge("w-full rounded-b-md px-4 border-b", headerBg)}
+      >
         <div className="flex items-center justify-between ">
           <div></div>
           <NavigationBar activeTab={activeTab} setActiveTab={setActiveTab} />
