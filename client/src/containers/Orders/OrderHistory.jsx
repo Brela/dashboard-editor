@@ -85,13 +85,10 @@ function OrderHistory() {
     <div className="px-4">
       <div className="flex justify-end">
         <button
-          className="bg-zinc-200 hover:bg-zinc-300/80 py-2 px-4 rounded-full text-zinc-700 font-semibold text-sm flex items-center gap-2"
+          className=" hover:bg-zinc-200/70 py-1 px-4 rounded-md flex items-center gap-2"
           onClick={handleClearHistory}
         >
-          <FontAwesomeIcon
-            icon={faTrash}
-            className=" text-zinc-500 text-base"
-          />{" "}
+          <FontAwesomeIcon icon={faTrash} className="text-sm text-zinc-400" />{" "}
           Clear History
         </button>
       </div>

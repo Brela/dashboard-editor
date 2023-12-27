@@ -28,6 +28,7 @@ export const getUser = async (id) => {
 
 export const createUser = async (username, password) => {
   try {
+    console.log(username);
     const response = await axios.post(
       `${API_URL}/user/`,
       {
@@ -42,7 +43,6 @@ export const createUser = async (username, password) => {
       },
     );
 
-    toast.success(`${username} successfully signed up`);
     return response.data;
   } catch (error) {
     toast.error(
@@ -67,8 +67,6 @@ export const loginUser = async (username, password) => {
         },
       },
     );
-
-    toast.success("Welcome Back 👋");
 
     return response.data;
   } catch (error) {

@@ -16,13 +16,13 @@ import ProfileContent from "./ProfileContent";
 import SettingsContent from "./SettingsContent";
 import HeaderModal from "./HeaderModal";
 import NavigationBar from "../../components/NavigationBar";
-import { Popover, Modal } from "../../components";
+import { Popover, Modal, Spinner } from "../../components";
 
 const Profile = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState({ username: "" });
   const dropdownRef = useRef(null);
-  const { setIsLoggedIn } = useContext(AuthContext);
+  const { setIsLoggedIn, authLoading } = useContext(AuthContext);
   const [modalContent, setModalContent] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const closeModal = () => setShowModal(false);
@@ -64,9 +64,15 @@ const Profile = () => {
       <Popover
         trigger={
           <div className="bg-cyan-700/20 hover:bg-slate-200/80 p-3 h-10 w-10 rounded-full  focus:outline-none focus:bg-slate-400 flex items-center justify-center">
-            <span className="text-xl font-bold uppercase text-gray-700">
-              {loggedInUser?.username?.charAt(0)}
-            </span>
+            {authLoading ? (
+              <div className="absolute flex items-center">
+                <Spinner size="medium" />
+              </div>
+            ) : (
+              <span className="text-xl font-bold uppercase text-gray-700">
+                {loggedInUser?.username?.charAt(0)}
+              </span>
+            )}
           </div>
         }
         contentClassName="mr-2 px-8"

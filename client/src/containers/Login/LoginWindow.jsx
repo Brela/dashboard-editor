@@ -59,6 +59,7 @@ export default function LoginWindow() {
         );
 
         if (userData.user) {
+          toast.success("Welcome Back 👋");
           setIsLoggedIn(true);
           // reloadInventory();
           navigate("/copilot/");

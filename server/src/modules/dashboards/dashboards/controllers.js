@@ -28,7 +28,7 @@ const prisma = new PrismaClient();
 
 const getAllDashboards = async (req, res) => {
   const userId = req?.user?.id;
-
+  console.log("userId", userId);
   const { page, size, offset, orderBy, search } = parseQueryParams(req);
 
   const { error } = dashboardOrderSchema.validate(orderBy, {

@@ -25,7 +25,7 @@ import DashboardLayout from "../DashboardLayout";
 import EditDashboardNameModal from "./dashboardModals/EditDashboardName";
 import AddNewDashboardModal from "./dashboardModals/AddNewDashboard";
 import DeleteDashboardModal from "./dashboardModals/DeleteDashboard";
-import { toast } from "react-hot-toast";
+import { toast } from "react-toastify";
 import useWindowSize from "../../../hooks/useWindowSize";
 
 import { getNewXandYCoords } from "../helpers/layoutUtils";
@@ -64,38 +64,34 @@ const DashboardEditor = () => {
 
   const handleSave = async () => {
     setLoading(true);
-    return new Promise(async (resolve, reject) => {
-      try {
-        const widgetUpdates = {};
-        widgets.forEach((widget) => {
-          widgetUpdates[widget.id] = {
-            x: widget.x,
-            y: widget.y,
-            // include other properties to update as needed
-          };
-        });
+    try {
+      const widgetUpdates = {};
+      widgets.forEach((widget) => {
+        widgetUpdates[widget.id] = {
+          x: widget.x,
+          y: widget.y,
+          // include other properties to update as needed
+        };
+      });
 
-        // console.log("widgetUpdates: --", widgetUpdates);
+      await updateManyWidgets(dashboard?.id, widgets, widgetUpdates);
 
-        await updateManyWidgets(dashboard?.id, widgets, widgetUpdates);
+      // Invalidate and refetch widgets to update the local cache
+      queryClient.invalidateQueries(["widgets", dashboard?.id]);
 
-        // Invalidate and refetch widgets to update the local cache
-        queryClient.invalidateQueries(["widgets", dashboard?.id]);
-
-        toast.success(`${dashboard?.name} saved.`);
-
-        resolve(`${dashboard?.name} saved.`); // Resolve the promise with a success message
-      } catch (error) {
-        console.error("error: ", error);
-        toast.error(
-          `Could not save ${dashboard?.name}: ${error.message}. Please try again`,
-        );
-        reject(error); // Reject the promise with the error
-      } finally {
-        setLoading(false);
-        setHasUnsavedChanges(false);
-      }
-    });
+      toast.success(`${dashboard?.name} saved.`);
+      setHasUnsavedChanges(false);
+      return `${dashboard?.name} saved.`; // Return a success message
+    } catch (error) {
+      console.error("error: ", error);
+      toast.error(
+        `Could not save ${dashboard?.name}: ${error.message}. Please try again`,
+      );
+      setHasUnsavedChanges(false);
+      throw error; // Throw the error
+    } finally {
+      setLoading(false);
+    }
   };
 
   // Fetch dashboards
@@ -105,13 +101,14 @@ const DashboardEditor = () => {
     error: dashboardsError,
   } = useQuery("dashboards", getDashboards, {
     onError: (error) =>
-      notifyError(
+      toast.error(
         `Error loading dashboards: ${error.message}. The server may be down.`,
       ),
     retry: 3, // Adjust this number to the maximum number of retry attempts you want
   });
 
   const dashboards = dashboardsData ? dashboardsData.items : [];
+  console.log(dashboards);
 
   // Fetch widgets for the selected dashboard
   const { data: widgetsData, isLoading: isWidgetsLoading } = useQuery(
@@ -120,7 +117,7 @@ const DashboardEditor = () => {
     {
       enabled: !!dashboard && !isDashboardsLoading, // the query will only run if dashboard is truthy and dashboards are not loading.
       onError: (error) =>
-        notifyError(`Error loading widgets: ${error.message}`),
+        toast.error(`Error loading widgets: ${error.message}`),
     },
   );
 
@@ -333,7 +330,6 @@ const DashboardEditor = () => {
                 ? setModal({ name: "confirmUnsaved" })
                 : navigate("/dashboard");
             }}
-            variant="light"
             className="z-50 bg-gray-200  border rounded-md px-2 m-2 py-1 text-slate-700 font-medium text-sm hover:text-slate-60 hover:bg-white"
           >
             <div className="flex items-center gap-1">

@@ -1,15 +1,17 @@
 import React, { createContext, useState, useEffect } from "react";
-import { useQuery } from 'react-query';
-import { authenticateUser } from '../services/authenticationAPIcalls';
+import { useQuery } from "react-query";
+import { authenticateUser } from "../services/authenticationAPIcalls";
 
 export const AuthContext = createContext({
   isLoggedIn: false,
   userId: null,
+  authLoading: true,
 });
 
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState(null);
+  const [authLoading, setAuthLoading] = useState(true);
 
   useEffect(() => {
     const fetchAuthStatus = async () => {
@@ -20,6 +22,8 @@ export const AuthProvider = ({ children }) => {
       } catch (error) {
         console.error("Error during authentication:", error.message);
         setIsLoggedIn(false);
+      } finally {
+        setAuthLoading(false);
       }
     };
 
@@ -27,7 +31,9 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, userId }}>
+    <AuthContext.Provider
+      value={{ isLoggedIn, setIsLoggedIn, userId, authLoading }}
+    >
       {children}
     </AuthContext.Provider>
   );

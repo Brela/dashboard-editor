@@ -53,6 +53,7 @@ export const createUser = async (req, res) => {
   const hashedPassword = await argon2.hash(password);
   console.log(username, hashedPassword);
   let user;
+
   try {
     const createUser = await prisma.User.create({
       data: {
