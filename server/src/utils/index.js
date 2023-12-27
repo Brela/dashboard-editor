@@ -22,9 +22,10 @@ const generateToken = (type, data) => {
 const verifyToken = (token) => {
   try {
     const decoded = jwt.verify(
-      token.replace(/\"/g, ""),
+      token.replace(/"/g, ""),
       process.env.TOKEN_SECRET,
     );
+
     return { status: true, data: decoded };
     // # TODO: Handle if token is expired
   } catch (e) {
@@ -33,7 +34,7 @@ const verifyToken = (token) => {
   }
 };
 
-const firebaseUploadFile = async (filename, data, metadata) => {
+/* const firebaseUploadFile = async (filename, data, metadata) => {
   const storageRef = ref(
     storage,
     `/files/feeds/${filename}_${new Date().getTime()}`,
@@ -52,7 +53,7 @@ const firebaseUploadFile = async (filename, data, metadata) => {
       console.log(error);
       return error.response;
     });
-};
+}; */
 
 // This is according to the pagination design in the UI
 // Example:
@@ -191,7 +192,7 @@ const convertFieldsArray = (fields) => {
 export {
   generateToken,
   verifyToken,
-  firebaseUploadFile,
+  // firebaseUploadFile,
   generateMeta,
   parseQueryParams,
   extractStackTraceInfo,

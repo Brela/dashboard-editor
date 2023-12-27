@@ -7,12 +7,14 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
-    "build": ""
+    "build": "",
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "eslint": "^8.56.0",
     "nodemon": "^3.0.1",
     "prisma": "^5.7.1"
   },

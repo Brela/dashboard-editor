@@ -87,7 +87,7 @@ export async function createManyInventoryItems(products) {
 
   await products.map((product) => {
     for (let prop in product) {
-      if (product.hasOwnProperty(prop)) {
+      if (Object.prototype.hasOwnProperty.call(product, prop)) {
         if (
           prop === "inStock" ||
           prop === "reorderAt" ||
