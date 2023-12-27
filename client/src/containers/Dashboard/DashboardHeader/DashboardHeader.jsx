@@ -6,6 +6,9 @@ import { AuthContext } from "../../../contexts/auth.context";
 import Profile from "../../Profile";
 import { createUser, loginUser } from "../../../services/userAPIcalls";
 import { v4 as uuid } from "uuid";
+import { twMerge } from "tailwind-merge";
+import { headerBg } from "../../../css/globalTailwindVars";
+import useWindowSize from "../../../hooks/useWindowSize";
 
 const DashboardHeader = () => {
   const { isLoggedIn, setIsLoggedIn, authLoading } = useContext(AuthContext);
@@ -64,11 +67,11 @@ const DashboardHeader = () => {
 
   return (
     <>
-      <div className=" flex justify- px-3 border-b pb-3">
+      <div className={twMerge(" flex justify- px-3 border-b", headerBg)}>
         <h1 className="basis-1/3 font-bold text-xl p-3 bg-gradient-to-r from-zinc-800 to-zinc-400 text-transparent bg-clip-text">
           Dashboard Demo
         </h1>
-        <div className="basis-1/3 flex justify-center">
+        <div className={twMerge("z-50 basis-1/3 flex justify-center")}>
           <DashNavBar />
         </div>
         <section className="basis-1/3 flex items-center justify-end">

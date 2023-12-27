@@ -8,7 +8,7 @@ import {
   createManyDashboardWidgetsQuery,
   updateDashboardWidgetQuery,
   deleteManyDashboardWidgetsQuery,
-} from "./repository.js";
+} from "./repositoryDemo.js";
 
 import { validateWidgetArraySchema } from "./validators.js";
 import { getOneDashboardQuery } from "../dashboards/repository.js";

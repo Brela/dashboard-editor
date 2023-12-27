@@ -7,11 +7,13 @@ import {
   faShoppingCart,
   faTable,
 } from "@fortawesome/free-solid-svg-icons";
+import useWindowSize from "../../../hooks/useWindowSize";
+import { twMerge } from "tailwind-merge";
 
 const buttons = [
   { label: "Dashboard", icon: faBox, value: "dashboard", href: `/dashboard` },
   {
-    label: "Editor",
+    label: "Dashboard Editor",
     icon: faTable,
     value: "editor",
     href: `/dashboard/editor`,
@@ -19,17 +21,23 @@ const buttons = [
 ];
 
 const NavButton = ({ currentPath, button }) => {
+  const isWindowSmall = useWindowSize(1460);
+
   const navigate = useNavigate();
-  const pathSegments = currentPath.split("/");
+  const pathSegments = currentPath.split("/").filter(Boolean); // filter out empty strings
   const lastSegment = pathSegments[pathSegments.length - 1];
-  const isActive = lastSegment === button.value;
+  const isActive =
+    lastSegment === button.value ||
+    (pathSegments.length === 0 && button.value === "dashboard");
 
   return (
     <button
       key={button.value}
-      className={`w-1/3 sm:w-auto flex flex-col items-center sm:flex-row gap-1 sm:gap-0 px-1 sm:px-4 py-1  ${
-        isActive ? " text-cyan-800  text-md " : "text-zinc-500 text-md"
-      }`}
+      className={twMerge(
+        "w-1/3 sm:w-auto flex flex-col items-center sm:flex-row gap-1 sm:gap-0 px-1 sm:px-4 py-1",
+        isActive ? "text-cyan-800  text-md " : "text-zinc-500 text-md",
+        pathSegments.includes("editor") && isWindowSmall ? "text-white" : "",
+      )}
       onClick={() => navigate(button.href)}
     >
       <FontAwesomeIcon
@@ -46,7 +54,11 @@ export default function DashNavBar() {
 
   return (
     <div>
-      <div className="flex mt-4  mb-2 gap-x-4 sm:gap-x-1 font-semibold text-zinc-800 md:px-2">
+      <div
+        className={
+          "flex mt-4  mb-2 gap-x-4 sm:gap-x-1 font-semibold text-zinc-800 md:px-2"
+        }
+      >
         {buttons.map((button) => (
           <NavButton
             key={button.value}

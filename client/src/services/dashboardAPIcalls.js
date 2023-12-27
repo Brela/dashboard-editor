@@ -2,11 +2,9 @@ import { API } from "./config";
 
 export const getDemoDashboards = async (queryParams) => {
   try {
-    console.log("getDemoDashboards");
     const response = await API("/dashboards/demo").get("/", {
       params: queryParams,
     });
-    console.log(response.data);
     return response.data;
   } catch (error) {
     throw new Error(

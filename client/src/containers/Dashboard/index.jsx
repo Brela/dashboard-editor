@@ -22,7 +22,6 @@ const DashboardHome = () => {
   const { data: dashboardsData, isLoading: isDashboardsLoading } = useQuery(
     "dashboards",
     () => (authLoading || !isLoggedIn ? getDemoDashboards() : getDashboards()),
-    // () => getDashboards(),
     { retries: 2 },
   );
 
@@ -52,6 +51,7 @@ const DashboardHome = () => {
 
   // Initialize with the first dashboard or from local storage when dashboards are loaded
   useEffect(() => {
+    if (dashboards.length < 1) return;
     if (!dashboard && dashboards.length > 0) {
       const storedDashboardId = localStorage.getItem("lastSelectedDashboardId");
       const defaultDashboard =

@@ -7,7 +7,7 @@ import {
   getOneDashboardQuery,
 } from "./repository.js";
 
-import { deleteManyDashboardWidgetsQuery } from "../widgets/repository.js";
+import { deleteManyDashboardWidgetsQuery } from "../widgets/repositoryLive.js";
 
 import {
   dashboardOrderSchema,

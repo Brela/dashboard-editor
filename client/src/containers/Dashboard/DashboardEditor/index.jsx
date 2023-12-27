@@ -1,5 +1,5 @@
 // for now, only going to allow the first dashboard's adjustments to save to local storage, but can hit reset button to start over
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
@@ -14,6 +14,7 @@ import { useQueryClient, useQuery } from "react-query";
 import {
   getDashboardWidgets,
   getDashboards,
+  getDemoDashboards,
   updateManyWidgets,
 } from "../../../services/dashboardAPIcalls";
 
@@ -32,8 +33,10 @@ import { getNewXandYCoords } from "../helpers/layoutUtils";
 import WidgetsSidebar from "./WidgetsSidebar/WidgetsSidebar";
 import ConfirmUnsavedChanges from "./dashboardModals/ConfirmUnsavedChanges";
 import DashboardHeader from "../DashboardHeader/DashboardHeader";
+import { AuthContext } from "../../../contexts/auth.context";
 
 const DashboardEditor = () => {
+  const { isLoggedIn, authLoading } = useContext(AuthContext);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
@@ -100,13 +103,17 @@ const DashboardEditor = () => {
     data: dashboardsData,
     isLoading: isDashboardsLoading,
     error: dashboardsError,
-  } = useQuery("dashboards", getDashboards, {
-    onError: (error) =>
-      toast.error(
-        `Error loading dashboards: ${error.message}. The server may be down.`,
-      ),
-    retry: 3, // Adjust this number to the maximum number of retry attempts you want
-  });
+  } = useQuery(
+    "dashboards",
+    () => (authLoading || !isLoggedIn ? getDemoDashboards() : getDashboards()),
+    {
+      onError: (error) =>
+        toast.error(
+          `Error loading dashboards: ${error.message}. The server may be down.`,
+        ),
+      retry: 3, // Adjust this number to the maximum number of retry attempts you want
+    },
+  );
 
   const dashboards = dashboardsData ? dashboardsData.items : [];
   console.log(dashboards);
@@ -328,8 +335,8 @@ const DashboardEditor = () => {
       )}
       <DashboardHeader />
       <div className="w-full min-h-screen">
-        <section className="flex justify-between items-center p-3">
-          <button
+        <section className="flex justify-center items-center p-3">
+          {/*  <button
             onClick={() => {
               hasUnsavedChanges
                 ? setModal({ name: "confirmUnsaved" })
@@ -341,7 +348,7 @@ const DashboardEditor = () => {
               <ArrowLeftCircleIcon className="h-4 w-4" />
               Exit
             </div>
-          </button>
+          </button> */}
           <div className="flex items-center justify-start p-2">
             <Select
               key={dashboards.length}
@@ -386,7 +393,7 @@ const DashboardEditor = () => {
               Save
             </Button>
           </div>
-          <div className="invisible"></div>
+          {/* <div className="invisible"></div> */}
         </section>
         <div className="grid grid-cols-12 h-[85vh]">
           <div className="col-span-4 md:col-span-4 lg:col-span-2">
