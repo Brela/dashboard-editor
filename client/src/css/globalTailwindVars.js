@@ -1,4 +1,4 @@
-export const dashboardBg = "bg-gray-400/50";
+export const dashboardBg = "bg-gray-300/50";
 
 export const primaryColor = "#006699";
 

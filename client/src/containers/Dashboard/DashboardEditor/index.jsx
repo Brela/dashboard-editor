@@ -20,7 +20,7 @@ import {
 
 import { chartDisplayTypes } from "./WidgetsSidebar/widgetsLibrary";
 import { v4 as uuidv4 } from "uuid";
-import { Select, Button } from "../../../components";
+import { Select, Button, Popover } from "../../../components";
 import { Tooltip } from "react-tooltip";
 
 import DashboardLayout from "../DashboardLayout";
@@ -35,6 +35,7 @@ import WidgetsSidebar from "./WidgetsSidebar/WidgetsSidebar";
 import ConfirmUnsavedChanges from "./dashboardModals/ConfirmUnsavedChanges";
 import DashboardHeader from "../DashboardHeader/DashboardHeader";
 import { AuthContext } from "../../../contexts/auth.context";
+import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 
 const DashboardEditor = () => {
   const { isLoggedIn, authLoading } = useContext(AuthContext);
@@ -321,7 +322,7 @@ const DashboardEditor = () => {
   return (
     <>
       {isWindowSmall && (
-        <div className=" p-10 absolute top-0 left-0 w-full h-full bg-gray-900/70 text-white flex flex-col gap-5 items-center justify-center z-30">
+        <div className=" z-30 p-10 absolute top-0 left-0 w-full h-full bg-gray-900/70 text-white flex flex-col gap-5 items-center justify-center">
           <section className="md:w-[60vw] text-center">
             <h4 className="font-semibold text-2xl mb-6">
               Please increase screen width to use editor.
@@ -337,6 +338,7 @@ const DashboardEditor = () => {
       <DashboardHeader />
       <div className="w-full min-h-screen">
         <section className="flex justify-between items-center p-3">
+          <div className="invisible"></div>
           {/*  <button
             onClick={() => {
               hasUnsavedChanges
@@ -364,19 +366,7 @@ const DashboardEditor = () => {
               }}
             />
 
-            <Tooltip variant="info" id="editName">
-              Edit Dashboard Name
-            </Tooltip>
-            <Button
-              data-tooltip-id="editName"
-              size="sm"
-              variant="ghost"
-              onClick={() => setModal({ name: "editDashboard" })}
-            >
-              <PencilSquareIcon className="h-5 w-5" />
-            </Button>
-
-            <Tooltip variant="info" id="addDash">
+            <Tooltip variant="info" id="addDash" style={{ zIndex: 2000 }}>
               Add New Dashboard
             </Tooltip>
             <Button
@@ -388,17 +378,41 @@ const DashboardEditor = () => {
               <PlusIcon className="h-5 w-5" />
             </Button>
 
-            <Tooltip variant="info" id="deleteDash">
-              Delete Dashboard
-            </Tooltip>
-            <Button
-              data-tooltip-id="deleteDash"
-              size="sm"
-              variant="ghost"
-              onClick={() => setModal({ name: "deleteDashboard" })}
-            >
-              <TrashIcon className="h-5 w-5" />
-            </Button>
+            <Popover
+              contentClassName="p-0 m-2 mr-5"
+              trigger={
+                <div className="p-1 hover:bg-gray-200 rounded-md">
+                  <EllipsisVerticalIcon className="h-5 w-5" />
+                </div>
+              }
+              content={
+                <div className="z-10 mt-2 py-2 px-5 rounded-md bg-white shadow-lg ring-1 ring-gray-700 ring-opacity-20 focus:outline-none">
+                  <Tooltip variant="info" id="editName">
+                    Edit Dashboard Name
+                  </Tooltip>
+                  <Button
+                    data-tooltip-id="editName"
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => setModal({ name: "editDashboard" })}
+                  >
+                    <PencilSquareIcon className="h-5 w-5" />
+                  </Button>
+
+                  <Tooltip variant="info" id="deleteDash">
+                    Delete Dashboard
+                  </Tooltip>
+                  <Button
+                    data-tooltip-id="deleteDash"
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => setModal({ name: "deleteDashboard" })}
+                  >
+                    <TrashIcon className="h-5 w-5" />
+                  </Button>
+                </div>
+              }
+            />
           </div>
           <Tooltip variant="info" id="saveDash">
             Save Dashboard Layout

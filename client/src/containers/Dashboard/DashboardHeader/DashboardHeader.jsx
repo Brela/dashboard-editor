@@ -71,7 +71,7 @@ const DashboardHeader = () => {
         <h1 className="basis-1/3 font-bold text-xl p-3 bg-gradient-to-r from-zinc-800 to-zinc-400 text-transparent bg-clip-text">
           Dashboard Demo
         </h1>
-        <div className={twMerge("z-25 basis-1/3 flex justify-center")}>
+        <div className={twMerge("z-50 basis-1/3 flex justify-center")}>
           <DashNavBar />
         </div>
         <section className="basis-1/3 flex items-center justify-end">
@@ -83,7 +83,7 @@ const DashboardHeader = () => {
             <Button
               onClick={handleGuestLogin}
               variant="secondary"
-              className="bg-green-500 py-2 h-auto my-auto"
+              className="bg-green-500/70 py-2 h-auto my-auto"
             >
               One Click Guest Login
             </Button>
