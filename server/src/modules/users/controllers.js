@@ -49,7 +49,7 @@ export const getUser = async (req, res) => {
 
 export const createUser = async (req, res) => {
   res.header("Access-Control-Allow-Origin", `${process.env.CORS_ORIGIN}`);
-  const { username, password } = req.body;
+  const { username, password, isTempAccount } = req.body;
   const hashedPassword = await argon2.hash(password);
   console.log(username, hashedPassword);
   let user;
@@ -59,6 +59,7 @@ export const createUser = async (req, res) => {
       data: {
         username: username,
         password: hashedPassword,
+        isTempAccount: isTempAccount,
       },
     });
     user = createUser;

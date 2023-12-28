@@ -39,7 +39,7 @@ const DashboardHeader = () => {
     try {
       // to-do: create a flag on guest accont where we can delete it on backend with cron job
       toastId = toast("Creating guest account...", { autoClose: false });
-      const userData = await createUser(username, password);
+      const userData = await createUser(username, password, true); // isTempAccount = true
       toast.dismiss(toastId);
 
       if (!userData.username) {
@@ -83,7 +83,7 @@ const DashboardHeader = () => {
             <Button
               onClick={handleGuestLogin}
               variant="secondary"
-              className="bg-green-500/70 py-2 h-auto my-auto"
+              className="bg-green-500/90 py-2 h-auto my-auto"
             >
               One Click Guest Login
             </Button>

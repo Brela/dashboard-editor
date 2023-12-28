@@ -26,14 +26,15 @@ export const getUser = async (id) => {
   }
 };
 
-export const createUser = async (username, password) => {
+export const createUser = async (username, password, isTempAccount) => {
   try {
-    console.log(username);
+    console.log(isTempAccount);
     const response = await axios.post(
       `${API_URL}/user/`,
       {
         username,
         password,
+        isTempAccount: isTempAccount ? true : false,
       },
       {
         headers: {
