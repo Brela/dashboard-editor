@@ -29,7 +29,7 @@ const prisma = new PrismaClient();
 const getDemoDashboards = async (req, res) => {
   // used for demo to view dashboards and widgets
   // this is the userId for xrp777
-  const userId = "clqih62ev00009heqsyfi5a16";
+  const userId = process.env.DEMO_USER_ID;
   try {
     const items = await prisma.dashboard.findMany({
       where: {

@@ -17,15 +17,18 @@ import SettingsContent from "./SettingsContent";
 import HeaderModal from "./HeaderModal";
 import NavigationBar from "../../components/NavigationBar";
 import { Popover, Modal, Spinner } from "../../components";
+import { useQueryClient } from "react-query";
 
-const Profile = () => {
+const Profile = ({ refetchDashboardData }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState({ username: "" });
   const dropdownRef = useRef(null);
-  const { setIsLoggedIn, authLoading } = useContext(AuthContext);
+  const { isLoggedIn, setIsLoggedIn, authLoading } = useContext(AuthContext);
   const [modalContent, setModalContent] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const closeModal = () => setShowModal(false);
+
+  const queryClient = useQueryClient();
 
   const openSettingsModal = () => {
     setModalContent(<SettingsContent />);
@@ -34,14 +37,30 @@ const Profile = () => {
 
   const handleLogoutUser = async () => {
     try {
-      await logoutUser(); // Calling the API to logout the user
+      await logoutUser();
+
       setIsLoggedIn(false);
       setShowDropdown(false);
       setLoggedInUser({ username: "" });
+
+      queryClient.setQueryData("dashboards", null);
+      queryClient.setQueryData("widgets", null);
+
+      // Then remove the queries
+      queryClient.removeQueries("dashboards");
+      queryClient.removeQueries("widgets");
     } catch (error) {
       toast.error(`Oops! Something went wrong: ${error}`);
     }
   };
+
+  useEffect(() => {
+    if (isLoggedIn && !authLoading) {
+      // Invalidate the "dashboards" and "widgets" queries when the user logs in and authLoading is false
+      queryClient.invalidateQueries("dashboards");
+      queryClient.invalidateQueries("widgets");
+    }
+  }, [isLoggedIn, authLoading]);
 
   // console.log(loggedInUser?.id);
 

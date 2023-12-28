@@ -19,8 +19,13 @@ const DashboardHome = () => {
   const [dashboard, setDashboard] = useState();
 
   // Fetch dashboards
-  const { data: dashboardsData, isLoading: isDashboardsLoading } = useQuery(
+  const {
+    data: dashboardsData,
+    isLoading: isDashboardsLoading,
+    refetch: refetchDashboards,
+  } = useQuery(
     "dashboards",
+    // get demo dashboards gets the dashboards from a user defined in env
     () => (authLoading || !isLoggedIn ? getDemoDashboards() : getDashboards()),
     { retries: 2 },
   );
@@ -28,7 +33,11 @@ const DashboardHome = () => {
   const dashboards = dashboardsData ? dashboardsData.items : [];
 
   // Fetch widgets for the selected dashboard
-  const { data: widgetsData, isLoading: isWidgetsLoading } = useQuery(
+  const {
+    data: widgetsData,
+    isLoading: isWidgetsLoading,
+    refetch: refetchWidgets,
+  } = useQuery(
     ["widgets", dashboard?.id],
     () => getDashboardWidgets(dashboard?.id),
     {
@@ -37,6 +46,10 @@ const DashboardHome = () => {
     },
   );
   const widgets = widgetsData ? widgetsData.items : [];
+  const refetchDashboardData = () => {
+    refetchDashboards();
+    refetchWidgets();
+  };
 
   // const isLoading = isDashboardsLoading || isWidgetsLoading;
 
@@ -63,7 +76,7 @@ const DashboardHome = () => {
 
   return (
     <>
-      <DashboardHeader />
+      <DashboardHeader refetchDashboardData={refetchDashboardData} />
       <div className="mx-auto w-[90vw] lg:w-[85vw] pb-10">
         <div className="flex  items-center justify-center gap-x-2 p-2 mt-3">
           <section className="flex text-gray-500 flex-col gap-1 w-[50vw] md:w-[30vw] xl:w-[15vw]">

@@ -152,3 +152,42 @@ export const getLoggedInUser = async (req, res) => {
       .json({ message: "Internal server error", error: err });
   }
 };
+
+export const createSeedDataForUser = async (newUserId) => {
+  const seedUserId = process.env.DEMO_USER_ID;
+
+  // Get all dashboards of the seed user
+  const seedDashboards = await prisma.dashboard.findMany({
+    where: {
+      userId: seedUserId,
+    },
+    include: {
+      widgets: true, // Include the widgets of each dashboard
+    },
+  });
+
+  console.log("seedDashboards: ", seedDashboards);
+  // For each dashboard of the seed user
+  /* for (const seedDashboard of seedDashboards) {
+    // Create a new dashboard for the new user
+    const newDashboard = await prisma.dashboard.create({
+      data: {
+        ...seedDashboard,
+        userId: newUserId,
+        id: undefined, // Let Prisma auto-generate a new ID
+      },
+    });
+
+    // For each widget of the seed dashboard
+    for (const seedWidget of seedDashboard.widgets) {
+      // Create a new widget for the new dashboard
+      await prisma.widget.create({
+        data: {
+          ...seedWidget,
+          dashboardId: newDashboard.id,
+          id: undefined, // Let Prisma auto-generate a new ID
+        },
+      });
+    }
+  } */
+};
