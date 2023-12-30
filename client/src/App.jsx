@@ -12,11 +12,10 @@ import {
 import { AuthProvider } from "./contexts/auth.context";
 import { AuthContext } from "./contexts/auth.context.jsx";
 import { Toaster } from "react-hot-toast";
-import DashboardEditorRoutes from "./DashboardEditorRoutes";
-import InventoryCopilotRoutes from "./InventoryCopilotRoutes";
+import InventoryCopilotRoutes from "./InventoryCopilotRoutes.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
-import DashboardHome from "./containers/Dashboard/index.jsx";
-import DashboardEditor from "./containers/Dashboard/DashboardEditor/index.jsx";
+import DashboardHome from "./containers/Dashboard/DashHome";
+import DashboardEditor from "./containers/Dashboard/DashboardEditor/DashEditor";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

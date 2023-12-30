@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import DashboardLayout from "./DashboardLayout";
+import DashboardLayout from "./DashWidgetsLayout";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 import { AuthContext } from "../../contexts/auth.context";
 import { Tooltip, Select, Button } from "../../components";
@@ -11,7 +11,7 @@ import {
   getDashboards,
   getDemoDashboards,
 } from "../../services/dashboardAPIcalls";
-import DashboardHeader from "./DashboardHeader/DashboardHeader";
+import DashboardHeader from "./DashboardHeader/DashHeader";
 
 const DashboardHome = () => {
   const { isLoggedIn, authLoading } = useContext(AuthContext);

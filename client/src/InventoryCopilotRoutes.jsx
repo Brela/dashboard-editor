@@ -5,7 +5,6 @@ import { AuthContext } from "./contexts/auth.context.jsx";
 import Home from "./pages/Home/Home.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import OrderedDeliveredPopup from "./containers/Inventory/modals/OrderedDeliveredPopup.jsx";
-import DashboardEditor from "./containers/Dashboard/DashboardEditor/index.jsx";
 import { Toaster } from "react-hot-toast";
 import { InventoryProvider } from "./contexts/inventory.context.jsx";
 import { OrdersProvider } from "./contexts/orders.context.jsx";

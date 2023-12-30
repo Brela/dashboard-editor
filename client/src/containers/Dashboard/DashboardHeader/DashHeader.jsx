@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { toast } from "react-hot-toast";
-import DashNavBar from "./Nav";
+import DashNavBar from "./DashNav";
 import { AuthContext } from "../../../contexts/auth.context";
 import Profile from "../../Profile";
 import { twMerge } from "tailwind-merge";
@@ -31,9 +31,15 @@ const DashboardHeader = (props) => {
   return (
     <>
       <div className={twMerge(" flex justify- px-3 border-b", headerBg)}>
-        <h1 className="basis-1/3 font-bold text-xl p-3 bg-gradient-to-r from-zinc-800 to-zinc-400 text-transparent bg-clip-text">
-          Dashboard Demo
-        </h1>
+        <div className="basis-1/3 flex justify-start p-2 font-bold text-xl  bg-gradient-to-r from-zinc-600 to-zinc-400 tracking-tight text-transparent bg-clip-text">
+          <section className="flex flex-col items-center ">
+            <h1 className=""> Custom Dashboard</h1>
+            <span className="absolute top-7  text-[16px] text-gray-400">
+              Demo
+            </span>
+          </section>
+        </div>
+
         <div className={twMerge("z-50 basis-1/3 flex justify-center")}>
           <DashNavBar />
         </div>

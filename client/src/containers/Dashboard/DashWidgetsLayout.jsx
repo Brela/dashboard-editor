@@ -61,7 +61,7 @@ const DashboardLayout = ({
     );
   } else if (!isEditMode && (!widgets || widgets.length === 0)) {
     return (
-      <EmptyDashboard message="You don't have any widgets on this dashboard! Click dashboard settings above to add some widgets." />
+      <EmptyDashboard message="You don't have any widgets on this dashboard! Click Dashboard Editor above to add some widgets." />
     );
   }
 

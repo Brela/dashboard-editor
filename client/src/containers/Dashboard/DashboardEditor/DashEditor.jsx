@@ -16,25 +16,25 @@ import {
   getDashboards,
   getDemoDashboards,
   updateManyWidgets,
-} from "../../../services/dashboardAPIcalls";
+} from "../../../services/dashboardAPIcalls.js";
 
-import { chartDisplayTypes } from "./WidgetsSidebar/widgetsLibrary";
+import { chartDisplayTypes } from "./WidgetsSidebar/widgetsLibrary.js";
 import { v4 as uuidv4 } from "uuid";
-import { Select, Button, Popover } from "../../../components";
+import { Select, Button, Popover } from "../../../components/index.jsx";
 import { Tooltip } from "react-tooltip";
 
-import DashboardLayout from "../DashboardLayout";
-import EditDashboardNameModal from "./dashboardModals/EditDashboardName";
-import AddNewDashboardModal from "./dashboardModals/AddNewDashboard";
-import DeleteDashboardModal from "./dashboardModals/DeleteDashboard";
+import DashboardLayout from "../DashWidgetsLayout.jsx";
+import EditDashboardNameModal from "./dashboardModals/EditDashboardName.jsx";
+import AddNewDashboardModal from "./dashboardModals/AddNewDashboard.jsx";
+import DeleteDashboardModal from "./dashboardModals/DeleteDashboard.jsx";
 import { toast } from "react-toastify";
-import useWindowSize from "../../../hooks/useWindowSize";
+import useWindowSize from "../../../hooks/useWindowSize.js";
 
-import { getNewXandYCoords } from "../helpers/layoutUtils";
-import WidgetsSidebar from "./WidgetsSidebar/WidgetsSidebar";
-import ConfirmUnsavedChanges from "./dashboardModals/ConfirmUnsavedChanges";
-import DashboardHeader from "../DashboardHeader/DashboardHeader";
-import { AuthContext } from "../../../contexts/auth.context";
+import { getNewXandYCoords } from "../helpers/layoutUtils.js";
+import WidgetsSidebar from "./WidgetsSidebar/WidgetsSidebar.jsx";
+import ConfirmUnsavedChanges from "./dashboardModals/ConfirmUnsavedChanges.jsx";
+import DashboardHeader from "../DashboardHeader/DashHeader.jsx";
+import { AuthContext } from "../../../contexts/auth.context.jsx";
 import { DashboardContext } from "../../../contexts/dash.context.jsx";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 

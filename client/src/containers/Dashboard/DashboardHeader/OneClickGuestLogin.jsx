@@ -56,10 +56,14 @@ const OneClickGuestLogin = (props) => {
       // ------ create one sample dashboard ------
       toastId = toast("Creating sample dashboard...", { autoClose: false });
 
-      const createdDashboard = await createDashboard({
+      await createDashboard({
+        name: "Sample 2",
+      });
+      await createDashboard({
         name: "Sample 1",
       });
-      //   refetchDashboardData();
+
+      refetchDashboardData();
 
       toast.dismiss(toastId);
       toast.success("Sample dashboard created", {

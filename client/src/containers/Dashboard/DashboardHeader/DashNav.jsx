@@ -7,10 +7,10 @@ import {
   faShoppingCart,
   faTable,
 } from "@fortawesome/free-solid-svg-icons";
-import useWindowSize from "../../../hooks/useWindowSize";
+import useWindowSize from "../../../hooks/useWindowSize.js";
 import { twMerge } from "tailwind-merge";
 import { DashboardContext } from "../../../contexts/dash.context.jsx";
-import ConfirmUnsavedChanges from "../DashboardEditor/dashboardModals/ConfirmUnsavedChanges";
+import ConfirmUnsavedChanges from "../DashboardEditor/dashboardModals/ConfirmUnsavedChanges.jsx";
 
 const buttons = [
   { label: "Dashboard", icon: faBox, value: "dashboard", href: `/dashboard` },
