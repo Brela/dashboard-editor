@@ -9,22 +9,23 @@ import {
 import { v4 as uuid } from "uuid";
 import { AuthContext } from "../../../contexts/auth.context";
 import { useQueryClient } from "react-query";
+import { createDashboard } from "../../../services/dashboardAPIcalls";
 
-const OneClickGuestLogin = ({ refetchDashboardData }) => {
-  const { isLoggedIn, setIsLoggedIn, authLoading } = useContext(AuthContext);
+const OneClickGuestLogin = (props) => {
+  const { isLoggedIn, setIsLoggedIn, authLoading, fetchAuthStatus } =
+    useContext(AuthContext);
   const queryClient = useQueryClient();
-
-  useEffect(() => {
-    setIsLoggedIn(false);
-  }, []);
+  const { refetchDashboardData, changeSelectedDashboard } = props;
 
   const handleGuestLogin = async () => {
     let toastId = null;
     let uniqueId = String(uuid());
     let username = `Guest ${uniqueId.slice(0, 4)}`;
     let password = String(uuid());
+    await fetchAuthStatus();
 
     try {
+      // ------ create guest account ------
       toastId = toast("Creating guest account...", { autoClose: false });
       const userData = await createUser(username, password, true); // isTempAccount = true - flag to delete account later
       toast.dismiss(toastId);
@@ -33,30 +34,36 @@ const OneClickGuestLogin = ({ refetchDashboardData }) => {
         throw new Error(userData.message);
       }
 
-      //   toastId = toast("Logging in...", { autoClose: false });
+      // ------ login to guest account ------
       const loginData = await loginUser(username, password);
-      //   toast.dismiss(toastId);
 
       if (!loginData.user) {
         throw new Error(loginData.message);
       }
-      queryClient.setQueryData("dashboards", null);
+
+      localStorage.removeItem("lastSelectedDashboardId");
+      await fetchAuthStatus();
+
+      // clear the demo queries and remove them
+      queryClient.setQueryData(["dashboards", "demo"], null);
       queryClient.setQueryData("widgets", null);
-
-      // Then remove the queries
-      queryClient.removeQueries("dashboards");
+      queryClient.removeQueries(["dashboards", "demo"], { exact: true });
       queryClient.removeQueries("widgets");
-
-      setIsLoggedIn(true);
+      //   await refetchDashboardData();
 
       toast.success("Guest account setup complete", { autoClose: 5000 });
 
-      toastId = toast("Creating sample data...", { autoClose: false });
-      let seedData = await createSeedDataForUser();
+      // ------ create one sample dashboard ------
+      toastId = toast("Creating sample dashboard...", { autoClose: false });
+
+      const createdDashboard = await createDashboard({
+        name: "Sample 1",
+      });
+      //   refetchDashboardData();
 
       toast.dismiss(toastId);
-      toast.success("Sample dashboards and widgets created", {
-        autoClose: 5000,
+      toast.success("Sample dashboard created", {
+        autoClose: 4000,
       });
     } catch (error) {
       toast.dismiss(toastId);
@@ -65,11 +72,11 @@ const OneClickGuestLogin = ({ refetchDashboardData }) => {
   };
 
   useEffect(() => {
-    if (isLoggedIn && !authLoading) {
-      // Invalidate the "dashboards" and "widgets" queries when the user logs in and authLoading is false
-      refetchDashboardData();
+    if (isLoggedIn) {
+      queryClient.removeQueries("dashboards");
+      queryClient.removeQueries("widgets");
     }
-  }, [isLoggedIn, authLoading]);
+  }, [isLoggedIn]);
 
   return (
     <div>

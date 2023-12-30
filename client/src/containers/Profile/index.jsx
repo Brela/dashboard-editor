@@ -19,14 +19,15 @@ import NavigationBar from "../../components/NavigationBar";
 import { Popover, Modal, Spinner } from "../../components";
 import { useQueryClient } from "react-query";
 
-const Profile = ({ refetchDashboardData }) => {
-  const [showDropdown, setShowDropdown] = useState(false);
+const Profile = (props) => {
   const [loggedInUser, setLoggedInUser] = useState({ username: "" });
-  const dropdownRef = useRef(null);
+
   const { isLoggedIn, setIsLoggedIn, authLoading } = useContext(AuthContext);
   const [modalContent, setModalContent] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const closeModal = () => setShowModal(false);
+
+  const { refetchDashboardData, changeSelectedDashboard } = props;
 
   const queryClient = useQueryClient();
 
@@ -35,19 +36,23 @@ const Profile = ({ refetchDashboardData }) => {
     setShowModal(true);
   };
 
+  // this is used for the dashboard demo
+  /*   useEffect(() => {
+    setIsLoggedIn(true);
+  }, []); */
+
   const handleLogoutUser = async () => {
     try {
       await logoutUser();
 
       setIsLoggedIn(false);
-      setShowDropdown(false);
       setLoggedInUser({ username: "" });
+      localStorage.removeItem("lastSelectedDashboardId");
 
-      queryClient.setQueryData("dashboards", null);
+      // clear the demo queries and remove them
+      queryClient.setQueryData(["dashboards", "user"], null);
       queryClient.setQueryData("widgets", null);
-
-      // Then remove the queries
-      queryClient.removeQueries("dashboards");
+      queryClient.removeQueries(["dashboards", "user"], { exact: true });
       queryClient.removeQueries("widgets");
     } catch (error) {
       toast.error(`Oops! Something went wrong: ${error}`);
@@ -55,12 +60,11 @@ const Profile = ({ refetchDashboardData }) => {
   };
 
   useEffect(() => {
-    if (isLoggedIn && !authLoading) {
-      // Invalidate the "dashboards" and "widgets" queries when the user logs in and authLoading is false
-      queryClient.invalidateQueries("dashboards");
-      queryClient.invalidateQueries("widgets");
+    if (!isLoggedIn) {
+      queryClient.removeQueries("dashboards");
+      queryClient.removeQueries("widgets");
     }
-  }, [isLoggedIn, authLoading]);
+  }, [isLoggedIn, queryClient]);
 
   // console.log(loggedInUser?.id);
 

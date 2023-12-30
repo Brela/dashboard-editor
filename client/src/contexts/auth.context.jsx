@@ -13,26 +13,36 @@ export const AuthProvider = ({ children }) => {
   const [userId, setUserId] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchAuthStatus = async () => {
-      try {
-        const authenticatedUser = await authenticateUser();
-        setIsLoggedIn(true);
-        setUserId(authenticatedUser.id);
-      } catch (error) {
-        console.error("Error during authentication:", error.message);
-        setIsLoggedIn(false);
-      } finally {
-        setAuthLoading(false);
-      }
-    };
+  const fetchAuthStatus = async () => {
+    try {
+      const authenticatedUser = await authenticateUser();
+      setIsLoggedIn(true);
+      setUserId(authenticatedUser.id);
+    } catch (error) {
+      console.error("Error during authentication:", error.message);
+      setIsLoggedIn(false);
+    } finally {
+      setAuthLoading(false);
+    }
+  };
 
+  useEffect(() => {
+    console.log(isLoggedIn);
+  }, [isLoggedIn]);
+
+  useEffect(() => {
     fetchAuthStatus();
   }, []);
 
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn, setIsLoggedIn, userId, authLoading }}
+      value={{
+        isLoggedIn,
+        setIsLoggedIn,
+        userId,
+        authLoading,
+        fetchAuthStatus,
+      }}
     >
       {children}
     </AuthContext.Provider>

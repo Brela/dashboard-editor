@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
@@ -9,6 +9,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import useWindowSize from "../../../hooks/useWindowSize";
 import { twMerge } from "tailwind-merge";
+import { DashboardContext } from "../../../contexts/dash.context.jsx";
+import ConfirmUnsavedChanges from "../DashboardEditor/dashboardModals/ConfirmUnsavedChanges";
 
 const buttons = [
   { label: "Dashboard", icon: faBox, value: "dashboard", href: `/dashboard` },
@@ -21,6 +23,8 @@ const buttons = [
 ];
 
 const NavButton = ({ currentPath, button }) => {
+  const { hasUnsavedChanges, setOpenConfirmUnsavedModal } =
+    useContext(DashboardContext);
   const isWindowSmall = useWindowSize(1460);
 
   const navigate = useNavigate();
@@ -38,7 +42,14 @@ const NavButton = ({ currentPath, button }) => {
         isActive ? "text-cyan-800  text-md " : "text-zinc-500 text-md",
         pathSegments.includes("editor") && isWindowSmall ? "text-white" : "",
       )}
-      onClick={() => navigate(button.href)}
+      onClick={() => {
+        console.log("------5-5-5:", hasUnsavedChanges);
+        if (hasUnsavedChanges && button.value === "dashboard") {
+          setOpenConfirmUnsavedModal(true);
+        } else {
+          navigate(button.href);
+        }
+      }}
     >
       <FontAwesomeIcon
         icon={button.icon}

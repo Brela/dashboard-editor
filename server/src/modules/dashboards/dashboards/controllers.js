@@ -150,6 +150,7 @@ const getOneDashboard = async (req, res) => {
 };
 
 const createDashboard = async (req, res) => {
+  let userId = req?.user?.id;
   const payload = req.body;
 
   const { error } = dashboardCreateSchema.validate(payload, {
@@ -175,6 +176,7 @@ const createDashboard = async (req, res) => {
     const existingDashboard = await prisma.dashboard.findFirst({
       where: {
         name: payload.name,
+        userId: userId,
       },
     });
 

@@ -153,7 +153,8 @@ export const getLoggedInUser = async (req, res) => {
   }
 };
 
-export const createSeedDataForUser = async (newUserId) => {
+export const createSeedDataForUser = async (req, res) => {
+  let userId = req?.user?.id;
   const seedUserId = process.env.DEMO_USER_ID;
 
   // Get all dashboards of the seed user
@@ -168,26 +169,47 @@ export const createSeedDataForUser = async (newUserId) => {
 
   console.log("seedDashboards: ", seedDashboards);
   // For each dashboard of the seed user
-  /* for (const seedDashboard of seedDashboards) {
+  for (const seedDashboard of seedDashboards) {
+    // Destructure the id property out of the seedDashboard object
+    const { id, ...dashboardWithoutId } = seedDashboard;
+
     // Create a new dashboard for the new user
     const newDashboard = await prisma.dashboard.create({
       data: {
-        ...seedDashboard,
-        userId: newUserId,
-        id: undefined, // Let Prisma auto-generate a new ID
+        ...dashboardWithoutId,
+        user: {
+          connect: {
+            id: userId,
+          },
+        },
       },
     });
+    console.log("Created dashboard:", newDashboard);
 
     // For each widget of the seed dashboard
     for (const seedWidget of seedDashboard.widgets) {
+      // Destructure the id property out of the seedWidget object
+      const { id, ...widgetWithoutId } = seedWidget;
+
       // Create a new widget for the new dashboard
-      await prisma.widget.create({
+      const newWidget = await prisma.widget.create({
         data: {
-          ...seedWidget,
-          dashboardId: newDashboard.id,
-          id: undefined, // Let Prisma auto-generate a new ID
+          ...widgetWithoutId,
+          dashboard: {
+            connect: {
+              id: newDashboard.id,
+            },
+          },
+          user: {
+            connect: {
+              id: userId,
+            },
+          },
         },
       });
+
+      console.log("Created widget:", newWidget);
     }
-  } */
+  }
+  res.json({ message: "Seed data created successfully" });
 };

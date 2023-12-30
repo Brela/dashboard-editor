@@ -35,13 +35,21 @@ import WidgetsSidebar from "./WidgetsSidebar/WidgetsSidebar";
 import ConfirmUnsavedChanges from "./dashboardModals/ConfirmUnsavedChanges";
 import DashboardHeader from "../DashboardHeader/DashboardHeader";
 import { AuthContext } from "../../../contexts/auth.context";
+import { DashboardContext } from "../../../contexts/dash.context.jsx";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 
 const DashboardEditor = () => {
   const { isLoggedIn, authLoading } = useContext(AuthContext);
+  const {
+    hasUnsavedChanges,
+    setHasUnsavedChanges,
+    openConfirmUnsavedModal,
+    setOpenConfirmUnsavedModal,
+  } = useContext(DashboardContext);
+
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+
   const isWindowSmall = useWindowSize(1460);
 
   const [modal, setModal] = useState({ name: null, id: null });
@@ -101,23 +109,21 @@ const DashboardEditor = () => {
   };
 
   // Fetch dashboards
+  const queryKey = isLoggedIn ? ["dashboards", "user"] : ["dashboards", "demo"];
   const {
     data: dashboardsData,
     isLoading: isDashboardsLoading,
+    refetch: refetchDashboards,
     error: dashboardsError,
   } = useQuery(
-    "dashboards",
+    queryKey,
+    // get demo dashboards gets the dashboards from a user defined in env
     () => (authLoading || !isLoggedIn ? getDemoDashboards() : getDashboards()),
-    {
-      onError: (error) =>
-        toast.error(
-          `Error loading dashboards: ${error.message}. The server may be down.`,
-        ),
-      retry: 3, // Adjust this number to the maximum number of retry attempts you want
-    },
+    { enabled: !authLoading, retries: 2 },
   );
 
   const dashboards = dashboardsData ? dashboardsData.items : [];
+
   console.log(dashboards);
 
   // Fetch widgets for the selected dashboard
@@ -143,7 +149,7 @@ const DashboardEditor = () => {
   // const isLoading = isDashboardsLoading || isWidgetsLoading;
 
   // Update local state when a new dashboard is selected
-  const handleSelectionChange = (id) => {
+  const changeSelectedDashboard = (id) => {
     const newDashboard = dashboards.find((item) => item.id === id);
     if (newDashboard) {
       setDashboard(newDashboard); // Update local state
@@ -362,7 +368,7 @@ const DashboardEditor = () => {
               className="m-0 inline-flex w-[200px] text-md mr-2"
               value={dashboard ? String(dashboard.id) : ""}
               onChange={(value) => {
-                handleSelectionChange(value);
+                changeSelectedDashboard(value);
               }}
             />
 
@@ -414,9 +420,9 @@ const DashboardEditor = () => {
               }
             />
           </div>
-          <Tooltip variant="info" id="saveDash">
+          {/*  <Tooltip variant="info" id="saveDash">
             Save Dashboard Layout
-          </Tooltip>
+          </Tooltip> */}
           <Button
             data-tooltip-id="saveDash"
             onClick={handleSave}
@@ -425,7 +431,7 @@ const DashboardEditor = () => {
             className={"ml-3 py-1"}
             isLoading={loading}
           >
-            Save
+            Save Layout
           </Button>
           {/* <div className="invisible"></div> */}
         </section>
@@ -452,12 +458,12 @@ const DashboardEditor = () => {
           closeModal={closeModal}
           setAutoAddNewOpen={setAutoAddNewOpen}
           dashboards={dashboards}
-          handleSelectionChange={handleSelectionChange}
+          changeSelectedDashboard={changeSelectedDashboard}
         />
 
         <ConfirmUnsavedChanges
-          open={modal.name === "confirmUnsaved"}
-          closeModal={closeModal}
+          open={openConfirmUnsavedModal === true}
+          closeModal={setOpenConfirmUnsavedModal(false)}
           onSave={handleSave}
         />
         {dashboard && (
