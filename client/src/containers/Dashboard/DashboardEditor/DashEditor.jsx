@@ -20,14 +20,19 @@ import {
 
 import { chartDisplayTypes } from "./WidgetsSidebar/widgetsLibrary.js";
 import { v4 as uuidv4 } from "uuid";
-import { Select, Button, Popover } from "../../../components/index.jsx";
+import {
+  Select,
+  Button,
+  Popover,
+  Spinner,
+} from "../../../components/index.jsx";
 import { Tooltip } from "react-tooltip";
 
-import DashboardLayout from "../DashWidgetsLayout.jsx";
+import DashWidgetsLayout from "../DashWidgetsLayout.jsx";
 import EditDashboardNameModal from "./dashboardModals/EditDashboardName.jsx";
 import AddNewDashboardModal from "./dashboardModals/AddNewDashboard.jsx";
 import DeleteDashboardModal from "./dashboardModals/DeleteDashboard.jsx";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import useWindowSize from "../../../hooks/useWindowSize.js";
 
 import { getNewXandYCoords } from "../helpers/layoutUtils.js";
@@ -37,9 +42,10 @@ import DashboardHeader from "../DashboardHeader/DashHeader.jsx";
 import { AuthContext } from "../../../contexts/auth.context.jsx";
 import { DashboardContext } from "../../../contexts/dash.context.jsx";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
+import useDashboardData from "../hooks/useDashboardData.js";
 
 const DashboardEditor = () => {
-  const { isLoggedIn, authLoading } = useContext(AuthContext);
+  const { isLoggedIn, authLoading, userId } = useContext(AuthContext);
   const {
     hasUnsavedChanges,
     setHasUnsavedChanges,
@@ -56,11 +62,8 @@ const DashboardEditor = () => {
   const closeModal = () => setModal({ name: null, id: null });
   const [autoAddNewOpen, setAutoAddNewOpen] = useState(true);
 
-  const [dashboard, setDashboard] = useState();
-  const [widgets, setWidgets] = useState();
+  const [widgets, setUnsavedWidgets] = useState();
   const [loading, setLoading] = useState(false);
-
-  document.title = `Editing Dashboard: ${dashboard?.name}`;
 
   // ------------------------------------------------------------------------
 
@@ -77,6 +80,7 @@ const DashboardEditor = () => {
   }, []);
 
   const handleSave = async () => {
+    if (!isLoggedIn) return toast("Please log in to save a dashboard.  ➡️");
     setLoading(true);
     try {
       const widgetUpdates = {};
@@ -108,111 +112,27 @@ const DashboardEditor = () => {
     }
   };
 
-  // Fetch dashboards
-  const queryKey = isLoggedIn ? ["dashboards", "user"] : ["dashboards", "demo"];
   const {
-    data: dashboardsData,
-    isLoading: isDashboardsLoading,
-    refetch: refetchDashboards,
-    error: dashboardsError,
-  } = useQuery(
-    queryKey,
-    // get demo dashboards gets the dashboards from a user defined in env
-    () => (authLoading || !isLoggedIn ? getDemoDashboards() : getDashboards()),
-    { enabled: !authLoading, retries: 2 },
-  );
+    dashboard,
+    dashboards,
+    dashboardError,
+    isDashboardsLoading,
+    refetchDashboardData,
+    widgets: widgetsFromDb,
+    isWidgetsLoading,
+    changeSelectedDashboard,
+  } = useDashboardData({ isLoggedIn, authLoading, userId });
 
-  const dashboards = dashboardsData ? dashboardsData.items : [];
-
-  console.log(dashboards);
-
-  // Fetch widgets for the selected dashboard
-  const { data: widgetsData, isLoading: isWidgetsLoading } = useQuery(
-    ["widgets", dashboard?.id],
-    () => getDashboardWidgets(dashboard?.id),
-    {
-      enabled: !!dashboard && !isDashboardsLoading, // the query will only run if dashboard is truthy and dashboards are not loading.
-      onError: (error) =>
-        toast.error(`Error loading widgets: ${error.message}`),
-      retry: 3,
-    },
-  );
+  document.title = `Editing Dashboard: ${dashboard?.name}`;
 
   // Update localWidgets state when widgetsData changes
   useEffect(() => {
-    console.log("widgetsData useEffect");
-    if (widgetsData) {
-      setWidgets(widgetsData.items);
-    }
-  }, [widgetsData]);
+    if (isDashboardsLoading || isWidgetsLoading) return;
+    console.log("-- 4 -- onSuccess queryKey and Data: ");
+    setUnsavedWidgets(widgetsFromDb);
+  }, [widgetsFromDb, isDashboardsLoading]);
 
   // const isLoading = isDashboardsLoading || isWidgetsLoading;
-
-  // Update local state when a new dashboard is selected
-  const changeSelectedDashboard = (id) => {
-    const newDashboard = dashboards.find((item) => item.id === id);
-    if (newDashboard) {
-      setDashboard(newDashboard); // Update local state
-      localStorage.setItem("lastSelectedDashboardId", JSON.stringify(id));
-    }
-  };
-
-  // Initialize with the dashboard from local storage when dashboards are loaded
-  useEffect(() => {
-    if (dashboards.length === 0) return;
-    console.log("Dashboards useEffect");
-    if (dashboards && dashboards.length > 0) {
-      const storedDashboardId = localStorage.getItem("lastSelectedDashboardId");
-      const storedDashboardExists =
-        storedDashboardId &&
-        dashboards.some((d) => d.id === JSON.parse(storedDashboardId));
-
-      // If the stored dashboard exists in the list, use it
-      if (storedDashboardExists) {
-        const newSelectedDashboard = dashboards.find(
-          (d) => d.id === JSON.parse(storedDashboardId),
-        );
-        setDashboard(newSelectedDashboard);
-      } else {
-        // If not, default to the first dashboard
-        const defaultDashboard = dashboards[0];
-        setDashboard(defaultDashboard);
-        localStorage.setItem(
-          "lastSelectedDashboardId",
-          JSON.stringify(defaultDashboard.id),
-        );
-      }
-    } else {
-      if (autoAddNewOpen) {
-        setModal({ name: "addDashboard" });
-      }
-    }
-  }, [dashboards]);
-
-  // When a dashboard is deleted, select the first dashboard if available
-  useEffect(() => {
-    console.log("Dashboards, dashboard useEffect");
-    if (dashboards.length < 1) return;
-    if (!dashboard || !dashboards.find((d) => d.id === dashboard.id)) {
-      const storedDashboardId = localStorage.getItem("lastSelectedDashboardId");
-      const storedDashboardExists = dashboards.some(
-        (d) => d.id === JSON.parse(storedDashboardId),
-      );
-      const defaultDashboard = storedDashboardExists
-        ? dashboards.find((d) => d.id === JSON.parse(storedDashboardId))
-        : dashboards[0] || null;
-
-      setDashboard(defaultDashboard);
-      if (defaultDashboard) {
-        localStorage.setItem(
-          "lastSelectedDashboardId",
-          JSON.stringify(defaultDashboard.id),
-        );
-      } else {
-        localStorage.removeItem("lastSelectedDashboardId");
-      }
-    }
-  }, [dashboards, dashboard]);
 
   const handleAddItem = async (widgetOptions) => {
     const { name, entity, criteria, displayType, icon, color, navigationUrl } =
@@ -262,7 +182,7 @@ const DashboardEditor = () => {
     // console.log(newWidget.x);
     // console.log(newWidget.y);
 
-    setWidgets((prevWidgets) => [...prevWidgets, newWidget]);
+    setUnsavedWidgets((prevWidgets) => [...prevWidgets, newWidget]);
     setHasUnsavedChanges(true);
   };
 
@@ -272,13 +192,38 @@ const DashboardEditor = () => {
       return;
     }
     try {
-      setWidgets((prevWidgets) =>
+      setUnsavedWidgets((prevWidgets) =>
         prevWidgets.filter((item) => item.i !== widget.i),
       );
-
+      selectDashAfterDelete();
       setHasUnsavedChanges(true);
     } catch (error) {
       console.error("Error deleting widget:", error);
+    }
+  };
+
+  // When a dashboard is deleted, select the first dashboard if available
+  const selectDashAfterDelete = () => {
+    console.log("Dashboards, dashboard useEffect");
+    if (dashboards.length < 1) return;
+    if (!dashboard || !dashboards.find((d) => d.id === dashboard.id)) {
+      const storedDashboardId = localStorage.getItem("lastSelectedDashboardId");
+      const storedDashboardExists = dashboards.some(
+        (d) => d.id === JSON.parse(storedDashboardId),
+      );
+      const defaultDashboard = storedDashboardExists
+        ? dashboards.find((d) => d.id === JSON.parse(storedDashboardId))
+        : dashboards[0] || null;
+
+      changeSelectedDashboard(defaultDashboard?.id);
+      if (defaultDashboard) {
+        localStorage.setItem(
+          "lastSelectedDashboardId",
+          JSON.stringify(defaultDashboard.id),
+        );
+      } else {
+        localStorage.removeItem("lastSelectedDashboardId");
+      }
     }
   };
 
@@ -305,22 +250,27 @@ const DashboardEditor = () => {
     updatedWidgets = sortWidgets(updatedWidgets);
 
     // Update the widgets state
-    setWidgets(updatedWidgets);
+    setUnsavedWidgets(updatedWidgets);
     setHasUnsavedChanges(true);
 
     // console.table(updatedWidgets);
   };
 
-  if (!dashboards) {
-    return <div></div>;
+  if (isDashboardsLoading) {
+    return (
+      <div className="flex justify-center items-center">
+        <Spinner />
+      </div>
+    );
   }
+
   /*   if (isDashboardsLoading || isWidgetsLoading) {
     return <div>Loading...</div>;
   } */
-  if (dashboardsError) {
+  if (dashboardError) {
     return (
       <div>
-        <p>Error loading dashboards: {dashboardsError.message}</p>
+        <p>Error loading dashboards: {dashboardError.message}</p>
       </div>
     );
   }
@@ -426,7 +376,6 @@ const DashboardEditor = () => {
           <Button
             data-tooltip-id="saveDash"
             onClick={handleSave}
-            size="large"
             variant="light"
             className={"ml-3 py-1"}
             isLoading={loading}
@@ -444,9 +393,11 @@ const DashboardEditor = () => {
             />
           </div>
           {/* this is the actual react-grid-layout dashboard - besides here, it is called from CompanyDashboard and SoftwareDashboard */}
-          <DashboardLayout
+          <DashWidgetsLayout
             dashboards={dashboards}
-            widgets={widgets || widgetsData?.items}
+            widgets={widgets}
+            isWidgetsLoading={isWidgetsLoading}
+            isDashboardsLoading={isDashboardsLoading}
             isEditMode={true}
             onWidgetMoved={handleWidgetMoved}
             onRemoveItem={handleRemoveItem}

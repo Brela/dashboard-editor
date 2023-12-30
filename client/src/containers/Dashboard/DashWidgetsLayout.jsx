@@ -9,7 +9,7 @@ import {
 import { twMerge } from "tailwind-merge";
 
 import WidgetContent from "./components/WidgetContent";
-import { Button } from "../../components";
+import { Button, Spinner } from "../../components";
 
 import PieChart from "./components/charts/PieChart";
 import LineChart from "./components/charts/LineChart";
@@ -22,13 +22,15 @@ import { ICON_MAP } from "./helpers/iconMap";
 import EmptyDashboard from "./components/EmptyDashboard";
 import { dashboardBg } from "../../css/globalTailwindVars";
 
-// this has to go outside of the DashboardLayout  function
+// this has to go outside of the DashWidgetsLayout  function
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-const DashboardLayout = ({
+const DashWidgetsLayout = ({
   isEditMode,
   dashboards,
   widgets,
+  isDashboardsLoading,
+  isWidgetsLoading,
   onWidgetMoved,
   onRemoveItem,
 }) => {
@@ -39,7 +41,9 @@ const DashboardLayout = ({
 
   // this is used to responsive layouts to provide to react-grid-layout
   useEffect(() => {
-    if (widgets && widgets.length !== 0) {
+    if (isDashboardsLoading || isWidgetsLoading) return;
+    console.log("-- 6 --: ");
+    if (widgets && widgets.length > 0) {
       setSmLayout(generateThreeColumnLayout(widgets));
       setXxsLayout(generateTwoColumnLayout(widgets));
     }
@@ -55,7 +59,17 @@ const DashboardLayout = ({
     ); */
   }, [widgets]);
 
-  if (!dashboards || dashboards.length === 0) {
+  if (isDashboardsLoading || isWidgetsLoading) {
+    return (
+      <EmptyDashboard
+        message={
+          <div>
+            <Spinner />
+          </div>
+        }
+      />
+    );
+  } else if (!dashboards || dashboards.length === 0) {
     return (
       <EmptyDashboard message="No dashboards found. To add a dashboard, click the settings icon above." />
     );
@@ -188,7 +202,7 @@ const DashboardLayout = ({
   );
 };
 
-export default DashboardLayout;
+export default DashWidgetsLayout;
 
 const RemoveBlockXButton = ({ block, onRemoveItem }) => {
   return (

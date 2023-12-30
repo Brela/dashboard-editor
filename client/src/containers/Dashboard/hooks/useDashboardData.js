@@ -7,15 +7,19 @@ import {
 } from "../../../services/dashboardAPIcalls";
 
 // this customm hook was created to share this data between the dashboard home and dashboard editor
-const useDashboardData = ({ isLoggedIn, authLoading }) => {
+const useDashboardData = ({ isLoggedIn, authLoading, userId }) => {
   const [dashboard, setDashboard] = useState();
 
+  // i beleive the problem is here -- the query is not running the user query right after user logs in
   // Fetch dashboards
-  const queryKey = isLoggedIn ? ["dashboards", "user"] : ["dashboards", "demo"];
+  const queryKey = isLoggedIn
+    ? ["dashboards", "user", userId]
+    : ["dashboards", "demo"];
   const {
     data: dashboardsData,
     isLoading: isDashboardsLoading,
     refetch: refetchDashboards,
+    error: dashboardError,
   } = useQuery(
     queryKey,
     // get demo dashboards gets the dashboards from a user defined in env
@@ -26,6 +30,8 @@ const useDashboardData = ({ isLoggedIn, authLoading }) => {
       onSuccess: (data) => {
         // data will be the result of getDashboards or getDemoDashboards
         // Perform actions that depend on the updated dashboards data
+
+        console.log("-- 1 -- onSuccess queryKey and Data: ", queryKey, data);
         const newDashboards = data.items;
         changeSelectedDashboardAfterFetch(newDashboards);
       },
@@ -35,9 +41,23 @@ const useDashboardData = ({ isLoggedIn, authLoading }) => {
   const dashboards = dashboardsData ? dashboardsData.items : [];
 
   useEffect(() => {
-    console.log("dashborads", dashboards);
-    console.log("selected dashboard", dashboard);
-  }, [dashboards, dashboard]);
+    console.log("-- 2 -- in hook, dashboards changed: ", dashboards);
+  }, [dashboards]);
+  useEffect(() => {
+    console.log("-- 3 -- in hook, selected dashboard changed: ", dashboard);
+  }, [dashboards]);
+
+  // Initialize with the first dashboard or from local storage when dashboards are loaded
+  useEffect(() => {
+    if (dashboards.length > 0) {
+      const storedDashboardId = localStorage.getItem("lastSelectedDashboardId");
+      const foundDashboard = dashboards.find(
+        (d) => d.id === JSON.parse(storedDashboardId),
+      );
+      const defaultDashboard = foundDashboard || dashboards[0];
+      setDashboard(defaultDashboard);
+    }
+  }, [dashboards]);
 
   // Fetch widgets for the selected dashboard
   const {
@@ -48,7 +68,7 @@ const useDashboardData = ({ isLoggedIn, authLoading }) => {
     ["widgets", dashboard?.id],
     () => getDashboardWidgets(dashboard?.id),
     {
-      enabled: !!dashboard, // the query will only run if dashboard is truthy.
+      enabled: !!dashboard && !authLoading, // the query will only run if dashboard is truthy.
       retries: 2,
     },
   );
@@ -95,11 +115,11 @@ const useDashboardData = ({ isLoggedIn, authLoading }) => {
   return {
     dashboard,
     dashboards,
+    dashboardError,
     isDashboardsLoading,
     refetchDashboardData,
     widgets,
     isWidgetsLoading,
-
     setDashboard,
     changeSelectedDashboard,
   };

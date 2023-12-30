@@ -64,7 +64,7 @@ const Profile = (props) => {
       queryClient.removeQueries("dashboards");
       queryClient.removeQueries("widgets");
     }
-  }, [isLoggedIn, queryClient]);
+  }, [isLoggedIn]);
 
   // console.log(loggedInUser?.id);
 

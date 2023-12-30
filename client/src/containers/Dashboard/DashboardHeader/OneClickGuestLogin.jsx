@@ -10,12 +10,17 @@ import { v4 as uuid } from "uuid";
 import { AuthContext } from "../../../contexts/auth.context";
 import { useQueryClient } from "react-query";
 import { createDashboard } from "../../../services/dashboardAPIcalls";
+import useDashboardData from "../hooks/useDashboardData";
 
 const OneClickGuestLogin = (props) => {
-  const { isLoggedIn, setIsLoggedIn, authLoading, fetchAuthStatus } =
+  const { isLoggedIn, setIsLoggedIn, userId, authLoading, fetchAuthStatus } =
     useContext(AuthContext);
   const queryClient = useQueryClient();
-  const { refetchDashboardData, changeSelectedDashboard } = props;
+  const { refetchDashboardData } = useDashboardData({
+    isLoggedIn,
+    authLoading,
+    userId,
+  });
 
   const handleGuestLogin = async () => {
     let toastId = null;
@@ -80,7 +85,7 @@ const OneClickGuestLogin = (props) => {
       queryClient.removeQueries("dashboards");
       queryClient.removeQueries("widgets");
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, queryClient]);
 
   return (
     <div>

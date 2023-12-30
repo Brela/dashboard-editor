@@ -33,7 +33,7 @@ const WidgetsSidebar = ({
 
   const [widgetForOptionsPopover, setWidgetForOptionsPopover] = useState();
 
-  const fetchCustomWidgets = async () => {
+  /* const fetchCustomWidgets = async () => {
     setLoading(true);
     try {
       const data = await getCustomWidgets();
@@ -47,7 +47,7 @@ const WidgetsSidebar = ({
   };
   useEffect(() => {
     fetchCustomWidgets();
-  }, []);
+  }, []); */
 
   const [financeWidgets_filtered, setFinanceWidgets_filtered] =
     useState(financeWidgetsList);
@@ -60,6 +60,7 @@ const WidgetsSidebar = ({
 
   // get only widgets that aren't on the dashboard
   useEffect(() => {
+    if (widgets?.length === 0) return;
     setFinanceWidgets_filtered(
       financeWidgetsList.filter(
         (widgetOption) =>
@@ -100,7 +101,7 @@ const WidgetsSidebar = ({
           ),
       ),
     );
-  }, [dashboard, widgets, customWidgetsList]);
+  }, [dashboard, widgets]);
 
   // group the widgets so that they can use the same code when mapped over
   const [widgetLibraries, setWidgetLibraries] = useState();
@@ -250,7 +251,7 @@ const WidgetsSidebar = ({
       <AddCustomWidgetModal
         open={modal.name === "addCustomWidget"}
         closeModal={closeModal}
-        fetchCustomWidgets={fetchCustomWidgets}
+        // fetchCustomWidgets={fetchCustomWidgets}
         // setCustomWidgets={setCustomWidgets_filtered}
       />
     </div>

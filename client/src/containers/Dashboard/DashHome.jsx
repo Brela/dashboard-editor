@@ -7,7 +7,7 @@ import DashboardHeader from "./DashboardHeader/DashHeader";
 import useDashboardData from "./hooks/useDashboardData";
 
 const DashboardHome = () => {
-  const { isLoggedIn, authLoading } = useContext(AuthContext);
+  const { isLoggedIn, authLoading, userId } = useContext(AuthContext);
 
   const {
     dashboard,
@@ -17,7 +17,7 @@ const DashboardHome = () => {
     widgets,
     isWidgetsLoading,
     changeSelectedDashboard,
-  } = useDashboardData({ isLoggedIn, authLoading });
+  } = useDashboardData({ isLoggedIn, authLoading, userId });
 
   return (
     <>
