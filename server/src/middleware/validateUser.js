@@ -1,9 +1,13 @@
+import jwt from "jsonwebtoken";
+import prisma from "../config/prismaClient.js";
+
 const verifyToken = (token) => {
   try {
     const decoded = jwt.verify(
-      token.replace(/\"/g, ""),
+      token.replace(/"/g, ""),
       process.env.TOKEN_SECRET,
     );
+
     return { status: true, data: decoded };
     // # TODO: Handle if token is expired
   } catch (e) {
@@ -13,7 +17,7 @@ const verifyToken = (token) => {
 };
 
 const validateUser = async (req, res, next) => {
-  token = req.cookies.authToken;
+  let token = req.cookies.authToken;
   if (!token) {
     return res.status(403).json({ message: "Invalid session" });
   }

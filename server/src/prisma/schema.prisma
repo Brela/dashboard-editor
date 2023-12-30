@@ -12,7 +12,7 @@ generator client {
 model Product {
   id             Int       @id @default(autoincrement())
   userId         String?
-  user           User?     @relation(fields: [userId], references: [id])
+  user           User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
   sku            String    @unique // SKU field marked as unique
   brand          String
   productName    String
@@ -32,7 +32,7 @@ model Product {
 model Order {
   id               Int       @id @default(autoincrement())
   SKU              String // Field to connect with Product's SKU
-  product          Product   @relation(fields: [SKU], references: [sku]) // Relation using SKU
+  product          Product   @relation(fields: [SKU], references: [sku], onDelete: Cascade) // Relation using SKU
   orderedDate      DateTime  @default(now())
   schedArrivalDate DateTime?
   delivered        DateTime?
@@ -49,6 +49,7 @@ model User {
   id              String            @id @default(cuid())
   username        String            @unique
   password        String
+  isTempAccount   Boolean           @default(false)
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
   tokens          Token[]
@@ -65,7 +66,7 @@ model Token {
   token     String
   type      String // "ACCESS" or "REFRESH"
   userId    String
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -82,7 +83,7 @@ model Dashboard {
   updatedAt DateTime @default(now())
 
   userId  String
-  user    User              @relation(fields: [userId], references: [id])
+  user    User              @relation(fields: [userId], references: [id], onDelete: Cascade)
   widgets DashboardWidget[]
 
   @@schema("inventory-copilot")
@@ -107,7 +108,7 @@ model DashboardWidget {
   userId      String
   dashboardId Int
 
-  user      User      @relation(fields: [userId], references: [id])
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   dashboard Dashboard @relation(fields: [dashboardId], references: [id])
 
   createdAt DateTime @default(now())
@@ -127,7 +128,7 @@ model CustomWidget {
   color       String
 
   userId String
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())

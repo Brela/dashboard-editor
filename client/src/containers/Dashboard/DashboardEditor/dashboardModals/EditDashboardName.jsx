@@ -53,38 +53,45 @@ const EditDashboardNameModal = ({ open, closeModal, dashboard }) => {
       title=""
       open={open}
       setOpen={closeModal}
-      ui={
-        <>
-          <div className=" text-center sm:ml-4 sm:mt-0 sm:text-left pb-5">
-            <Input
-              label={"Edit This Dashboard's Name"}
-              placeholder={dashboard?.name}
-              labelClassname="text-gray-400"
-              className="w-[300px]"
-              onChange={(e) => setNewDashboardName(e.target.value)}
-            ></Input>
-          </div>
-          {inModalError.message !== "" && (
-            <InfoCard
-              type={inModalError.type}
-              message={inModalError.message}
-              title={inModalError.title}
-              forever={true}
-            />
-          )}
-
-          <div className="mt-5 sm:mt-4 flex gap-3 justify-end">
-            <Button size="sm" variant="ghost" onClick={() => closeModal()}>
-              Cancel
-            </Button>
-            <Button size="sm" isLoading={loading} onClick={handleEditName}>
-              Save
-            </Button>
-          </div>
-        </>
-      }
       modalStyle={`md:max-w-md overflow-y-auto`}
       placement="top"
+      ui={
+        <>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleEditName();
+            }}
+          >
+            <div className=" text-center sm:ml-4 sm:mt-0 sm:text-left pb-5">
+              <Input
+                label={"Edit This Dashboard's Name"}
+                placeholder={dashboard?.name}
+                labelClassname="text-gray-400"
+                className="w-[300px]"
+                onChange={(e) => setNewDashboardName(e.target.value)}
+              ></Input>
+            </div>
+            {inModalError.message !== "" && (
+              <InfoCard
+                type={inModalError.type}
+                message={inModalError.message}
+                title={inModalError.title}
+                forever={true}
+              />
+            )}
+
+            <div className="mt-5 sm:mt-4 flex gap-3 justify-end">
+              <Button size="sm" variant="ghost" onClick={() => closeModal()}>
+                Cancel
+              </Button>
+              <Button size="sm" isLoading={loading} onClick={handleEditName}>
+                Save
+              </Button>
+            </div>
+          </form>
+        </>
+      }
     />
   );
 };

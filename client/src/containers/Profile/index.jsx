@@ -16,32 +16,57 @@ import ProfileContent from "./ProfileContent";
 import SettingsContent from "./SettingsContent";
 import HeaderModal from "./HeaderModal";
 import NavigationBar from "../../components/NavigationBar";
-import { Popover, Modal } from "../../components";
+import { Popover, Modal, Spinner } from "../../components";
+import { useQueryClient } from "react-query";
 
-const Profile = () => {
-  const [showDropdown, setShowDropdown] = useState(false);
+const Profile = (props) => {
   const [loggedInUser, setLoggedInUser] = useState({ username: "" });
-  const dropdownRef = useRef(null);
-  const { setIsLoggedIn } = useContext(AuthContext);
+
+  const { isLoggedIn, setIsLoggedIn, authLoading } = useContext(AuthContext);
   const [modalContent, setModalContent] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const closeModal = () => setShowModal(false);
+
+  const { refetchDashboardData, changeSelectedDashboard } = props;
+
+  const queryClient = useQueryClient();
 
   const openSettingsModal = () => {
     setModalContent(<SettingsContent />);
     setShowModal(true);
   };
 
+  // this is used for the dashboard demo
+  /*   useEffect(() => {
+    setIsLoggedIn(true);
+  }, []); */
+
   const handleLogoutUser = async () => {
     try {
-      await logoutUser(); // Calling the API to logout the user
+      await logoutUser();
+
       setIsLoggedIn(false);
-      setShowDropdown(false);
       setLoggedInUser({ username: "" });
+      localStorage.removeItem("lastSelectedDashboardId");
+
+      // clear the demo queries and remove them
+      queryClient.setQueryData(["dashboards", "user"], null);
+      queryClient.setQueryData("widgets", null);
+      queryClient.removeQueries(["dashboards", "user"], { exact: true });
+      queryClient.removeQueries("widgets");
     } catch (error) {
       toast.error(`Oops! Something went wrong: ${error}`);
     }
   };
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      queryClient.removeQueries("dashboards");
+      queryClient.removeQueries("widgets");
+    }
+  }, [isLoggedIn]);
+
+  // console.log(loggedInUser?.id);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -64,9 +89,15 @@ const Profile = () => {
       <Popover
         trigger={
           <div className="bg-cyan-700/20 hover:bg-slate-200/80 p-3 h-10 w-10 rounded-full  focus:outline-none focus:bg-slate-400 flex items-center justify-center">
-            <span className="text-xl font-bold uppercase text-gray-700">
-              {loggedInUser?.username?.charAt(0)}
-            </span>
+            {authLoading ? (
+              <div className="absolute flex items-center">
+                <Spinner size="medium" />
+              </div>
+            ) : (
+              <span className="text-xl font-bold uppercase text-gray-700">
+                {loggedInUser?.username?.charAt(0)}
+              </span>
+            )}
           </div>
         }
         contentClassName="mr-2 px-8"

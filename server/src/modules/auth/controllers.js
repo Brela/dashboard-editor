@@ -7,7 +7,7 @@ import {
 } from "../../config/envConfig.js";
 import { HTTP_STATUS } from "../../config/constants.js";
 import { createToken } from "./authUtils.js";
-import { authenticateJWT } from "./jwtAuth.js";
+import { authenticateJWT } from "./authenticateJWT.js";
 import prisma from "../../config/prismaClient.js";
 
 const isDevMode = IS_DEV_MODE === "true";

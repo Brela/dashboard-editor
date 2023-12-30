@@ -4,6 +4,7 @@ import { Tooltip } from "../../../components";
 import { useNavigate } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 import { primaryColor } from "../../../css/globalTailwindVars";
+import { toast } from "react-hot-toast";
 
 const WidgetContent = ({ isEditMode, block, IconComponent }) => {
   const [linkHover, setLinkHover] = useState();
@@ -69,9 +70,10 @@ const WidgetContent = ({ isEditMode, block, IconComponent }) => {
                 }
               }}
               onClick={() => {
-                if (!isEditMode) {
+                toast("This feature is disabled for Demo");
+                /*   if (!isEditMode) {
                   navigate(block.navigationUrl);
-                }
+                } */
               }}
               onMouseLeave={() => {
                 setLinkHover(null);

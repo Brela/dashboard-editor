@@ -1,7 +1,19 @@
 import { API } from "./config";
 
+export const getDemoDashboards = async (queryParams) => {
+  try {
+    const response = await API("/dashboards/demo").get("/", {
+      params: queryParams,
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message || "Failed to get dashboards",
+    );
+  }
+};
+
 export const getDashboards = async (queryParams) => {
-  console.log("fn");
   try {
     const response = await API("/dashboards").get("/", { params: queryParams });
     return response.data;

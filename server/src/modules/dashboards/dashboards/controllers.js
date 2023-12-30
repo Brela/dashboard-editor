@@ -7,7 +7,7 @@ import {
   getOneDashboardQuery,
 } from "./repository.js";
 
-import { deleteManyDashboardWidgetsQuery } from "../widgets/repository.js";
+import { deleteManyDashboardWidgetsQuery } from "../widgets/repositoryLive.js";
 
 import {
   dashboardOrderSchema,
@@ -26,10 +26,31 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const getAllDashboards = async (req, res) => {
-  const userId = req?.user?.id;
+const getDemoDashboards = async (req, res) => {
+  // used for demo to view dashboards and widgets
+  // this is the userId for xrp777
+  const userId = process.env.DEMO_USER_ID;
+  try {
+    const items = await prisma.dashboard.findMany({
+      where: {
+        userId: userId,
+      },
+    });
 
-  const { page, size, offset, orderBy, search } = parseQueryParams(req);
+    return res.status(200).json({
+      items: items,
+    });
+  } catch (error) {
+    console.error("Error retrieving items:", error);
+    return res.status(500).json({
+      message: error.message || "Internal server error",
+    });
+  }
+};
+
+const getAllDashboards = async (req, res) => {
+  let userId = req?.user?.id;
+  const { page, size, orderBy, search } = parseQueryParams(req);
 
   const { error } = dashboardOrderSchema.validate(orderBy, {
     abortEarly: false,
@@ -62,8 +83,6 @@ const getAllDashboards = async (req, res) => {
             OR: searchQueries,
           },
           orderBy,
-          skip: offset,
-          take: size,
         },
         tx,
       );
@@ -79,6 +98,8 @@ const getAllDashboards = async (req, res) => {
         },
         tx,
       );
+
+      console.log("items", items);
 
       return { items, total_filtered };
     });
@@ -129,6 +150,7 @@ const getOneDashboard = async (req, res) => {
 };
 
 const createDashboard = async (req, res) => {
+  let userId = req?.user?.id;
   const payload = req.body;
 
   const { error } = dashboardCreateSchema.validate(payload, {
@@ -154,6 +176,7 @@ const createDashboard = async (req, res) => {
     const existingDashboard = await prisma.dashboard.findFirst({
       where: {
         name: payload.name,
+        userId: userId,
       },
     });
 
@@ -256,6 +279,7 @@ const deleteDashboard = async (req, res) => {
 };
 
 export {
+  getDemoDashboards,
   getAllDashboards,
   createDashboard,
   updateDashboard,

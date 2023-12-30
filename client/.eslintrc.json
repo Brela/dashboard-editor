@@ -1,0 +1,28 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "ecmaFeatures": {
+      "jsx": true // Enable this if you are using React
+    },
+    "sourceType": "module"
+  },
+  "plugins": ["react"],
+  "rules": {
+    "no-unused-vars": "off",
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/display-name": "off"
+    // You can add other rules here as needed
+  },
+  "settings": {
+    "react": {
+      "version": "detect", // Automatically detect the React version
+      "runtime": "automatic" // For new JSX transform
+    }
+  }
+}

@@ -85,13 +85,10 @@ function OrderHistory() {
     <div className="px-4">
       <div className="flex justify-end">
         <button
-          className="bg-zinc-200 hover:bg-zinc-300/80 py-2 px-4 rounded-full text-zinc-700 font-semibold text-sm flex items-center gap-2"
+          className=" hover:bg-zinc-200/70 py-1 px-4 rounded-md flex items-center gap-2"
           onClick={handleClearHistory}
         >
-          <FontAwesomeIcon
-            icon={faTrash}
-            className=" text-zinc-500 text-base"
-          />{" "}
+          <FontAwesomeIcon icon={faTrash} className="text-sm text-zinc-400" />{" "}
           Clear History
         </button>
       </div>
@@ -100,9 +97,14 @@ function OrderHistory() {
         <table {...getTableProps()} className="w-full table-auto text-black/80">
           <thead className="border-b border-zinc-200 text-sm font-semibold">
             {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()} className="h-14 ">
+              <tr
+                key={headerGroup.id}
+                {...headerGroup.getHeaderGroupProps()}
+                className="h-14 "
+              >
                 {headerGroup.headers.map((column, index) => (
                   <th
+                    key={column.id}
                     {...column.getHeaderProps(column.getSortByToggleProps())}
                     className={twMerge(
                       "px-5 pl-10 text-left font-semibold",
@@ -144,10 +146,15 @@ function OrderHistory() {
               return (
                 <tr
                   {...row.getRowProps()}
+                  key={row.id}
                   className="h-12 border-b last:border-none border-zinc-200 hover:bg-zinc-50"
                 >
                   {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()} className="px-10">
+                    <td
+                      key={cell.id}
+                      {...cell.getCellProps()}
+                      className="px-10"
+                    >
                       {cell.render("Cell")}
                     </td>
                   ))}

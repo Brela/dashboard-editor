@@ -26,13 +26,14 @@ export const getUser = async (id) => {
   }
 };
 
-export const createUser = async (username, password) => {
+export const createUser = async (username, password, isTempAccount) => {
   try {
     const response = await axios.post(
       `${API_URL}/user/`,
       {
         username,
         password,
+        isTempAccount: isTempAccount ? true : false,
       },
       {
         headers: {
@@ -42,7 +43,6 @@ export const createUser = async (username, password) => {
       },
     );
 
-    toast.success(`${username} successfully signed up`);
     return response.data;
   } catch (error) {
     toast.error(
@@ -67,8 +67,6 @@ export const loginUser = async (username, password) => {
         },
       },
     );
-
-    toast.success("Welcome Back 👋");
 
     return response.data;
   } catch (error) {
@@ -138,5 +136,31 @@ export const deleteUser = async (id) => {
   } catch (error) {
     toast.error("An error occurred during the delete process:", error);
     throw error;
+  }
+};
+
+export const createSeedDataForUser = async () => {
+  try {
+    const response = await axios.post(
+      `${API_URL}/user/seeds`,
+      {
+        // username,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      },
+    );
+
+    return response.data;
+  } catch (error) {
+    toast.error(
+      `Failed to create seed data: ${
+        error.response?.data.message || error.message
+      }`,
+    );
+    return null;
   }
 };

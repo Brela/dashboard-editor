@@ -30,10 +30,14 @@ import AddProductButtons from "./modals/AddProductButtons";
 import OrderHistory from "../Orders/OrderHistory";
 import ActiveOrders from "../Orders/ActiveOrders";
 import SelectedRowsModal from "./modals/SelectedRows";
-import { updateInventoryItem } from "../../services/inventoryAPIcalls";
+import {
+  getInventoryList,
+  updateInventoryItem,
+} from "../../services/inventoryAPIcalls";
 import { EditableCell } from "./EditableCell";
 import DemoControls from "../DemoControls";
 import PaginationWrapper from "../../pages/Home/PaginationWrapper";
+import { useQuery } from "react-query";
 
 export default function Inventory() {
   const {
@@ -47,6 +51,13 @@ export default function Inventory() {
     toggleSelectedItem,
     isLoading,
   } = useContext(InventoryContext);
+
+  /*  const { data: inventoryData, isLoading: isInventoryLoading } = useQuery(
+    "inventory",
+    getInventoryList,
+    { retries: 2 },
+  );
+  const inventory = inventoryData ? inventoryData.items : []; */
 
   const {
     activeOrders,
@@ -288,9 +299,13 @@ export default function Inventory() {
             >
               <thead className="border-b border-zinc-200 h-14 text-sm ">
                 {headerGroups.map((headerGroup) => (
-                  <tr {...headerGroup.getHeaderGroupProps()}>
+                  <tr
+                    key={headerGroup.id}
+                    {...headerGroup.getHeaderGroupProps()}
+                  >
                     {headerGroup.headers.map((column) => (
                       <th
+                        key={column.id}
                         {...column.getHeaderProps(
                           column.getSortByToggleProps(),
                         )}
@@ -331,10 +346,11 @@ export default function Inventory() {
                   return (
                     <tr
                       {...row.getRowProps()}
+                      key={row.id}
                       className="text-sm h-12 border-b last:border-none border-zinc-200 hover:bg-zinc-50"
                     >
-                      {row.cells.map((cell) => (
-                        <td {...cell.getCellProps()} className="px-5">
+                      {row.cells.map((cell, idx) => (
+                        <td {...cell.getCellProps()} key={idx} className="px-5">
                           {cell.render("Cell")}
                         </td>
                       ))}

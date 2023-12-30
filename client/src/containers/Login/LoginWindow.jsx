@@ -11,7 +11,7 @@ import {
 import { toast } from "react-hot-toast";
 import { InventoryContext } from "../../contexts/inventory.context";
 
-export default function () {
+export default function LoginWindow() {
   const { setIsLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
   const [login, setLogin] = useState(true);
@@ -27,7 +27,7 @@ export default function () {
   const handleCredentialResponse = (response) => {
     console.log("Encoded JWT ID Token:  ", response);
   };
-  useEffect(() => {
+  /* useEffect(() => {
     google.accounts.id.initialize({
       client_id:
         "785322521849-am635dvee0bhsm2jqcl7c0h0cip0rum6.apps.googleusercontent.com",
@@ -42,7 +42,7 @@ export default function () {
         text: "continue_with",
       },
     );
-  }, []);
+  }, []); */
   // ------------------
 
   const handleSubmit = async (event) => {
@@ -59,6 +59,7 @@ export default function () {
         );
 
         if (userData.user) {
+          toast.success("Welcome Back 👋");
           setIsLoggedIn(true);
           // reloadInventory();
           navigate("/copilot/");

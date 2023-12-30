@@ -105,7 +105,7 @@ async function countInvoices({ companyId, condition }) {
   return await prisma.invoice.count({ where: { companyId, ...condition } });
 }
 // to-do
-async function countParts({ companyId }) {
+async function countParts({ companyId, condition }) {
   return await prisma.part.count({ where: { companyId, ...condition } });
 }
 
@@ -303,7 +303,7 @@ function createWidgetQueries(companyId) {
 
     // -------   parts  -----------
     //to-do
-    "parts-partsInInventory-count": () => countParts({ cId }),
+    // "parts-partsInInventory-count": () => countParts({ cId }),
     // to-do
     "parts-partsTotalCost-total": async ({ companyId }) => {
       try {

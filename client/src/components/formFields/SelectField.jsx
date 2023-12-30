@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import Select from "react-select";
 import { get, includes, isArray } from "lodash";
 import { twMerge } from "tailwind-merge";
+import { primaryColor } from "../../css/globalTailwindVars";
 
 const SelectField = ({
   label,
@@ -105,16 +106,14 @@ const SelectField = ({
             ...provided,
             backgroundColor: state.isSelected
               ? isPastel
-                ? getPastelColor(PRIMARY_COLOR)
-                : PRIMARY_COLOR
+                ? primaryColor
+                : primaryColor
               : state.isFocused
-              ? getPastelColor(PRIMARY_COLOR)
+              ? primaryColor
               : "white",
             color: state.isSelected || state.isFocused ? "white" : "black",
             "&:hover": {
-              backgroundColor: isPastel
-                ? `${getPastelColor(PRIMARY_COLOR)}`
-                : PRIMARY_COLOR,
+              backgroundColor: isPastel ? primaryColor : primaryColor,
               color: "white",
             },
             cursor: "pointer",

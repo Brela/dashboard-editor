@@ -2,6 +2,7 @@ import express from "express";
 const router = express.Router({ mergeParams: true });
 
 import {
+  getDemoDashboards,
   getAllDashboards,
   createDashboard,
   updateDashboard,
@@ -15,11 +16,13 @@ import {
 } from "./widgets/controllers.js";
 
 import { dashboardIdProvided } from "./middleware.js";
-import { authenticateJWT } from "../auth/jwtAuth.js";
+import { authenticateJWT } from "../auth/authenticateJWT.js";
+import { addUserToReq } from "../auth/addUserToReq.js";
 
 // authenticate all routes except for get dashboards and get widgets
 // dashboard routes
-router.get("/", getAllDashboards);
+router.get("/demo", getDemoDashboards);
+router.get("/", authenticateJWT, getAllDashboards);
 router.post("/", authenticateJWT, createDashboard);
 router.patch(
   "/:dashboardId",
