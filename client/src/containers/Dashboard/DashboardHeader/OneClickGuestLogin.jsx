@@ -54,16 +54,12 @@ const OneClickGuestLogin = (props) => {
       queryClient.setQueryData("widgets", null);
       queryClient.removeQueries(["dashboards", "demo"], { exact: true });
       queryClient.removeQueries("widgets");
-      //   await refetchDashboardData();
 
       toast.success("Guest account setup complete", { autoClose: 5000 });
 
       // ------ create one sample dashboard ------
       toastId = toast("Creating sample dashboard...", { autoClose: false });
 
-      await createDashboard({
-        name: "Sample 2",
-      });
       await createDashboard({
         name: "Sample 1",
       });
