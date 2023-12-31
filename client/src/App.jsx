@@ -18,31 +18,36 @@ import DashboardHome from "./containers/Dashboard/DashHome";
 import DashboardEditor from "./containers/Dashboard/DashboardEditor/DashEditor";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { DashboardProvider } from "./contexts/dash.context.jsx";
 
 const App = () => {
   const { isLoggedIn } = useContext(AuthContext);
   return (
     <>
-      <Router>
-        <Routes>
-          {/* dashboard editor routes */}
-          <Route path="/dashboard" element={<DashboardHome />} />
-          <Route path="/dashboard/editor" element={<DashboardEditor />} />
-          <Route path="/*" element={<Navigate to="/copilot" />} />
-          {/* inventory copilot routes */}
-          {isLoggedIn ? (
-            <Route path="/copilot/*" element={<InventoryCopilotRoutes />} />
-          ) : (
-            <>
-              <Route path="/copilot/login" element={<LoginPage />} />
-              <Route
-                path="/copilot/*"
-                element={<Navigate to="/copilot/login" />}
-              />
-            </>
-          )}
-        </Routes>
-      </Router>
+      <DashboardProvider>
+        <Router>
+          <Routes>
+            {/* dashboard editor routes */}
+
+            <Route path="/dashboard" element={<DashboardHome />} />
+            <Route path="/dashboard/editor" element={<DashboardEditor />} />
+            <Route path="/*" element={<Navigate to="/copilot" />} />
+
+            {/* inventory copilot routes */}
+            {isLoggedIn ? (
+              <Route path="/copilot/*" element={<InventoryCopilotRoutes />} />
+            ) : (
+              <>
+                <Route path="/copilot/login" element={<LoginPage />} />
+                <Route
+                  path="/copilot/*"
+                  element={<Navigate to="/copilot/login" />}
+                />
+              </>
+            )}
+          </Routes>
+        </Router>
+      </DashboardProvider>
       {/* new notification */}
       {/* <ToastContainer /> */}
       <ToastContainer

@@ -201,7 +201,7 @@ const DashWidgetsLayout = ({
             })}
         </ResponsiveGridLayout>
       ) : (
-        <div className="flex justify-center pt-12">
+        <div className="flex justify-center items-center h-full">
           Add some widgets from left sidebar.
         </div>
       )}
