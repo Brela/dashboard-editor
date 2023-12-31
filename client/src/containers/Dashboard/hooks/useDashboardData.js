@@ -10,18 +10,17 @@ import {
 const useDashboardData = ({ isLoggedIn, authLoading, userId }) => {
   const [dashboard, setDashboard] = useState();
 
+  console.log("is logged in from useDashboardData: ", isLoggedIn);
   // i beleive the problem is here -- the query is not running the user query right after user logs in
   // Fetch dashboards
-  const queryKey = isLoggedIn
-    ? ["dashboards", "user", userId]
-    : ["dashboards", "demo"];
+
   const {
     data: dashboardsData,
     isLoading: isDashboardsLoading,
     refetch: refetchDashboards,
     error: dashboardError,
   } = useQuery(
-    queryKey,
+    ["dashboards", isLoggedIn, userId],
     // get demo dashboards gets the dashboards from a user defined in env
     () => (!isLoggedIn ? getDemoDashboards() : getDashboards()),
     {
@@ -31,14 +30,16 @@ const useDashboardData = ({ isLoggedIn, authLoading, userId }) => {
         // data will be the result of getDashboards or getDemoDashboards
         // Perform actions that depend on the updated dashboards data
 
-        console.log("-- 1 -- onSuccess queryKey and Data: ", queryKey, data);
-        const newDashboards = data.items;
-        changeSelectedDashboardAfterFetch(newDashboards);
+        console.log("-- 1 -- ON SUCESS queryKey and Data: ", data);
       },
     },
   );
 
   const dashboards = dashboardsData ? dashboardsData.items : [];
+
+  useEffect(() => {
+    localStorage.removeItem("lastSelectedDashboardId");
+  }, [isLoggedIn]);
 
   useEffect(() => {
     console.log("-- 2 -- in hook, dashboards changed: ", dashboards);
@@ -73,23 +74,25 @@ const useDashboardData = ({ isLoggedIn, authLoading, userId }) => {
     },
   );
   const widgets = widgetsData ? widgetsData.items : [];
-  const refetchDashboardData = () => {
-    refetchDashboards();
+  const refetchDashboardData = async () => {
+    await refetchDashboards();
     refetchWidgets();
   };
 
   // const isLoading = isDashboardsLoading || isWidgetsLoading;
 
-  const changeSelectedDashboardAfterFetch = (newDashboards) => {
-    if (newDashboards.length > 0) {
+  // Initialize with the first dashboard or from local storage when dashboards are loaded
+  useEffect(() => {
+    if (dashboards.length > 0) {
+      console.log("------- dashboards ------", dashboards);
       const storedDashboardId = localStorage.getItem("lastSelectedDashboardId");
-      const defaultDashboard =
-        newDashboards.find((d) => d.id === JSON.parse(storedDashboardId)) ||
-        newDashboards[0];
-      console.log("defaultDashboard", defaultDashboard);
+      const foundDashboard = dashboards.find(
+        (d) => d.id === JSON.parse(storedDashboardId),
+      );
+      const defaultDashboard = foundDashboard || dashboards[0];
       setDashboard(defaultDashboard);
     }
-  };
+  }, [dashboards, isLoggedIn, authLoading]);
 
   // Update local state when a new dashboard is selected
   const changeSelectedDashboard = (id) => {
@@ -99,18 +102,6 @@ const useDashboardData = ({ isLoggedIn, authLoading, userId }) => {
       localStorage.setItem("lastSelectedDashboardId", JSON.stringify(id));
     }
   };
-
-  // Initialize with the first dashboard or from local storage when dashboards are loaded
-  useEffect(() => {
-    if (dashboards.length > 0) {
-      const storedDashboardId = localStorage.getItem("lastSelectedDashboardId");
-      const foundDashboard = dashboards.find(
-        (d) => d.id === JSON.parse(storedDashboardId),
-      );
-      const defaultDashboard = foundDashboard || dashboards[0];
-      setDashboard(defaultDashboard);
-    }
-  }, [dashboards]);
 
   return {
     dashboard,

@@ -62,6 +62,7 @@ const DashWidgetsLayout = ({
   if (isDashboardsLoading || isWidgetsLoading) {
     return (
       <EmptyDashboard
+        className={isEditMode ? dashboardBg + " h-[85vh] mt-0 px-0" : ""}
         message={
           <div>
             <Spinner />
@@ -71,11 +72,17 @@ const DashWidgetsLayout = ({
     );
   } else if (!dashboards || dashboards.length === 0) {
     return (
-      <EmptyDashboard message="No dashboards found. To add a dashboard, click the settings icon above." />
+      <EmptyDashboard
+        className={isEditMode ? dashboardBg + " h-[85vh] mt-0 px-0" : ""}
+        message="No dashboards found. To add a dashboard, click the settings icon above."
+      />
     );
   } else if (!isEditMode && (!widgets || widgets.length === 0)) {
     return (
-      <EmptyDashboard message="You don't have any widgets on this dashboard! Click Dashboard Editor above to add some widgets." />
+      <EmptyDashboard
+        className={isEditMode ? dashboardBg + " h-[85vh] mt-0 px-0" : ""}
+        message="You don't have any widgets on this dashboard! Click Dashboard Editor above to add some widgets."
+      />
     );
   }
 
@@ -194,7 +201,7 @@ const DashWidgetsLayout = ({
             })}
         </ResponsiveGridLayout>
       ) : (
-        <div className="flex justify-center pt-12">
+        <div className="flex justify-center items-center h-full">
           Add some widgets from left sidebar.
         </div>
       )}

@@ -43,6 +43,7 @@ import { AuthContext } from "../../../contexts/auth.context.jsx";
 import { DashboardContext } from "../../../contexts/dash.context.jsx";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 import useDashboardData from "../hooks/useDashboardData.js";
+import { headerBg, primaryColor } from "../../../css/globalTailwindVars.js";
 
 const DashboardEditor = () => {
   const { isLoggedIn, authLoading, userId } = useContext(AuthContext);
@@ -52,6 +53,8 @@ const DashboardEditor = () => {
     openConfirmUnsavedModal,
     setOpenConfirmUnsavedModal,
   } = useContext(DashboardContext);
+
+  // currently - trying to figure out confirmUsavedChanges modal
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -195,7 +198,7 @@ const DashboardEditor = () => {
       setUnsavedWidgets((prevWidgets) =>
         prevWidgets.filter((item) => item.i !== widget.i),
       );
-      selectDashAfterDelete();
+
       setHasUnsavedChanges(true);
     } catch (error) {
       console.error("Error deleting widget:", error);
@@ -203,7 +206,7 @@ const DashboardEditor = () => {
   };
 
   // When a dashboard is deleted, select the first dashboard if available
-  const selectDashAfterDelete = () => {
+  useEffect(() => {
     console.log("Dashboards, dashboard useEffect");
     if (dashboards.length < 1) return;
     if (!dashboard || !dashboards.find((d) => d.id === dashboard.id)) {
@@ -225,7 +228,7 @@ const DashboardEditor = () => {
         localStorage.removeItem("lastSelectedDashboardId");
       }
     }
-  };
+  }, [dashboards]);
 
   const handleWidgetMoved = (movedWidgets) => {
     let updatedWidgets = movedWidgets.map((movedWidget) => {
@@ -292,9 +295,9 @@ const DashboardEditor = () => {
         </div>
       )}
       <DashboardHeader />
-      <div className="w-full min-h-screen">
-        <section className="flex justify-between items-center p-3">
-          <div className="invisible"></div>
+      <div className="w-full min-h-screen px-7">
+        <section className="flex justify-between items-end py-1 px-3">
+          <div className="invisible basis-1/3"></div>
           {/*  <button
             onClick={() => {
               hasUnsavedChanges
@@ -308,7 +311,7 @@ const DashboardEditor = () => {
               Exit
             </div>
           </button> */}
-          <div className="flex items-center justify-start p-2">
+          <div className="pl-8 basis-1/3 relative flex items-center justify-center p-2">
             <Select
               key={dashboards.length}
               options={dashboards?.map((dashboard) => ({
@@ -373,18 +376,22 @@ const DashboardEditor = () => {
           {/*  <Tooltip variant="info" id="saveDash">
             Save Dashboard Layout
           </Tooltip> */}
-          <Button
-            data-tooltip-id="saveDash"
-            onClick={handleSave}
-            variant="light"
-            className={"ml-3 py-1"}
-            isLoading={loading}
-          >
-            Save Layout
-          </Button>
+          <div className="basis-1/3 flex items-end justify-end">
+            {hasUnsavedChanges && (
+              <Button
+                data-tooltip-id="saveDash"
+                onClick={handleSave}
+                variant={"primary"}
+                className={`ml-3 py-1`}
+                isLoading={loading}
+              >
+                Save Layout
+              </Button>
+            )}
+          </div>
           {/* <div className="invisible"></div> */}
         </section>
-        <div className="grid grid-cols-12 h-[85vh]">
+        <div className="grid grid-cols-12 h-[83vh]">
           <div className="col-span-4 md:col-span-4 lg:col-span-2">
             <WidgetsSidebar
               handleAddItem={handleAddItem}
@@ -413,7 +420,7 @@ const DashboardEditor = () => {
         />
 
         <ConfirmUnsavedChanges
-          open={openConfirmUnsavedModal === true}
+          open={openConfirmUnsavedModal}
           closeModal={setOpenConfirmUnsavedModal(false)}
           onSave={handleSave}
         />
