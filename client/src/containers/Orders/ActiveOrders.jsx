@@ -11,8 +11,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import EditPopup from "./EditPopup";
 import { useTable, useSortBy, usePagination } from "react-table";
-import PaginationWrapper from "../../pages/Home/PaginationWrapper";
+import PaginationWrapper from "../../pages/InventoryCopilot/PaginationWrapper";
 import AddProductButtons from "../Inventory/modals/AddProductButtons";
+import { columnNameColor } from "../../css/globalTailwindVars";
 
 function ActiveOrders() {
   const { orders, activeOrders, reloadOrders, deliveriesOn } =
@@ -163,7 +164,10 @@ function ActiveOrders() {
                     <th
                       key={column.id}
                       {...column.getHeaderProps(column.getSortByToggleProps())}
-                      className=" px-5 text-left font-semibold"
+                      className=" px-5 text-left font-semibold  whitespace-nowrap"
+                      style={{
+                        color: columnNameColor,
+                      }}
                     >
                       {column.render("Header")}
                       <span className="">
@@ -217,7 +221,7 @@ function ActiveOrders() {
         </section>
 
         <PaginationWrapper>
-          <div className="flex gap-4 justify-between p-2">
+          <div className="flex justify-between p-2">
             <div className="flex gap-4 items-center">
               <button
                 onClick={() => previousPage()}
