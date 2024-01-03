@@ -1,4 +1,4 @@
-import React, { useState, useContext, useMemo, useEffect } from "react";
+import React, { useState, useContext, useMemo, useEffect, useRef } from "react";
 import {
   useTable,
   useSortBy,
@@ -225,7 +225,8 @@ export default function Inventory() {
     previousPage,
     setPageSize,
     selectedFlatRows,
-    state: { pageIndex, pageSize },
+    toggleRowSelected,
+    state: { pageIndex, pageSize, selectedRowIds },
   } = useTable(
     {
       columns,
@@ -258,10 +259,31 @@ export default function Inventory() {
     return selectedFlatRows.map((row) => row.original);
   }, [selectedFlatRows]);
 
-  // set selected items (rows) into inventory context
+  // Define a ref to store the previous value of selectedItems
+  const previousSelectedRef = useRef();
+
+  // Initialize previousSelectedRef on component mount
   useEffect(() => {
-    setSelectedItems(selectedRowsData);
-  }, [selectedRowsData]);
+    previousSelectedRef.current = selectedItems;
+  }, []);
+
+  // This effect syncs the local storage `selectedItems` with the table's state
+  useEffect(() => {
+    if (previousSelectedRef.current) {
+      // Deselect all rows first
+      Object.keys(selectedRowIds).forEach((id) => {
+        toggleRowSelected(id, false);
+      });
+
+      // Now, select rows that should be selected
+      selectedItems.forEach((item) => {
+        const rowId = data.findIndex((dataItem) => dataItem.id === item.id);
+        if (rowId >= 0) {
+          toggleRowSelected(rowId, true);
+        }
+      });
+    }
+  }, []);
 
   return (
     <div>
@@ -276,22 +298,12 @@ export default function Inventory() {
           />
 
           <div className="flex justify-between items-center">
-            <div className="">
-              {selectedFlatRows.length > 0 && (
-                <button
-                  className="bg-zinc-200 hover:bg-zinc-300/70 p-2 px-4 rounded-full flex items-center gap-2 text-zinc-700 font-semibold text-sm"
-                  onClick={openModalWithSelectedRows}
-                >
-                  <FontAwesomeIcon
-                    icon={faGear}
-                    className=" text-base text-zinc-400 "
-                  />{" "}
-                  <span className="hidden sm:flex">Bulk Actions</span>
-                </button>
-              )}
-            </div>
+            {/* bulk actions button */}
+
+            <DemoControls />
             <AddProductButtons />
           </div>
+
           <section className="overflow-x-auto h-[65vh]">
             <table
               {...getTableProps()}
@@ -303,6 +315,7 @@ export default function Inventory() {
                   <tr
                     key={headerGroup.id}
                     {...headerGroup.getHeaderGroupProps()}
+                    className="relative"
                   >
                     {headerGroup.headers.map((column) => (
                       <th
@@ -323,24 +336,37 @@ export default function Inventory() {
                               column.isSortedDesc ? (
                                 <FontAwesomeIcon
                                   icon={faSortDown}
-                                  className="text-zinc-400 ml-2"
+                                  className="text-zinc-300/90 ml-2"
                                 />
                               ) : (
                                 <FontAwesomeIcon
                                   icon={faSortUp}
-                                  className="text-zinc-400 ml-2"
+                                  className="text-zinc-300/90 ml-2"
                                 />
                               )
                             ) : (
                               <FontAwesomeIcon
                                 icon={faSort}
-                                className="text-zinc-400 ml-2"
+                                className="text-zinc-300/90 ml-2"
                               />
                             )
                           ) : null}
                         </span>
                       </th>
                     ))}
+                    {selectedFlatRows.length > 0 && (
+                      <th
+                        colSpan="10%" // Adjust the number according to the number of columns
+                        className="absolute top-2 left-14 bg-zinc-200 hover:bg-zinc-100 p-2 px-4 rounded-full flex items-center gap-2 text-zinc-700 font-semibold text-sm"
+                        onClick={openModalWithSelectedRows}
+                      >
+                        <FontAwesomeIcon
+                          icon={faGear}
+                          className="text-base text-zinc-400"
+                        />
+                        <span className="hidden sm:flex">Bulk Actions</span>
+                      </th>
+                    )}
                   </tr>
                 ))}
               </thead>

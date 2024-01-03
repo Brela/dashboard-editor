@@ -121,18 +121,18 @@ function OrderHistory() {
                         column.isSortedDesc ? (
                           <FontAwesomeIcon
                             icon={faSortDown}
-                            className="text-zinc-400 ml-2"
+                            className="text-zinc-300/90 ml-2"
                           />
                         ) : (
                           <FontAwesomeIcon
                             icon={faSortUp}
-                            className="text-zinc-400 ml-2"
+                            className="text-zinc-300/90 ml-2"
                           />
                         )
                       ) : (
                         <FontAwesomeIcon
                           icon={faSort}
-                          className="text-zinc-400 ml-2"
+                          className="text-zinc-300/90 ml-2"
                         />
                       )}
                     </span>

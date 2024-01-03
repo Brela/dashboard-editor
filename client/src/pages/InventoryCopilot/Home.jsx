@@ -46,7 +46,7 @@ function InventoryPage() {
 
         <PaginationWrapper activeTab={activeTab} />
       </section>
-      <DemoControls />
+
       <div className=" flex justify-center  my-4">
         <Footer />
       </div>

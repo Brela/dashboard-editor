@@ -28,7 +28,11 @@ export const InventoryProvider = ({ children }) => {
   const [userData, setUserData] = useState({});
   const [inventory, setInventory] = useState([]);
   const [isUsingStock, setIsUsingStock] = useState(false);
-  const [selectedItems, setSelectedItems] = useState([]);
+  const [selectedItems, setSelectedItems] = useState(() => {
+    // Load saved items from local storage if they exist
+    const savedItems = localStorage.getItem("selectedItems");
+    return savedItems ? JSON.parse(savedItems) : [];
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [tempInStock, setTempInStock] = useState({});
   // this is for demo controls to set the "Use Selected (products) Only" on or off
@@ -87,43 +91,27 @@ export const InventoryProvider = ({ children }) => {
     return inventory.findIndex((item) => item.id === itemId);
   };
 
-  const toggleSelectedItem = async (itemId) => {
+  const toggleSelectedItem = (item) => {
     setSelectedItems((prevSelectedItems) => {
-      const prevSelectedItemsArray = Array.from(prevSelectedItems);
-      // Check if the item is already selected
-      const itemIndexInSelected = prevSelectedItemsArray.indexOf(itemId);
-      if (itemIndexInSelected !== -1) {
-        // Remove the item from the selected items array
-        console.log(
-          "1) prevSelectedItemsArray before removing:  ",
-          prevSelectedItemsArray,
-        );
-        prevSelectedItemsArray.splice(itemIndexInSelected, 1);
-        console.log(
-          "2) prevSelectedItemsArray after removing:  ",
-          prevSelectedItemsArray,
-        );
-      } else {
-        // Add the item to the selected items array in the correct order based on the inventory
-        const inventoryIndex = getInventoryIndex(itemId);
-        const insertIndex = prevSelectedItemsArray.findIndex(
-          (selectedItemId) =>
-            inventoryIndex < getInventoryIndex(selectedItemId),
-        );
-        if (insertIndex !== -1) {
-          prevSelectedItemsArray.splice(insertIndex, 0, itemId);
-        } else {
-          prevSelectedItemsArray.push(itemId);
-        }
-      }
-      // Filter out invalid item IDs
-      const validSelectedItemsArray = prevSelectedItemsArray.filter(
-        (selectedItemId) =>
-          inventory.some((item) => item.id === selectedItemId),
-      );
+      const itemIndex = prevSelectedItems.findIndex((i) => i.id === item.id);
+      let newSelectedItems = [];
 
-      // return the array
-      return prevSelectedItemsArray;
+      if (itemIndex >= 0) {
+        // Item is already selected, remove it
+        newSelectedItems = [
+          ...prevSelectedItems.slice(0, itemIndex),
+          ...prevSelectedItems.slice(itemIndex + 1),
+        ];
+      } else {
+        // Item is not selected, add it
+        newSelectedItems = [...prevSelectedItems, item];
+      }
+
+      // Save the new state to local storage
+      localStorage.setItem("selectedItems", JSON.stringify(newSelectedItems));
+
+      console.log(localStorage.getItem("selectedItems"));
+      return newSelectedItems;
     });
   };
 

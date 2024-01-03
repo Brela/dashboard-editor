@@ -72,12 +72,7 @@ export default function DemoControls() {
   };
 
   return (
-    <div
-      className={twMerge(
-        "flex gap-10 lg:justify-center items-center w-auto border lg:mx-[15vw] mb-4 px-2 py-3 rounded-2xl ",
-        headerBg,
-      )}
-    >
+    <div className={twMerge("p-1 rounded-md bg-cyan-700/30")}>
       <div className="flex gap-3 items-center px-4 p-2 ">
         <div className="flex items-center gap-2">
           <span className="text-md text-slate-700">
