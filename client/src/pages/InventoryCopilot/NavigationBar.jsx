@@ -6,6 +6,7 @@ import {
   faShoppingCart,
   faTable,
 } from "@fortawesome/free-solid-svg-icons";
+import { columnNameColor, primaryColor } from "../../css/globalTailwindVars";
 
 const buttons = [
   { label: "Inventory", icon: faBox, value: "inventory" },
@@ -20,17 +21,17 @@ export default function NavigationBar({ activeTab, setActiveTab }) {
         {buttons.map((button) => (
           <button
             key={button.value}
-            className={`w-1/3 sm:w-auto flex flex-col items-center sm:flex-row gap-1 sm:gap-0 px-1 sm:px-4 py-1  ${
+            className={`w-1/3 hover:text-gray-400 sm:w-auto flex flex-col items-center sm:flex-row gap-1 sm:gap-0 px-1 sm:px-4 py-1  ${
               activeTab === button.value
-                ? " text-cyan-800 text-md rounded-md "
-                : "text-zinc-500 text-md"
+                ? "font-bold text-md rounded-md text-cyan-800"
+                : "text-gray-500 text-md"
             }`}
             onClick={() => setActiveTab(button.value)}
           >
-            <FontAwesomeIcon
+            {/*         <FontAwesomeIcon
               icon={button.icon}
               className="mr-1 sm:mr-2 text-xs sm:text-base text-zinc-500"
-            />{" "}
+            />{" "} */}
             {button.label}
           </button>
         ))}

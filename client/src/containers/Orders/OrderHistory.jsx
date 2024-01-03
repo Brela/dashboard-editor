@@ -11,8 +11,9 @@ import {
   faCircleChevronRight,
   faCircleChevronLeft,
 } from "@fortawesome/free-solid-svg-icons";
-import PaginationWrapper from "../../pages/Home/PaginationWrapper";
+import PaginationWrapper from "../../pages/InventoryCopilot/PaginationWrapper";
 import { twMerge } from "tailwind-merge";
+import { columnNameColor } from "../../css/globalTailwindVars";
 
 function OrderHistory() {
   const { orders, reloadOrders } = useContext(OrdersContext);
@@ -107,9 +108,12 @@ function OrderHistory() {
                     key={column.id}
                     {...column.getHeaderProps(column.getSortByToggleProps())}
                     className={twMerge(
-                      "px-5 pl-10 text-left font-semibold",
+                      "px-5 pl-10 text-left font-semibold whitespace-nowrap",
                       // index === 0 ? "pl-10" : "",
                     )}
+                    style={{
+                      color: columnNameColor,
+                    }}
                   >
                     {column.render("Header")}
                     <span className="">
@@ -166,7 +170,7 @@ function OrderHistory() {
       </section>
 
       <PaginationWrapper>
-        <div className="flex gap-4 justify-between p-2 mt-6">
+        <div className="flex gap-4 justify-between p-2">
           <div className="flex gap-4 items-center">
             <button onClick={() => previousPage()} disabled={!canPreviousPage}>
               {

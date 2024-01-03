@@ -36,8 +36,9 @@ import {
 } from "../../services/inventoryAPIcalls";
 import { EditableCell } from "./EditableCell";
 import DemoControls from "../DemoControls";
-import PaginationWrapper from "../../pages/Home/PaginationWrapper";
+import PaginationWrapper from "../../pages/InventoryCopilot/PaginationWrapper";
 import { useQuery } from "react-query";
+import { columnNameColor, primaryColor } from "../../css/globalTailwindVars";
 
 export default function Inventory() {
   const {
@@ -309,7 +310,10 @@ export default function Inventory() {
                         {...column.getHeaderProps(
                           column.getSortByToggleProps(),
                         )}
-                        className=" px-5 text-left font-semibold"
+                        className=" px-5 text-left font-semibold whitespace-nowrap"
+                        style={{
+                          color: columnNameColor,
+                        }}
                       >
                         {column.render("Header")}
                         <span className="">
@@ -347,7 +351,7 @@ export default function Inventory() {
                     <tr
                       {...row.getRowProps()}
                       key={row.id}
-                      className="text-sm h-12 border-b last:border-none border-zinc-200 hover:bg-zinc-50"
+                      className="text-sm h-16 border-b last:border-none border-zinc-200 hover:bg-zinc-50"
                     >
                       {row.cells.map((cell, idx) => (
                         <td {...cell.getCellProps()} key={idx} className="px-5">
@@ -362,7 +366,7 @@ export default function Inventory() {
           </section>
 
           <PaginationWrapper>
-            <div className="flex gap-4 justify-between p-2 mt-2">
+            <div className="flex gap-4 justify-between p-2">
               <div className="flex gap-4 items-center">
                 <button
                   onClick={() => previousPage()}

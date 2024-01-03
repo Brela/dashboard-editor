@@ -15,3 +15,8 @@
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }
+
+.copilot-header-bg {
+  /* background-color: #4f5766; */
+  background-color: rgb(112, 112, 112);
+}

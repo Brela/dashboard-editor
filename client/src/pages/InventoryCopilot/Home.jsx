@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import Profile from "../../containers/Profile/index.jsx";
 import Footer from "../../containers/Footer/Footer.jsx";
-import NavigationBar from "../../components/NavigationBar.jsx";
+import NavigationBar from "./NavigationBar.jsx";
 
 import OrderHistory from "../../containers/Orders/OrderHistory.jsx";
 import ActiveOrders from "../../containers/Orders/ActiveOrders.jsx";
@@ -18,13 +18,13 @@ function InventoryPage() {
   const [activeTab, setActiveTab] = useState("inventory");
 
   return (
-    <div className="flex flex-col 2xl:items-center">
+    // <div className="flex flex-col 2xl:items-center">
+    <div className="">
       {/* <div className=" max-w-screen-2xl mx-2 md:mx-4 mb-2 md:mb-3 px-2 md:px-6 flex gap-2 flex-col rounded-3xl"> */}
       <section
-        className={twMerge("w-full rounded-b-md px-4 border-b", headerBg)}
+        className={twMerge("w-full rounded-b-md px-4 border-b bg-white")}
       >
         <div className="flex items-center justify-between ">
-          <div></div>
           <NavigationBar activeTab={activeTab} setActiveTab={setActiveTab} />
 
           <Profile />
@@ -32,8 +32,7 @@ function InventoryPage() {
       </section>
       <section
         className={twMerge(
-          "2xl:w-[75vw] relative min-h-[84vh] p-2 md:p-4 ",
-          activeTab === "dashboard" ? dashboardBg : "bg-white",
+          " relative min-h-[84vh] p-2 md:p-4 max-w-[1700px] mx-auto",
         )}
       >
         {activeTab === "inventory" && <Inventory />}

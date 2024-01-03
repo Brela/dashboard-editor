@@ -15,7 +15,7 @@ import { toast } from "react-hot-toast";
 import ProfileContent from "./ProfileContent";
 import SettingsContent from "./SettingsContent";
 import HeaderModal from "./HeaderModal";
-import NavigationBar from "../../components/NavigationBar";
+import NavigationBar from "../../pages/InventoryCopilot/NavigationBar";
 import { Popover, Modal, Spinner } from "../../components";
 import { useQueryClient } from "react-query";
 
