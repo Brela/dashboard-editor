@@ -12,7 +12,7 @@ const Popover = ({ trigger, content, contentClassName, triggerClassName }) => (
       <RadixPopover.Content
         className={twMerge(
           "bg-white shadow-lg p-3 rounded-md z-[9999]",
-          contentClassName
+          contentClassName,
         )}
       >
         {content}

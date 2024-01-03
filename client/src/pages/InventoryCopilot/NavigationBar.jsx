@@ -4,9 +4,11 @@ import {
   faArchive,
   faBox,
   faShoppingCart,
-  faTable,
 } from "@fortawesome/free-solid-svg-icons";
-import { columnNameColor, primaryColor } from "../../css/globalTailwindVars";
+import useWindowSize from "../../hooks/useWindowSize";
+import { Popover } from "../../components";
+import { Bars3Icon } from "@heroicons/react/24/solid";
+import { startCase } from "lodash";
 
 const buttons = [
   { label: "Inventory", icon: faBox, value: "inventory" },
@@ -15,7 +17,9 @@ const buttons = [
 ];
 
 export default function NavigationBar({ activeTab, setActiveTab }) {
-  return (
+  const isWindowSmall = useWindowSize(1460);
+
+  const DesktopNav = (
     <div>
       <div className="flex mt-4  mb-2 gap-x-4 sm:gap-x-1 font-semibold text-zinc-800 md:px-2">
         {buttons.map((button) => (
@@ -28,14 +32,37 @@ export default function NavigationBar({ activeTab, setActiveTab }) {
             }`}
             onClick={() => setActiveTab(button.value)}
           >
-            {/*         <FontAwesomeIcon
-              icon={button.icon}
-              className="mr-1 sm:mr-2 text-xs sm:text-base text-zinc-500"
-            />{" "} */}
             {button.label}
           </button>
         ))}
       </div>
     </div>
   );
+
+  const MobileNav = (
+    <Popover
+      trigger={
+        <div className=" hover:bg-slate-200/80 p-3 rounded-md  focus:outline-none focus:bg-slate-400 flex items-center justify-center">
+          <Bars3Icon className="w-7 h-7 mr-4" />
+          {startCase(activeTab)}
+        </div>
+      }
+      contentClassName="mr-2 px-8"
+      content={
+        <ul className="flex flex-col gap-3">
+          {buttons.map((button) => (
+            <Popover.CloseOnClickItem
+              key={button.value}
+              onClick={() => setActiveTab(button.value)}
+              className={"hover:text-gray-400 w-full"}
+            >
+              {button.label}
+            </Popover.CloseOnClickItem>
+          ))}
+        </ul>
+      }
+    />
+  );
+
+  return isWindowSmall ? MobileNav : DesktopNav;
 }
