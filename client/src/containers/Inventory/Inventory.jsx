@@ -1,4 +1,4 @@
-import React, { useState, useContext, useMemo, useEffect } from "react";
+import React, { useState, useContext, useMemo, useEffect, useRef } from "react";
 import {
   useTable,
   useSortBy,
@@ -29,7 +29,7 @@ import { OrdersContext } from "../../contexts/orders.context";
 import AddProductButtons from "./modals/AddProductButtons";
 import OrderHistory from "../Orders/OrderHistory";
 import ActiveOrders from "../Orders/ActiveOrders";
-import SelectedRowsModal from "./modals/SelectedRows";
+import SelectedRowsModal from "./modals/BulkActions";
 import {
   getInventoryList,
   updateInventoryItem,
@@ -39,6 +39,7 @@ import DemoControls from "../DemoControls";
 import PaginationWrapper from "../../pages/InventoryCopilot/PaginationWrapper";
 import { useQuery } from "react-query";
 import { columnNameColor, primaryColor } from "../../css/globalTailwindVars";
+import { Toolbar, ToolbarButton } from "../../components";
 
 export default function Inventory() {
   const {
@@ -138,12 +139,12 @@ export default function Inventory() {
         Cell: ({ value }) => <span className="">{value}</span>,
       },
       {
-        Header: "Item Name",
+        Header: "Name",
         accessor: "productName",
         Cell: ({ value }) => <span className="">{value}</span>,
       },
       {
-        Header: "Desc",
+        Header: "Description",
         accessor: "description",
         Cell: ({ value }) => <span className="">{value}</span>,
       },
@@ -170,7 +171,7 @@ export default function Inventory() {
         },
       },
       {
-        Header: "Threshold",
+        Header: "Reorder At",
         accessor: "reorderAt",
         Cell: ({ value, row }) => (
           <EditableCell
@@ -225,7 +226,8 @@ export default function Inventory() {
     previousPage,
     setPageSize,
     selectedFlatRows,
-    state: { pageIndex, pageSize },
+    toggleRowSelected,
+    state: { pageIndex, pageSize, selectedRowIds },
   } = useTable(
     {
       columns,
@@ -241,12 +243,14 @@ export default function Inventory() {
         {
           id: "selection",
           Header: ({ getToggleAllRowsSelectedProps }) => (
-            <div>
+            <div className="pl-4">
               <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
             </div>
           ),
           Cell: ({ row }) => (
-            <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+            <div className="pl-4">
+              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+            </div>
           ),
         },
         ...columns,
@@ -258,10 +262,31 @@ export default function Inventory() {
     return selectedFlatRows.map((row) => row.original);
   }, [selectedFlatRows]);
 
-  // set selected items (rows) into inventory context
+  // Define a ref to store the previous value of selectedItems
+  const previousSelectedRef = useRef();
+
+  // Initialize previousSelectedRef on component mount
   useEffect(() => {
-    setSelectedItems(selectedRowsData);
-  }, [selectedRowsData]);
+    previousSelectedRef.current = selectedItems;
+  }, []);
+
+  // This effect syncs the local storage `selectedItems` with the table's state
+  useEffect(() => {
+    if (previousSelectedRef.current) {
+      // Deselect all rows first
+      Object.keys(selectedRowIds).forEach((id) => {
+        toggleRowSelected(id, false);
+      });
+
+      // Now, select rows that should be selected
+      selectedItems.forEach((item) => {
+        const rowId = data.findIndex((dataItem) => dataItem.id === item.id);
+        if (rowId >= 0) {
+          toggleRowSelected(rowId, true);
+        }
+      });
+    }
+  }, []);
 
   return (
     <div>
@@ -275,34 +300,32 @@ export default function Inventory() {
             selectedRows={selectedRowsData}
           />
 
-          <div className="flex justify-between items-center">
-            <div className="">
-              {selectedFlatRows.length > 0 && (
-                <button
-                  className="bg-zinc-200 hover:bg-zinc-300/70 p-2 px-4 rounded-full flex items-center gap-2 text-zinc-700 font-semibold text-sm"
-                  onClick={openModalWithSelectedRows}
-                >
-                  <FontAwesomeIcon
-                    icon={faGear}
-                    className=" text-base text-zinc-400 "
-                  />{" "}
-                  <span className="hidden sm:flex">Bulk Actions</span>
-                </button>
-              )}
-            </div>
+          <Toolbar>
+            {/* bulk actions button */}
+            {/* {selectedFlatRows.length > 0 && ( */}
+            <ToolbarButton
+              text="Bulk Actions"
+              onClick={openModalWithSelectedRows}
+              icon={faGear}
+            />
+
+            {/* )} */}
+            <DemoControls page={"inventory"} />
             <AddProductButtons />
-          </div>
-          <section className="overflow-x-auto h-[65vh]">
+          </Toolbar>
+
+          <section className="overflow-x-auto h-[65vh] z-0 ">
             <table
               {...getTableProps()}
               id="inventory"
-              className="w-full table-auto text-black/80 mt-4"
+              className="w-full table-auto text-black/80 mt-2 z-0"
             >
-              <thead className="border-b border-zinc-200 h-14 text-sm ">
+              <thead className="border-b h-8 text-sm z-0">
                 {headerGroups.map((headerGroup) => (
                   <tr
                     key={headerGroup.id}
                     {...headerGroup.getHeaderGroupProps()}
+                    className="relative z-10 "
                   >
                     {headerGroup.headers.map((column) => (
                       <th
@@ -323,18 +346,18 @@ export default function Inventory() {
                               column.isSortedDesc ? (
                                 <FontAwesomeIcon
                                   icon={faSortDown}
-                                  className="text-zinc-400 ml-2"
+                                  className="text-zinc-300/90 ml-2"
                                 />
                               ) : (
                                 <FontAwesomeIcon
                                   icon={faSortUp}
-                                  className="text-zinc-400 ml-2"
+                                  className="text-zinc-300/90 ml-2"
                                 />
                               )
                             ) : (
                               <FontAwesomeIcon
                                 icon={faSort}
-                                className="text-zinc-400 ml-2"
+                                className="text-zinc-300/90 ml-2"
                               />
                             )
                           ) : null}

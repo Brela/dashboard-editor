@@ -14,6 +14,7 @@ import { useTable, useSortBy, usePagination } from "react-table";
 import PaginationWrapper from "../../pages/InventoryCopilot/PaginationWrapper";
 import AddProductButtons from "../Inventory/modals/AddProductButtons";
 import { columnNameColor } from "../../css/globalTailwindVars";
+import DemoControls from "../DemoControls";
 
 function ActiveOrders() {
   const { orders, activeOrders, reloadOrders, deliveriesOn } =
@@ -143,11 +144,14 @@ function ActiveOrders() {
 
   return (
     <>
-      <div className="px-4 ">
-        {/* this comp used as hidden just to take up space like other tables have */}
-        <div className="invisible">
-          <AddProductButtons />
-        </div>
+      <div className="px-4 pt-5">
+        <section>
+          <DemoControls page={"orders"} />
+          {/* this comp used as hidden just to take up space like other tables have */}
+          <div className="invisible">
+            <AddProductButtons />
+          </div>
+        </section>
         <section className="overflow-x-auto h-[65vh]">
           <table
             {...getTableProps()}
@@ -175,18 +179,18 @@ function ActiveOrders() {
                           column.isSortedDesc ? (
                             <FontAwesomeIcon
                               icon={faSortDown}
-                              className="text-zinc-400 ml-2"
+                              className="text-zinc-300/90 ml-2"
                             />
                           ) : (
                             <FontAwesomeIcon
                               icon={faSortUp}
-                              className="text-zinc-400 ml-2"
+                              className="text-zinc-300/90 ml-2"
                             />
                           )
                         ) : (
                           <FontAwesomeIcon
                             icon={faSort}
-                            className="text-zinc-400 ml-2"
+                            className="text-zinc-300/90 ml-2"
                           />
                         )}
                       </span>

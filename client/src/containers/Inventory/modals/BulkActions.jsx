@@ -13,11 +13,8 @@ import { createOrderItem } from "../../../services/ordersAPIcalls";
 import { toast } from "react-hot-toast";
 
 export default function SelectedRowsModal({ isOpen, onClose, selectedRows }) {
-  const {
-    reloadInventory,
-    selectedItems,
-    setNeedStatsUpdate,
-  } = useContext(InventoryContext);
+  const { reloadInventory, selectedItems, setNeedStatsUpdate } =
+    useContext(InventoryContext);
 
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
 
@@ -36,11 +33,13 @@ export default function SelectedRowsModal({ isOpen, onClose, selectedRows }) {
   };
 
   const handlePlaceOrders = async () => {
+    if (selectedRows.length < 1)
+      return toast.error("Please select some items to order.");
     const toastId = toast.loading("Please wait while we process your order.");
 
     try {
       for (const row of selectedRows) {
-        const priceEa = row.unitPrice 
+        const priceEa = row.unitPrice;
         const { total } = calculateTotal(row.orderQty, priceEa);
 
         const order = {
@@ -98,24 +97,32 @@ export default function SelectedRowsModal({ isOpen, onClose, selectedRows }) {
                 </tr>
               </thead>
               <tbody>
-                {selectedRows.map((row) => (
-                  <tr key={row.id}>
-                    <td>{row.id}</td>
-                    <td>{row.sku}</td>
-                    <td>{row.productName}</td>
+                {selectedRows.length < 1 ? (
+                  <tr>
+                    <td colSpan={3} className="pt-3 text-orange-500">
+                      Select Some Items from List
+                    </td>
                   </tr>
-                ))}
+                ) : (
+                  selectedRows.map((row) => (
+                    <tr key={row.id}>
+                      <td>{row.id}</td>
+                      <td>{row.sku}</td>
+                      <td>{row.productName}</td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
             <div className="flex items-center gap-4 mt-4">
               <button
                 type="button"
-                className="mt-4 bg-emerald-400/80 font-bold hover:bg-emerald-400/70 text-emerald-800 p-2 px-3 rounded-lg"
+                className="mt-4 bg-cyan-700/70 font-bold hover:bg-gray-300 text-white p-2 px-3 rounded-lg"
                 onClick={() => handlePlaceOrders()}
               >
                 <FontAwesomeIcon
                   icon={faCartPlus}
-                  className="mr-2 text-emerald-600"
+                  className="mr-2 text-white"
                 />
                 Single Order
               </button>
@@ -142,6 +149,7 @@ export default function SelectedRowsModal({ isOpen, onClose, selectedRows }) {
         }}
         onConfirm={confirmDelete}
         message="Are you sure you want to delete the selected items?"
+        selectedRows={selectedRows}
       />
     </div>
   );

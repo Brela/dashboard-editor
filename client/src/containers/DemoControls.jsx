@@ -13,7 +13,7 @@ import { Tooltip } from "react-tooltip";
 import { twMerge } from "tailwind-merge";
 import { headerBg } from "../css/globalTailwindVars";
 
-export default function DemoControls() {
+export default function DemoControls({ page }) {
   const {
     startUsage,
     stopUsage,
@@ -59,6 +59,7 @@ export default function DemoControls() {
     setDeliveriesOn(event.target.checked);
   };
 
+  // changed to only use selected by default
   const handleUseSelectedOnlyToggleChange = (event) => {
     setUseSelectedOnlyOn(event.target.checked);
   };
@@ -72,91 +73,98 @@ export default function DemoControls() {
   };
 
   return (
-    <div
-      className={twMerge(
-        "flex gap-10 lg:justify-center items-center w-auto border lg:mx-[15vw] mb-4 px-2 py-3 rounded-2xl ",
-        headerBg,
-      )}
-    >
-      <div className="flex gap-3 items-center px-4 p-2 ">
-        <div className="flex items-center gap-2">
-          <span className="text-md text-slate-700">
-            Automate Stock Usage and Order Deliveries:
-          </span>
-        </div>
-        <div className="flex items-center hover:cursor-pointer">
-          <FontAwesomeIcon
-            icon={faQuestionCircle}
-            className="text-xl text-zinc-400"
-            data-tooltip-id="my-tooltip-children-multiline"
-          />
-          <Tooltip id="my-tooltip-children-multiline">
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <p className="w-80">
-                {`Select a few products from the inventory then hit play. This
-                will run down the stock for those products. When the "Stock"
-                hits the "Target", you should see an order created for that
-                product. You can turn deliveries on (this delivers orders at
-                random times between 2 and 20 seconds) or manually deliver each
-                order with the edit icon in the 'Active Orders' tab. Click the
-                reset icon to reset with the original stock numbers.`}
-              </p>
+    <div>
+      <div className="flex items-center gap-2 px-4">
+        <FontAwesomeIcon
+          icon={faQuestionCircle}
+          className="text-lg text-cyan-700 "
+          data-tooltip-id="select-products-info"
+        />
+
+        <Tooltip
+          id="select-products-info"
+          style={{ zIndex: 9999, position: "absolute" }}
+        >
+          <div>
+            <p className="w-80 text-lg">
+              {page === "inventory" &&
+                `  Select a few products from the inventory then click "Use Stock". This
+  will run down the stock for those selected products. When the "In Stock"
+  hits the "Reorder At", you should see an order created for that
+  product. Click the
+  reset icon to reset with the original stock numbers.`}
+              {page === "orders" &&
+                `You can turn deliveries on (this delivers orders at
+                    random times between 2 and 20 seconds) or manually deliver each
+                    order with the edit icons in the table.`}
+            </p>
+          </div>
+        </Tooltip>
+
+        {page === "inventory" && (
+          <>
+            <div className="flex items-center gap-2">
+              <button
+                className={twMerge(
+                  "whitespace-nowrap text-sm hover:bg-zinc-200/70 py-1 px-4 rounded-md flex items-center gap-2 min-w-[120px]",
+                  isPlaying ? "text-cyan-700" : "",
+                )}
+                onClick={togglePlayStop}
+              >
+                <span className="mx-auto">
+                  {isPlaying ? "Pause" : "Use Stock"}
+                </span>
+                <FontAwesomeIcon
+                  icon={isPlaying ? faPause : faPlay}
+                  className={twMerge(
+                    "text-sm text-zinc-500 hover:scale-125 transition-all duration-300 ease-linear",
+                    isPlaying ? "text-cyan-700" : "",
+                  )}
+                />
+              </button>
             </div>
-          </Tooltip>
-        </div>
-      </div>
+            <div className="flex items-center gap-2">
+              <button
+                className="whitespace-nowrap text-sm hover:bg-zinc-200/70 py-1 px-4 rounded-md flex items-center gap-2"
+                onClick={resetInventoryWithState}
+              >
+                Reset Stock
+                <FontAwesomeIcon
+                  icon={faRotateLeft}
+                  className="text-base text-zinc-600 hover:scale-125 transition-all duration-300 ease-linear"
+                />
+              </button>
+            </div>
+          </>
+        )}
 
-      <div className="flex flex-col lg:flex-row lg:items-center gap-6 px-4">
-        <div className="flex items-center gap-2">
-          <p className="text-base font-semibold text-zinc-700">Use Stock:</p>
-          <button
-            className={`px-1 w-auto h-7.5 ${isPlaying ? "" : ""}`}
-            onClick={togglePlayStop}
-          >
-            <FontAwesomeIcon
-              icon={isPlaying ? faPause : faPlay}
-              className="text-base text-zinc-600 hover:scale-125 transition-all duration-300 ease-linear"
-            />
-          </button>
-        </div>
-        <div className="flex items-center gap-2">
-          <p className="text-base font-semibold text-zinc-700">Reset Stock:</p>
-          <button
-            className={`px-1 w-auto h-7.5 ${resetActive ? "" : ""}`}
-            onClick={resetInventoryWithState}
-          >
-            <FontAwesomeIcon
-              icon={faRotateLeft}
-              className="text-base text-zinc-600 hover:scale-125 transition-all duration-300 ease-linear"
-            />
-          </button>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <p className="text-base font-semibold text-zinc-700">
-            Deliveries On:
-          </p>
-          <label
-            htmlFor="deliveriesToggle"
-            aria-label="toggle deliveries on or off"
-            className="flex items-center cursor-pointer"
-          >
-            <div className="relative">
-              <input
-                id="deliveriesToggle"
-                type="checkbox"
-                className="sr-only"
-                checked={deliveriesOn}
-                onChange={handleDeliveriesToggleChange}
-              />
-              <div className="block bg-cyan-700/40 w-10 h-6 rounded-full"></div>
-              <div
-                className={`absolute left-1 top-1 bg-zinc-50 w-4 h-4 rounded-full transition-transform duration-300 ease-in-out 
+        {page === "orders" && (
+          <div className="flex items-center gap-2">
+            <p className="text-base font-semibold text-zinc-700">
+              Deliveries On:
+            </p>
+            <label
+              htmlFor="deliveriesToggle"
+              aria-label="toggle deliveries on or off"
+              className="flex items-center cursor-pointer"
+            >
+              <div className="relative">
+                <input
+                  id="deliveriesToggle"
+                  type="checkbox"
+                  className="sr-only"
+                  checked={deliveriesOn}
+                  onChange={handleDeliveriesToggleChange}
+                />
+                <div className="block bg-cyan-700/40 w-10 h-6 rounded-full"></div>
+                <div
+                  className={`absolute left-1 top-1 bg-zinc-50 w-4 h-4 rounded-full transition-transform duration-300 ease-in-out 
               ${deliveriesOn ? " translate-x-full" : ""}`}
-              ></div>
-            </div>
-          </label>
-        </div>
+                ></div>
+              </div>
+            </label>
+          </div>
+        )}
       </div>
     </div>
   );

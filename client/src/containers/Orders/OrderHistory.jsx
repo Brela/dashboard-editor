@@ -83,7 +83,7 @@ function OrderHistory() {
   );
 
   return (
-    <div className="px-4">
+    <div className="px-4 pt-5 ">
       <div className="flex justify-end">
         <button
           className=" hover:bg-zinc-200/70 py-1 px-4 rounded-md flex items-center gap-2"
@@ -121,18 +121,18 @@ function OrderHistory() {
                         column.isSortedDesc ? (
                           <FontAwesomeIcon
                             icon={faSortDown}
-                            className="text-zinc-400 ml-2"
+                            className="text-zinc-300/90 ml-2"
                           />
                         ) : (
                           <FontAwesomeIcon
                             icon={faSortUp}
-                            className="text-zinc-400 ml-2"
+                            className="text-zinc-300/90 ml-2"
                           />
                         )
                       ) : (
                         <FontAwesomeIcon
                           icon={faSort}
-                          className="text-zinc-400 ml-2"
+                          className="text-zinc-300/90 ml-2"
                         />
                       )}
                     </span>

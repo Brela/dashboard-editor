@@ -1,7 +1,17 @@
 import React from "react";
+import toast from "react-hot-toast";
 
-export default function ConfirmModal({ isOpen, onClose, onConfirm, message }) {
+export default function ConfirmModal({
+  isOpen,
+  onClose,
+  onConfirm,
+  message,
+  selectedRows,
+}) {
   if (!isOpen) return null;
+
+  if (selectedRows.length < 1)
+    return toast.error("Please select some items to delete.");
 
   return (
     <div className="fixed z-50 inset-0 overflow-y-auto">
