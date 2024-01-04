@@ -15,6 +15,7 @@ import PaginationWrapper from "../../pages/InventoryCopilot/PaginationWrapper";
 import AddProductButtons from "../Inventory/modals/AddProductButtons";
 import { columnNameColor } from "../../css/globalTailwindVars";
 import DemoControls from "../DemoControls";
+import { Toolbar, ToolbarButton } from "../../components";
 
 function ActiveOrders() {
   const { orders, activeOrders, reloadOrders, deliveriesOn } =
@@ -144,15 +145,19 @@ function ActiveOrders() {
 
   return (
     <>
-      <div className="px-4 pt-5">
-        <section>
+      <div className="">
+        <Toolbar>
+          {/* bulk actions button */}
+          {/* {selectedFlatRows.length > 0 && ( */}
+          <button className="invisible" />
           <DemoControls page={"orders"} />
           {/* this comp used as hidden just to take up space like other tables have */}
           <div className="invisible">
             <AddProductButtons />
           </div>
-        </section>
-        <section className="overflow-x-auto h-[65vh]">
+        </Toolbar>
+
+        <section className="overflow-x-auto h-[65vh] px-2">
           <table
             {...getTableProps()}
             className="table-auto w-full  text-black/80 "
@@ -234,7 +239,7 @@ function ActiveOrders() {
                 {
                   <FontAwesomeIcon
                     icon={faCircleChevronLeft}
-                    className="text-xl text-zinc-400 hover:text-zinc-400/80"
+                    className="text-lg text-zinc-400/80 hover:text-zinc-400/60 cursor-pointer"
                   />
                 }
               </button>{" "}
@@ -248,7 +253,7 @@ function ActiveOrders() {
                 {
                   <FontAwesomeIcon
                     icon={faCircleChevronRight}
-                    className="text-xl text-zinc-400 hover:text-zinc-400/80"
+                    className="text-lg text-zinc-400/80 hover:text-zinc-400/60 cursor-pointer"
                   />
                 }
               </button>{" "}

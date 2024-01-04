@@ -11,7 +11,7 @@ import {
 import { toast } from "react-hot-toast";
 import { InventoryContext } from "../../contexts/inventory.context";
 
-export default function LoginWindow() {
+export default function LoginForm() {
   const { setIsLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
   const [login, setLogin] = useState(true);
@@ -171,8 +171,8 @@ export default function LoginWindow() {
         ) : (
           <>
             {loading ? (
-              <div className="flex justify-center w-full">
-                <div className="w-10 h-10 border-t-4 border-emerald-500 rounded-full animate-spin"></div>
+              <div className="flex justify-center items-center w-full h-[250px]">
+                <div className="w-10 h-10 border-t-4 border-cyan-800 rounded-full animate-spin"></div>
               </div>
             ) : (
               <>
@@ -227,10 +227,10 @@ export default function LoginWindow() {
                 </div>
               </>
             )}
-            <span className="font-bold mx-auto"> - or - </span>
+            {/* <span className="font-bold mx-auto"> - or - </span>
             <section className="flex justify-center">
               <div id="g_signin_button"></div>
-            </section>
+            </section> */}
           </>
         )}
       </form>

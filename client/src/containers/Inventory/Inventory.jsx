@@ -314,13 +314,13 @@ export default function Inventory() {
             <AddProductButtons />
           </Toolbar>
 
-          <section className="overflow-x-auto h-[65vh] z-0 ">
+          <section className="overflow-x-auto h-[65vh] z-0 mx-2">
             <table
               {...getTableProps()}
               id="inventory"
               className="w-full table-auto text-black/80 mt-2 z-0"
             >
-              <thead className="border-b h-8 text-sm z-0">
+              <thead className="border-b h-10 text-sm z-0">
                 {headerGroups.map((headerGroup) => (
                   <tr
                     key={headerGroup.id}
@@ -398,7 +398,7 @@ export default function Inventory() {
                   {
                     <FontAwesomeIcon
                       icon={faCircleChevronLeft}
-                      className="text-xl text-zinc-400 hover:text-zinc-400/80"
+                      className="text-lg text-zinc-400/80 hover:text-zinc-400/60 cursor-pointer"
                     />
                   }
                 </button>{" "}
@@ -412,7 +412,7 @@ export default function Inventory() {
                   {
                     <FontAwesomeIcon
                       icon={faCircleChevronRight}
-                      className="text-xl text-zinc-400 hover:text-zinc-400/80"
+                      className="text-lg text-zinc-400/80 hover:text-zinc-400/60 cursor-pointer"
                     />
                   }
                 </button>{" "}
