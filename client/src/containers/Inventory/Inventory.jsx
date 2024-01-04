@@ -29,7 +29,7 @@ import { OrdersContext } from "../../contexts/orders.context";
 import AddProductButtons from "./modals/AddProductButtons";
 import OrderHistory from "../Orders/OrderHistory";
 import ActiveOrders from "../Orders/ActiveOrders";
-import SelectedRowsModal from "./modals/SelectedRows";
+import SelectedRowsModal from "./modals/BulkActions";
 import {
   getInventoryList,
   updateInventoryItem,
@@ -39,6 +39,7 @@ import DemoControls from "../DemoControls";
 import PaginationWrapper from "../../pages/InventoryCopilot/PaginationWrapper";
 import { useQuery } from "react-query";
 import { columnNameColor, primaryColor } from "../../css/globalTailwindVars";
+import { Toolbar, ToolbarButton } from "../../components";
 
 export default function Inventory() {
   const {
@@ -138,12 +139,12 @@ export default function Inventory() {
         Cell: ({ value }) => <span className="">{value}</span>,
       },
       {
-        Header: "Item Name",
+        Header: "Name",
         accessor: "productName",
         Cell: ({ value }) => <span className="">{value}</span>,
       },
       {
-        Header: "Desc",
+        Header: "Description",
         accessor: "description",
         Cell: ({ value }) => <span className="">{value}</span>,
       },
@@ -170,7 +171,7 @@ export default function Inventory() {
         },
       },
       {
-        Header: "Threshold",
+        Header: "Reorder At",
         accessor: "reorderAt",
         Cell: ({ value, row }) => (
           <EditableCell
@@ -242,12 +243,14 @@ export default function Inventory() {
         {
           id: "selection",
           Header: ({ getToggleAllRowsSelectedProps }) => (
-            <div>
+            <div className="pl-4">
               <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
             </div>
           ),
           Cell: ({ row }) => (
-            <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+            <div className="pl-4">
+              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+            </div>
           ),
         },
         ...columns,
@@ -297,25 +300,32 @@ export default function Inventory() {
             selectedRows={selectedRowsData}
           />
 
-          <div className="flex justify-between items-center">
+          <Toolbar>
             {/* bulk actions button */}
+            {/* {selectedFlatRows.length > 0 && ( */}
+            <ToolbarButton
+              text="Bulk Actions"
+              onClick={openModalWithSelectedRows}
+              icon={faGear}
+            />
 
-            <DemoControls />
+            {/* )} */}
+            <DemoControls page={"inventory"} />
             <AddProductButtons />
-          </div>
+          </Toolbar>
 
-          <section className="overflow-x-auto h-[65vh]">
+          <section className="overflow-x-auto h-[65vh] z-0 ">
             <table
               {...getTableProps()}
               id="inventory"
-              className="w-full table-auto text-black/80 mt-4"
+              className="w-full table-auto text-black/80 mt-2 z-0"
             >
-              <thead className="border-b border-zinc-200 h-14 text-sm ">
+              <thead className="border-b h-8 text-sm z-0">
                 {headerGroups.map((headerGroup) => (
                   <tr
                     key={headerGroup.id}
                     {...headerGroup.getHeaderGroupProps()}
-                    className="relative"
+                    className="relative z-10 "
                   >
                     {headerGroup.headers.map((column) => (
                       <th
@@ -354,19 +364,6 @@ export default function Inventory() {
                         </span>
                       </th>
                     ))}
-                    {selectedFlatRows.length > 0 && (
-                      <th
-                        colSpan="10%" // Adjust the number according to the number of columns
-                        className="absolute top-2 left-14 bg-zinc-200 hover:bg-zinc-100 p-2 px-4 rounded-full flex items-center gap-2 text-zinc-700 font-semibold text-sm"
-                        onClick={openModalWithSelectedRows}
-                      >
-                        <FontAwesomeIcon
-                          icon={faGear}
-                          className="text-base text-zinc-400"
-                        />
-                        <span className="hidden sm:flex">Bulk Actions</span>
-                      </th>
-                    )}
                   </tr>
                 ))}
               </thead>

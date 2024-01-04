@@ -88,13 +88,13 @@ const Profile = (props) => {
     <div className="">
       <Popover
         trigger={
-          <div className="bg-cyan-700/20 hover:bg-slate-200/80 p-3 h-10 w-10 rounded-full  focus:outline-none focus:bg-slate-400 flex items-center justify-center">
+          <div className="bg-cyan-700 hover:bg-slate-200/80 p-3 h-8 w-8 rounded-full  focus:outline-none focus:bg-slate-400 flex items-center justify-center">
             {authLoading ? (
               <div className="absolute flex items-center">
                 <Spinner size="medium" />
               </div>
             ) : (
-              <span className="text-xl font-bold uppercase text-gray-700">
+              <span className="text-xl font-bold uppercase text-white">
                 {loggedInUser?.username?.charAt(0)}
               </span>
             )}
