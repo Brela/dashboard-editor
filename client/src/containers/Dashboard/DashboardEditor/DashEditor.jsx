@@ -130,9 +130,12 @@ const DashboardEditor = () => {
 
   // Update localWidgets state ( which will hold the edited widgets ) when widgetsData ( widgets from database ) changes
   useEffect(() => {
-    console.log("-- 4 -- onSuccess queryKey and Data: ");
-    setUnsavedWidgets(widgetsFromDb);
-  }, [widgetsFromDb]);
+    // I believe this was the culprit for endless loop, adding the if contitions mitigated the loop to only run a few times
+    console.log("pos culprit -----");
+    if (!isWidgetsLoading && !isDashboardsLoading) {
+      setUnsavedWidgets(widgetsFromDb);
+    }
+  }, [widgetsFromDb, isWidgetsLoading, isDashboardsLoading]);
 
   // const isLoading = isDashboardsLoading || isWidgetsLoading;
 
@@ -204,10 +207,12 @@ const DashboardEditor = () => {
     }
   };
 
+  // operation - FEL - find endless loop
   // When a dashboard is deleted, select the first dashboard if available
   useEffect(() => {
-    console.log("Dashboards, dashboard useEffect");
+    // here, loop runs many times - problem is somewhere that needs to run the below check
     if (dashboards.length < 1) return;
+    // here it only runs once
     if (!dashboard || !dashboards.find((d) => d.id === dashboard.id)) {
       const storedDashboardId = localStorage.getItem("lastSelectedDashboardId");
       const storedDashboardExists = dashboards.some(
@@ -310,7 +315,7 @@ const DashboardEditor = () => {
               Exit
             </div>
           </button> */}
-          <div className="pl-8 basis-1/3 relative flex items-center justify-center p-2">
+          <div className="pl-8 basis-1/3 relative flex items-center justify-center pt-4 pb-2">
             <Select
               key={dashboards.length}
               options={dashboards?.map((dashboard) => ({
@@ -420,7 +425,8 @@ const DashboardEditor = () => {
 
         <ConfirmUnsavedChanges
           open={openConfirmUnsavedModal}
-          closeModal={setOpenConfirmUnsavedModal(false)}
+          closeModal={() => setOpenConfirmUnsavedModal(false)}
+          resetUnsavedChangesState={() => setHasUnsavedChanges(false)}
           onSave={handleSave}
         />
         {dashboard && (

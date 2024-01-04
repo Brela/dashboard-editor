@@ -42,7 +42,6 @@ const DashWidgetsLayout = ({
   // this is used to responsive layouts to provide to react-grid-layout
   useEffect(() => {
     if (isDashboardsLoading || isWidgetsLoading) return;
-    console.log("-- 6 --: ");
     if (widgets && widgets.length > 0) {
       setSmLayout(generateThreeColumnLayout(widgets));
       setXxsLayout(generateTwoColumnLayout(widgets));
@@ -86,7 +85,6 @@ const DashWidgetsLayout = ({
     );
   }
 
-  console.log("widgets: ", widgets);
   return (
     <section
       className={twMerge(

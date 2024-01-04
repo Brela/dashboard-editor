@@ -2,8 +2,14 @@ import React, { useState } from "react";
 import { Modal, InfoCard, Button } from "../../../../components";
 import { useNavigate } from "react-router-dom";
 
-const ConfirmUnsavedChanges = ({ open, closeModal, onSave }) => {
+const ConfirmUnsavedChanges = ({
+  open,
+  closeModal,
+  resetUnsavedChangesState,
+  onSave,
+}) => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState({
     type: "",
     title: "",
@@ -13,13 +19,24 @@ const ConfirmUnsavedChanges = ({ open, closeModal, onSave }) => {
     setError({ type: "", message: "", title: "" });
   };
 
+  const handleContinueWithoutSaving = () => {
+    closeModal();
+    resetUnsavedChangesState();
+    navigate("/dashboard");
+  };
+
   const handleSave = () => {
+    setLoading(true);
     onSave()
       .then((successMessage) => {
         navigate("/dashboard");
+        closeModal();
       })
       .catch((error) => {
         setError({ type: "error", title: "Error", message: error.message });
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -45,11 +62,16 @@ const ConfirmUnsavedChanges = ({ open, closeModal, onSave }) => {
             <Button
               size="sm"
               variant="warning"
-              onClick={() => navigate("/dashboard")}
+              onClick={handleContinueWithoutSaving}
             >
               Continue Without Saving
             </Button>
-            <Button size="sm" variant="success" onClick={handleSave}>
+            <Button
+              size="sm"
+              variant="success"
+              onClick={handleSave}
+              isLoading={loading}
+            >
               Save and Continue
             </Button>
           </div>

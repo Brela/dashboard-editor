@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button } from "../../../components";
 import { toast } from "react-hot-toast";
 import {
@@ -17,11 +17,13 @@ const OneClickGuestLogin = () => {
   const { isLoggedIn, setIsLoggedIn, userId, authLoading, fetchAuthStatus } =
     useContext(AuthContext);
   const queryClient = useQueryClient();
-  const { refetchDashboardData } = useDashboardData({
+  const { refetchDashboardData, changeSelectedDashboard } = useDashboardData({
     isLoggedIn,
     authLoading,
     userId,
   });
+
+  const [createdDash, setCreatedDash] = useState();
 
   const isWindowSmall = useWindowSize(1000);
 
@@ -64,9 +66,11 @@ const OneClickGuestLogin = () => {
         position: "bottom-center",
       });
 
-      await createDashboard({
+      const createdD = await createDashboard({
         name: "Sample 1",
       });
+      setCreatedDash(createdD);
+      console.log(createdD);
 
       // refetchDashboardData();
       setIsLoggedIn(true);
@@ -89,12 +93,12 @@ const OneClickGuestLogin = () => {
     }
   };
 
+  // possible fix for async issue
   useEffect(() => {
-    if (isLoggedIn) {
-      queryClient.removeQueries("dashboards");
-      queryClient.removeQueries("widgets");
+    if (createdDash) {
+      changeSelectedDashboard(createdDash?.id);
     }
-  }, [isLoggedIn, queryClient]);
+  }, [isLoggedIn]);
 
   return (
     <div>
