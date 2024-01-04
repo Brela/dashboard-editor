@@ -43,11 +43,11 @@ const ConfirmUnsavedChanges = ({
   return (
     <Modal
       title={"You Have Unsaved Changes"}
-      size={"sm"}
+      size={"md"}
       open={open}
       setOpen={closeModal}
       ui={
-        <>
+        <section className="h-[150px] flex items-center justify-center">
           {error.message !== "" && (
             <InfoCard
               type={error.type}
@@ -62,6 +62,7 @@ const ConfirmUnsavedChanges = ({
             <Button
               size="sm"
               variant="warning"
+              className="bg-gray-400"
               onClick={handleContinueWithoutSaving}
             >
               Continue Without Saving
@@ -75,7 +76,7 @@ const ConfirmUnsavedChanges = ({
               Save and Continue
             </Button>
           </div>
-        </>
+        </section>
       }
       modalStyle={`md:max-w-md overflow-y-auto`}
       placement="top"

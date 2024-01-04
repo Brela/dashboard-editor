@@ -325,6 +325,7 @@ const DashboardEditor = () => {
               className="m-0 inline-flex w-[200px] text-md mr-2"
               value={dashboard ? String(dashboard.id) : ""}
               onChange={(value) => {
+                setHasUnsavedChanges(false);
                 changeSelectedDashboard(value);
               }}
             />
@@ -385,8 +386,8 @@ const DashboardEditor = () => {
               <Button
                 data-tooltip-id="saveDash"
                 onClick={handleSave}
-                variant={"primary"}
-                className={`ml-3 py-1`}
+                variant={"success"}
+                className="ml-3 py-1 mb-1 bg-green-500/90"
                 isLoading={loading}
               >
                 Save Layout
