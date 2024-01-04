@@ -293,8 +293,8 @@ const DashboardEditor = () => {
           </section>
         </div>
       )}
-      <DashboardHeader />
-      <div className="w-full min-h-screen px-7">
+
+      <div className="w-full px-7">
         <section className="flex justify-between items-end py-1 px-3">
           <div className="invisible basis-1/3"></div>
           {/*  <button

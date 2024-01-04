@@ -13,7 +13,7 @@ import { createDashboard } from "../../../services/dashboardAPIcalls";
 import useDashboardData from "../hooks/useDashboardData";
 import useWindowSize from "../../../hooks/useWindowSize";
 
-const OneClickGuestLogin = (props) => {
+const OneClickGuestLogin = () => {
   const { isLoggedIn, setIsLoggedIn, userId, authLoading, fetchAuthStatus } =
     useContext(AuthContext);
   const queryClient = useQueryClient();

@@ -19,15 +19,13 @@ import NavigationBar from "../../pages/InventoryCopilot/NavigationBar";
 import { Popover, Modal, Spinner } from "../../components";
 import { useQueryClient } from "react-query";
 
-const Profile = (props) => {
+const Profile = () => {
   const [loggedInUser, setLoggedInUser] = useState({ username: "" });
 
   const { isLoggedIn, setIsLoggedIn, authLoading } = useContext(AuthContext);
   const [modalContent, setModalContent] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const closeModal = () => setShowModal(false);
-
-  const { refetchDashboardData, changeSelectedDashboard } = props;
 
   const queryClient = useQueryClient();
 

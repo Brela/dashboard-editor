@@ -21,10 +21,6 @@ const DashboardHome = () => {
 
   return (
     <>
-      <DashboardHeader
-        refetchDashboardData={refetchDashboardData}
-        changeSelectedDashboard={changeSelectedDashboard}
-      />
       <div className="mx-auto w-[90vw] lg:w-[85vw] pb-10">
         <div className="flex  items-center justify-center gap-x-2 p-2 mt-3">
           <section className="flex text-gray-500 flex-col gap-1 w-[50vw] md:w-[30vw] xl:w-[15vw]">

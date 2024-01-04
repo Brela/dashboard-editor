@@ -7,7 +7,7 @@ import { twMerge } from "tailwind-merge";
 import { headerBg } from "../../../css/globalTailwindVars";
 import OneClickGuestLogin from "./OneClickGuestLogin";
 
-const DashboardHeader = (props) => {
+const DashboardHeader = () => {
   const { isLoggedIn, authLoading } = useContext(AuthContext);
 
   // show info toast about logging in as guest - show one time only
@@ -58,11 +58,7 @@ const DashboardHeader = (props) => {
           <DashNavBar />
         </div>
         <section className="basis-1/3 flex items-center justify-end">
-          {isLoggedIn ? (
-            <Profile {...props} />
-          ) : (
-            <OneClickGuestLogin {...props} />
-          )}
+          {isLoggedIn ? <Profile /> : <OneClickGuestLogin />}
         </section>
       </div>
     </>
