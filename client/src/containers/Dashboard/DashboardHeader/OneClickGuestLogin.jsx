@@ -11,6 +11,7 @@ import { AuthContext } from "../../../contexts/auth.context";
 import { useQueryClient } from "react-query";
 import { createDashboard } from "../../../services/dashboardAPIcalls";
 import useDashboardData from "../hooks/useDashboardData";
+import useWindowSize from "../../../hooks/useWindowSize";
 
 const OneClickGuestLogin = (props) => {
   const { isLoggedIn, setIsLoggedIn, userId, authLoading, fetchAuthStatus } =
@@ -22,6 +23,8 @@ const OneClickGuestLogin = (props) => {
     userId,
   });
 
+  const isWindowSmall = useWindowSize(1000);
+
   const handleGuestLogin = async () => {
     let toastId = null;
     let uniqueId = String(uuid());
@@ -31,7 +34,10 @@ const OneClickGuestLogin = (props) => {
 
     try {
       // ------ create guest account ------
-      toastId = toast("Creating guest account...", { autoClose: false });
+      toastId = toast("Creating guest account...", {
+        autoClose: false,
+        position: "bottom-center",
+      });
       const userData = await createUser(username, password, true); // isTempAccount = true - flag to delete account later
       toast.dismiss(toastId);
 
@@ -46,29 +52,36 @@ const OneClickGuestLogin = (props) => {
         throw new Error(loginData.message);
       }
 
-      localStorage.removeItem("lastSelectedDashboardId");
       await fetchAuthStatus();
-
-      // clear the demo queries and remove them
-      queryClient.setQueryData(["dashboards", "demo"], null);
-      queryClient.setQueryData("widgets", null);
-      queryClient.removeQueries(["dashboards", "demo"], { exact: true });
-      queryClient.removeQueries("widgets");
-
-      toast.success("Guest account setup complete", { autoClose: 5000 });
+      toast.success("Guest account setup complete", {
+        autoClose: 5000,
+        position: "bottom-center",
+      });
 
       // ------ create one sample dashboard ------
-      toastId = toast("Creating sample dashboard...", { autoClose: false });
+      toastId = toast("Creating sample dashboard...", {
+        autoClose: false,
+        position: "bottom-center",
+      });
 
       await createDashboard({
         name: "Sample 1",
       });
 
-      refetchDashboardData();
+      // refetchDashboardData();
+      setIsLoggedIn(true);
+      localStorage.removeItem("lastSelectedDashboardId");
+
+      // clear the demo queries and remove them
+      queryClient.setQueryData(["dashboards", "user"], null);
+      queryClient.setQueryData("widgets", null);
+      queryClient.removeQueries(["dashboards", "user"]);
+      queryClient.removeQueries("widgets");
 
       toast.dismiss(toastId);
       toast.success("Sample dashboard created", {
         autoClose: 4000,
+        position: "bottom-center",
       });
     } catch (error) {
       toast.dismiss(toastId);
@@ -91,7 +104,8 @@ const OneClickGuestLogin = (props) => {
         variant="secondary"
         className="bg-green-500/90 py-2 h-auto my-auto"
       >
-        One Click Guest Login
+        Guest Login
+        {/* {isWindowSmall ? "Guest Login" : "One Click Guest Login"} */}
       </Button>
     </div>
   );

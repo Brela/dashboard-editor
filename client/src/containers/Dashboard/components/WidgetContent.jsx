@@ -70,7 +70,7 @@ const WidgetContent = ({ isEditMode, block, IconComponent }) => {
                 }
               }}
               onClick={() => {
-                toast("This feature is disabled for Demo");
+                toast("This feature is disabled for this Demo");
                 /*   if (!isEditMode) {
                   navigate(block.navigationUrl);
                 } */

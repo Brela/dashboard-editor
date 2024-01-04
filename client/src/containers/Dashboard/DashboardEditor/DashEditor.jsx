@@ -128,12 +128,11 @@ const DashboardEditor = () => {
 
   document.title = `Editing Dashboard: ${dashboard?.name}`;
 
-  // Update localWidgets state when widgetsData changes
+  // Update localWidgets state ( which will hold the edited widgets ) when widgetsData ( widgets from database ) changes
   useEffect(() => {
-    if (isDashboardsLoading || isWidgetsLoading) return;
     console.log("-- 4 -- onSuccess queryKey and Data: ");
     setUnsavedWidgets(widgetsFromDb);
-  }, [widgetsFromDb, isDashboardsLoading]);
+  }, [widgetsFromDb]);
 
   // const isLoading = isDashboardsLoading || isWidgetsLoading;
 
@@ -391,7 +390,7 @@ const DashboardEditor = () => {
           </div>
           {/* <div className="invisible"></div> */}
         </section>
-        <div className="grid grid-cols-12 h-[83vh]">
+        <div className="grid grid-cols-12 h-[80vh]">
           <div className="col-span-4 md:col-span-4 lg:col-span-2">
             <WidgetsSidebar
               handleAddItem={handleAddItem}

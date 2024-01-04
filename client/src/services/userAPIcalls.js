@@ -92,7 +92,7 @@ export const logoutUser = async () => {
       },
     );
 
-    toast.success("Logged out successfully. See you soon! 👋");
+    toast.success("Logged out successfully. 👋", { position: "bottom-center" });
 
     return response.data;
   } catch (error) {

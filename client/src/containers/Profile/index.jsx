@@ -52,7 +52,7 @@ const Profile = (props) => {
       // clear the demo queries and remove them
       queryClient.setQueryData(["dashboards", "user"], null);
       queryClient.setQueryData("widgets", null);
-      queryClient.removeQueries(["dashboards", "user"], { exact: true });
+      queryClient.removeQueries(["dashboards", "user"]);
       queryClient.removeQueries("widgets");
     } catch (error) {
       toast.error(`Oops! Something went wrong: ${error}`);
@@ -88,7 +88,7 @@ const Profile = (props) => {
     <div className="">
       <Popover
         trigger={
-          <div className="bg-cyan-700 hover:bg-slate-200/80 p-3 h-8 w-8 rounded-full  focus:outline-none focus:bg-slate-400 flex items-center justify-center">
+          <div className="bg-cyan-700 hover:bg-cyan-700/70 p-3 h-8 w-8 rounded-full  focus:outline-none focus:bg-slate-400 flex items-center justify-center">
             {authLoading ? (
               <div className="absolute flex items-center">
                 <Spinner size="medium" />
@@ -102,17 +102,21 @@ const Profile = (props) => {
         }
         contentClassName="mr-2 px-8"
         content={
-          <ul className="flex flex-col gap-3">
+          <ul className="flex flex-col items-start gap-3">
             <Popover.CloseOnClickItem
+              className="hover:text-gray-500"
               onClick={() => {
                 setModalContent(<ProfileContent loggedInUser={loggedInUser} />);
                 setShowModal(true);
               }}
             >
               <FontAwesomeIcon icon={faUser} className="mr-2 text-zinc-400" />
-              {loggedInUser?.username}
+              Profile
             </Popover.CloseOnClickItem>
-            <Popover.CloseOnClickItem onClick={handleLogoutUser}>
+            <Popover.CloseOnClickItem
+              className="hover:text-gray-500"
+              onClick={handleLogoutUser}
+            >
               <FontAwesomeIcon
                 icon={faSignOutAlt}
                 className="mr-2 text-zinc-400"

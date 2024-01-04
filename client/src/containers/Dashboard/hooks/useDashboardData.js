@@ -38,10 +38,6 @@ const useDashboardData = ({ isLoggedIn, authLoading, userId }) => {
   const dashboards = dashboardsData ? dashboardsData.items : [];
 
   useEffect(() => {
-    localStorage.removeItem("lastSelectedDashboardId");
-  }, [isLoggedIn]);
-
-  useEffect(() => {
     console.log("-- 2 -- in hook, dashboards changed: ", dashboards);
   }, [dashboards]);
   useEffect(() => {
@@ -96,10 +92,15 @@ const useDashboardData = ({ isLoggedIn, authLoading, userId }) => {
 
   // Update local state when a new dashboard is selected
   const changeSelectedDashboard = (id) => {
+    console.log("here 1");
     const newDashboard = dashboards.find((item) => item.id === id);
     if (newDashboard) {
+      console.log(newDashboard);
       setDashboard(newDashboard); // Update local state
-      localStorage.setItem("lastSelectedDashboardId", JSON.stringify(id));
+      localStorage.setItem(
+        "lastSelectedDashboardId",
+        JSON.stringify(newDashboard?.id),
+      );
     }
   };
 
