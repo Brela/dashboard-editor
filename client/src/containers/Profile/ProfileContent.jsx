@@ -21,9 +21,10 @@ const ProfileContent = ({ loggedInUser }) => (
       </div>
       {loggedInUser?.isTempAccount && (
         <div className="mt-3 flex gap-2">
-          <ClockIcon className="h-7 w-7 text-orange-500/70" />
+          <ClockIcon className="h-7 w-7 text-orange-600/70" />
           <p className="text-orange-500 font-semi-bold">
-            This guest account will be autommatically deleted from the database.
+            This guest account will be autommatically deleted from the database
+            at a later time.
           </p>
         </div>
       )}

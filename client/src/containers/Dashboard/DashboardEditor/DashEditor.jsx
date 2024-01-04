@@ -128,12 +128,14 @@ const DashboardEditor = () => {
 
   document.title = `Editing Dashboard: ${dashboard?.name}`;
 
-  // Update localWidgets state when widgetsData changes
+  // Update localWidgets state ( which will hold the edited widgets ) when widgetsData ( widgets from database ) changes
   useEffect(() => {
-    if (isDashboardsLoading || isWidgetsLoading) return;
-    console.log("-- 4 -- onSuccess queryKey and Data: ");
-    setUnsavedWidgets(widgetsFromDb);
-  }, [widgetsFromDb, isDashboardsLoading]);
+    // I believe this was the culprit for endless loop, adding the if contitions mitigated the loop to only run a few times
+    console.log("pos culprit -----");
+    if (!isWidgetsLoading && !isDashboardsLoading) {
+      setUnsavedWidgets(widgetsFromDb);
+    }
+  }, [widgetsFromDb, isWidgetsLoading, isDashboardsLoading]);
 
   // const isLoading = isDashboardsLoading || isWidgetsLoading;
 
@@ -205,10 +207,12 @@ const DashboardEditor = () => {
     }
   };
 
+  // operation - FEL - find endless loop
   // When a dashboard is deleted, select the first dashboard if available
   useEffect(() => {
-    console.log("Dashboards, dashboard useEffect");
+    // here, loop runs many times - problem is somewhere that needs to run the below check
     if (dashboards.length < 1) return;
+    // here it only runs once
     if (!dashboard || !dashboards.find((d) => d.id === dashboard.id)) {
       const storedDashboardId = localStorage.getItem("lastSelectedDashboardId");
       const storedDashboardExists = dashboards.some(
@@ -294,8 +298,8 @@ const DashboardEditor = () => {
           </section>
         </div>
       )}
-      <DashboardHeader />
-      <div className="w-full min-h-screen px-7">
+
+      <div className="w-full px-7">
         <section className="flex justify-between items-end py-1 px-3">
           <div className="invisible basis-1/3"></div>
           {/*  <button
@@ -311,7 +315,7 @@ const DashboardEditor = () => {
               Exit
             </div>
           </button> */}
-          <div className="pl-8 basis-1/3 relative flex items-center justify-center p-2">
+          <div className="pl-8 basis-1/3 relative flex items-center justify-center pt-4 pb-2">
             <Select
               key={dashboards.length}
               options={dashboards?.map((dashboard) => ({
@@ -321,6 +325,7 @@ const DashboardEditor = () => {
               className="m-0 inline-flex w-[200px] text-md mr-2"
               value={dashboard ? String(dashboard.id) : ""}
               onChange={(value) => {
+                setHasUnsavedChanges(false);
                 changeSelectedDashboard(value);
               }}
             />
@@ -381,8 +386,8 @@ const DashboardEditor = () => {
               <Button
                 data-tooltip-id="saveDash"
                 onClick={handleSave}
-                variant={"primary"}
-                className={`ml-3 py-1`}
+                variant={"success"}
+                className="ml-3 py-1 mb-1 bg-green-500/90"
                 isLoading={loading}
               >
                 Save Layout
@@ -391,7 +396,7 @@ const DashboardEditor = () => {
           </div>
           {/* <div className="invisible"></div> */}
         </section>
-        <div className="grid grid-cols-12 h-[83vh]">
+        <div className="grid grid-cols-12 h-[80vh]">
           <div className="col-span-4 md:col-span-4 lg:col-span-2">
             <WidgetsSidebar
               handleAddItem={handleAddItem}
@@ -421,7 +426,8 @@ const DashboardEditor = () => {
 
         <ConfirmUnsavedChanges
           open={openConfirmUnsavedModal}
-          closeModal={setOpenConfirmUnsavedModal(false)}
+          closeModal={() => setOpenConfirmUnsavedModal(false)}
+          resetUnsavedChangesState={() => setHasUnsavedChanges(false)}
           onSave={handleSave}
         />
         {dashboard && (

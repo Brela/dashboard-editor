@@ -2,8 +2,14 @@ import React, { useState } from "react";
 import { Modal, InfoCard, Button } from "../../../../components";
 import { useNavigate } from "react-router-dom";
 
-const ConfirmUnsavedChanges = ({ open, closeModal, onSave }) => {
+const ConfirmUnsavedChanges = ({
+  open,
+  closeModal,
+  resetUnsavedChangesState,
+  onSave,
+}) => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState({
     type: "",
     title: "",
@@ -13,24 +19,35 @@ const ConfirmUnsavedChanges = ({ open, closeModal, onSave }) => {
     setError({ type: "", message: "", title: "" });
   };
 
+  const handleContinueWithoutSaving = () => {
+    closeModal();
+    resetUnsavedChangesState();
+    navigate("/dashboard");
+  };
+
   const handleSave = () => {
+    setLoading(true);
     onSave()
       .then((successMessage) => {
         navigate("/dashboard");
+        closeModal();
       })
       .catch((error) => {
         setError({ type: "error", title: "Error", message: error.message });
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
   return (
     <Modal
       title={"You Have Unsaved Changes"}
-      size={"sm"}
+      size={"md"}
       open={open}
       setOpen={closeModal}
       ui={
-        <>
+        <section className="h-[150px] flex items-center justify-center">
           {error.message !== "" && (
             <InfoCard
               type={error.type}
@@ -45,15 +62,21 @@ const ConfirmUnsavedChanges = ({ open, closeModal, onSave }) => {
             <Button
               size="sm"
               variant="warning"
-              onClick={() => navigate("/dashboard")}
+              className="bg-gray-400"
+              onClick={handleContinueWithoutSaving}
             >
               Continue Without Saving
             </Button>
-            <Button size="sm" variant="success" onClick={handleSave}>
+            <Button
+              size="sm"
+              variant="success"
+              onClick={handleSave}
+              isLoading={loading}
+            >
               Save and Continue
             </Button>
           </div>
-        </>
+        </section>
       }
       modalStyle={`md:max-w-md overflow-y-auto`}
       placement="top"

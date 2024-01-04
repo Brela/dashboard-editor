@@ -12,6 +12,10 @@ export const DashboardProvider = ({ children }) => {
   const [openConfirmUnsavedModal, setOpenConfirmUnsavedModal] = useState(false);
 
   useEffect(() => {
+    console.log("---- open Modal ----", openConfirmUnsavedModal);
+  }, [openConfirmUnsavedModal]);
+
+  useEffect(() => {
     console.log("hasUnsaveDChanges in context ----", hasUnsavedChanges);
   }, [hasUnsavedChanges]);
 

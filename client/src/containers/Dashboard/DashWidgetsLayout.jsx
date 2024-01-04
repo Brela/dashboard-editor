@@ -42,7 +42,6 @@ const DashWidgetsLayout = ({
   // this is used to responsive layouts to provide to react-grid-layout
   useEffect(() => {
     if (isDashboardsLoading || isWidgetsLoading) return;
-    console.log("-- 6 --: ");
     if (widgets && widgets.length > 0) {
       setSmLayout(generateThreeColumnLayout(widgets));
       setXxsLayout(generateTwoColumnLayout(widgets));
@@ -62,7 +61,7 @@ const DashWidgetsLayout = ({
   if (isDashboardsLoading || isWidgetsLoading) {
     return (
       <EmptyDashboard
-        className={isEditMode ? dashboardBg + " h-[85vh] mt-0 px-0" : ""}
+        className={isEditMode ? dashboardBg + " h-[80vh] mt-0 px-0" : ""}
         message={
           <div>
             <Spinner />
@@ -73,26 +72,34 @@ const DashWidgetsLayout = ({
   } else if (!dashboards || dashboards.length === 0) {
     return (
       <EmptyDashboard
-        className={isEditMode ? dashboardBg + " h-[85vh] mt-0 px-0" : ""}
+        className={isEditMode ? dashboardBg + " h-[80vh] mt-0 px-0" : ""}
         message="No dashboards found. To add a dashboard, click the settings icon above."
       />
     );
   } else if (!isEditMode && (!widgets || widgets.length === 0)) {
     return (
       <EmptyDashboard
-        className={isEditMode ? dashboardBg + " h-[85vh] mt-0 px-0" : ""}
+        className={isEditMode ? dashboardBg + " h-[80vh] mt-0 px-0" : ""}
         message="You don't have any widgets on this dashboard! Click Dashboard Editor above to add some widgets."
       />
     );
   }
 
-  console.log("widgets: ", widgets);
   return (
     <section
       className={twMerge(
         "col-span-8 lg:col-span-10 mr-3 mt-1 ml-1 rounded-md ",
         isEditMode && dashboardBg,
       )}
+      style={
+        isEditMode
+          ? {
+              border: "1px dashed",
+              borderWidth: "1px",
+              borderColor: "#b5b5b5",
+            }
+          : {}
+      }
     >
       {widgets && widgets.length !== 0 ? (
         <ResponsiveGridLayout

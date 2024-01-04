@@ -176,7 +176,7 @@ function OrderHistory() {
               {
                 <FontAwesomeIcon
                   icon={faCircleChevronLeft}
-                  className="text-xl text-zinc-400 hover:text-zinc-400/80"
+                  className="text-lg text-zinc-400/80 hover:text-zinc-400/60 cursor-pointer"
                 />
               }
             </button>{" "}
@@ -190,7 +190,7 @@ function OrderHistory() {
               {
                 <FontAwesomeIcon
                   icon={faCircleChevronRight}
-                  className="text-xl text-zinc-400 hover:text-zinc-400/80"
+                  className="text-lg text-zinc-400/80 hover:text-zinc-400/60 cursor-pointer"
                 />
               }
             </button>{" "}

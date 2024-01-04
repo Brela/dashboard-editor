@@ -19,6 +19,7 @@ import DashboardEditor from "./containers/Dashboard/DashboardEditor/DashEditor";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { DashboardProvider } from "./contexts/dash.context.jsx";
+import DashboardHeaderRouting from "./containers/Dashboard/index.jsx";
 
 const App = () => {
   const { isLoggedIn } = useContext(AuthContext);
@@ -29,9 +30,8 @@ const App = () => {
           <Routes>
             {/* dashboard editor routes */}
 
-            <Route path="/dashboard" element={<DashboardHome />} />
-            <Route path="/dashboard/editor" element={<DashboardEditor />} />
-            <Route path="/*" element={<Navigate to="/copilot" />} />
+            <Route path="/dashboard/*" element={<DashboardHeaderRouting />} />
+            <Route path="/" element={<Navigate to="/copilot" />} />
 
             {/* inventory copilot routes */}
             {isLoggedIn ? (

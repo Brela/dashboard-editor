@@ -106,7 +106,7 @@ export default function DemoControls({ page }) {
             <div className="flex items-center gap-2">
               <button
                 className={twMerge(
-                  "whitespace-nowrap text-sm hover:bg-zinc-200/70 py-1 px-4 rounded-md flex items-center gap-2 min-w-[120px]",
+                  "whitespace-nowrap text-md hover:bg-zinc-200/70 py-1 px-4 rounded-md flex items-center gap-2 min-w-[120px]",
                   isPlaying ? "text-cyan-700" : "",
                 )}
                 onClick={togglePlayStop}
@@ -125,7 +125,7 @@ export default function DemoControls({ page }) {
             </div>
             <div className="flex items-center gap-2">
               <button
-                className="whitespace-nowrap text-sm hover:bg-zinc-200/70 py-1 px-4 rounded-md flex items-center gap-2"
+                className="whitespace-nowrap text-md hover:bg-zinc-200/70 py-1 px-4 rounded-md flex items-center gap-2"
                 onClick={resetInventoryWithState}
               >
                 Reset Stock
@@ -140,7 +140,7 @@ export default function DemoControls({ page }) {
 
         {page === "orders" && (
           <div className="flex items-center gap-2">
-            <p className="text-base font-semibold text-zinc-700">
+            <p className="whitespace-nowrap text-md py-1 px-4 rounded-md flex items-center gap-2">
               Deliveries On:
             </p>
             <label

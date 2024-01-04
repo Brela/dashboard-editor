@@ -10,6 +10,7 @@ import DashboardEditor from "./containers/Dashboard/DashboardEditor/DashEditor.j
 import { Toaster } from "react-hot-toast";
 import Profile from "./containers/Profile/index.jsx";
 import { DashboardProvider } from "./contexts/dash.context.jsx";
+import DashboardHeaderRouting from "./containers/Dashboard/index.jsx";
 
 export default function DashboardEditorRoutes() {
   const { isLoggedIn } = useContext(AuthContext);
@@ -19,19 +20,7 @@ export default function DashboardEditorRoutes() {
       <>
         <Routes>
           {isLoggedIn ? (
-            <>
-              <Route
-                path="/"
-                element={
-                  <div>
-                    <Profile />
-                    <Dashboard />
-                  </div>
-                }
-              />
-              <Route path="/editor" element={<DashboardEditor />} />
-              <Route path="/*" element={<Navigate to="/dashboard" />} />
-            </>
+            <DashboardHeaderRouting />
           ) : (
             <>
               <Route path="login" element={<LoginPage project="dashboard" />} />
