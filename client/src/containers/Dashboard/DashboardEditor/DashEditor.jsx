@@ -59,7 +59,7 @@ const DashboardEditor = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const isWindowSmall = useWindowSize(1460);
+  const isWindowSmall = useWindowSize(1530);
 
   const [modal, setModal] = useState({ name: null, id: null });
   const closeModal = () => setModal({ name: null, id: null });
