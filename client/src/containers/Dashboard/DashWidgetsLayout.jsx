@@ -88,7 +88,7 @@ const DashWidgetsLayout = ({
   return (
     <section
       className={twMerge(
-        "col-span-8 lg:col-span-10 mr-3 mt-1 ml-1 rounded-md ",
+        "col-span-12 md:col-span-8 lg:col-span-10 mr-3 mt-1 ml-1 rounded-md ",
         isEditMode && dashboardBg,
       )}
       style={

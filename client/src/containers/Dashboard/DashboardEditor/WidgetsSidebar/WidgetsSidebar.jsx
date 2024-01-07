@@ -119,7 +119,7 @@ const WidgetsSidebar = ({
 
   return (
     <div className=" flex flex-col px-3 h-full">
-      <section className="mb-10 h-[75vh]">
+      <section className="mb-10 h-[30vh] md:h-[75vh]">
         <h3 className="text-gray-500 tracking-wider text-xs font-medium pb-1 pt-2  px-2">
           Standard Widgets
         </h3>
