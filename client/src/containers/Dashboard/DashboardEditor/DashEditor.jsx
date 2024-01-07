@@ -52,6 +52,8 @@ const DashboardEditor = () => {
     setHasUnsavedChanges,
     openConfirmUnsavedModal,
     setOpenConfirmUnsavedModal,
+    useEditorInMobileAnyway,
+    setUseEditorInMobileAnyway,
   } = useContext(DashboardContext);
 
   // currently - trying to figure out confirmUsavedChanges modal
@@ -65,7 +67,7 @@ const DashboardEditor = () => {
   const closeModal = () => setModal({ name: null, id: null });
   const [autoAddNewOpen, setAutoAddNewOpen] = useState(true);
 
-  const [widgets, setUnsavedWidgets] = useState();
+  const [widgets, setUnsavedWidgets] = useState([]);
   const [loading, setLoading] = useState(false);
 
   // ------------------------------------------------------------------------
@@ -130,6 +132,7 @@ const DashboardEditor = () => {
 
   // Update localWidgets state ( which will hold the edited widgets ) when widgetsData ( widgets from database ) changes
   useEffect(() => {
+    if (isWidgetsLoading || isDashboardsLoading) return;
     // I believe this was the culprit for endless loop, adding the if contitions mitigated the loop to only run a few times
     console.log("pos culprit -----");
     if (!isWidgetsLoading && !isDashboardsLoading) {
@@ -284,20 +287,30 @@ const DashboardEditor = () => {
 
   return (
     <>
-      {isWindowSmall && (
+      {/* {isWindowSmall && !useEditorInMobileAnyway && (
         <div className=" z-30 p-10 absolute top-0 left-0 w-full h-full bg-gray-900/70 text-white flex flex-col gap-5 items-center justify-center">
           <section className="md:w-[60vw] text-center">
             <h4 className="font-semibold text-2xl mb-6">
               Please increase screen width to use editor.
             </h4>
             <p className="text-lg">
-              Although these dashboards are responsive once created, they must
-              be full screen (4 widgets wide) for the algorithms to work
-              correctly while editing.
+              Dashboards are responsive if editor is used on desktop ( should
+              have 4 widgets per row ).
+            </p>
+            <p className="text-lg">
+              {`Click button below if you don't need a reponsive layout.`}
             </p>
           </section>
+          <Button
+            size="sm"
+            variant="ghost"
+            className="bg-cyan-700/90 hover:bg-cyan-600/90 text-white"
+            onClick={() => setUseEditorInMobileAnyway(true)}
+          >
+            Use Anyway
+          </Button>
         </div>
-      )}
+      )} */}
 
       <div className="w-full px-7">
         <section className="flex justify-between items-end py-1 px-3">
@@ -315,14 +328,14 @@ const DashboardEditor = () => {
               Exit
             </div>
           </button> */}
-          <div className="pl-8 basis-1/3 relative flex items-center justify-center pt-4 pb-2">
+          <div className="md:pl-8 basis-1/3 relative flex items-center md:justify-center pt-4 pb-2">
             <Select
               key={dashboards.length}
               options={dashboards?.map((dashboard) => ({
                 value: dashboard.id,
                 label: dashboard.name,
               }))}
-              className="m-0 inline-flex w-[200px] text-md mr-2"
+              className="m-0 inline-flex w-[170px] md:w-[200px] text-md mr-2"
               value={dashboard ? String(dashboard.id) : ""}
               onChange={(value) => {
                 setHasUnsavedChanges(false);
@@ -397,7 +410,7 @@ const DashboardEditor = () => {
           {/* <div className="invisible"></div> */}
         </section>
         <div className="grid grid-cols-12 h-[80vh]">
-          <div className="col-span-4 md:col-span-4 lg:col-span-2">
+          <div className="col-span-12 md:col-span-4 lg:col-span-2">
             <WidgetsSidebar
               handleAddItem={handleAddItem}
               dashboard={dashboard}
