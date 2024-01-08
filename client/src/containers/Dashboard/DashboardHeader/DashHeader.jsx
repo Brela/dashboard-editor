@@ -14,19 +14,19 @@ const DashboardHeader = () => {
   useEffect(() => {
     const hasShownToast = localStorage.getItem("hasShownToast");
 
-    console.log(hasShownToast);
-    toast(`"test", ${hasShownToast}`);
     if (!hasShownToast) {
-      const toastDuration = 15000;
-      console.log("here");
-      toast(
+      console.log(hasShownToast);
+
+      toast(`"test", ${hasShownToast}`);
+
+      toast.success(
         <section className="text-slate-700">
           {`To create and save dashboards, click the "Guest
             Login" button on right to seamlessly sign in as a guest with one click and use all
             features.`}
         </section>,
         {
-          autoClose: toastDuration,
+          autoClose: 15000,
           position: "top-center",
           style: {
             borderRadius: "10px",
@@ -35,8 +35,8 @@ const DashboardHeader = () => {
       );
       setTimeout(() => {
         console.log("Toast has closed");
-        localStorage.setItem("hasShownToast", true);
-      }, toastDuration);
+        localStorage.setItem("hasShownToast", "true");
+      }, 15000);
     }
   }, []);
 
