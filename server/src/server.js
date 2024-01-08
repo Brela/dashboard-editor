@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import { CORS_ORIGIN, PORT } from "./config/envConfig.js";
+import { CORS_ORIGINS, PORT } from "./config/envConfig.js";
 import { validateUser } from "./middleware/validateUser.js";
 
 import inventoryRoutes from "./modules/inventory/routes.js";
@@ -14,7 +14,7 @@ import { authenticateJWT } from "./modules/auth/authenticateJWT.js";
 
 const app = express();
 
-const allowedOrigins = process.env.CORS_ORIGINS.split(",");
+const allowedOrigins = CORS_ORIGINS.split(",");
 
 const corsOptions = {
   origin: function (origin, callback) {

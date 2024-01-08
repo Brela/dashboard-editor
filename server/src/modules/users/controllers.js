@@ -47,8 +47,14 @@ export const getUser = async (req, res) => {
   }
 };
 
+const allowedOrigins = process.env.CORS_ORIGINS.split(",");
+
 export const createUser = async (req, res) => {
-  res.header("Access-Control-Allow-Origin", `${process.env.CORS_ORIGIN}`);
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  }
+
   const { username, password, isTempAccount } = req.body;
   const hashedPassword = await argon2.hash(password);
   console.log(username, hashedPassword);
