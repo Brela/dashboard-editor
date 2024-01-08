@@ -12,18 +12,18 @@ import { useQueryClient } from "react-query";
 import { createDashboard } from "../../../services/dashboardAPIcalls";
 import useDashboardData from "../hooks/useDashboardData";
 import useWindowSize from "../../../hooks/useWindowSize";
+import { create } from "lodash";
 
 const OneClickGuestLogin = () => {
   const { isLoggedIn, setIsLoggedIn, userId, authLoading, fetchAuthStatus } =
     useContext(AuthContext);
   const queryClient = useQueryClient();
-  const { refetchDashboardData, changeSelectedDashboard } = useDashboardData({
-    isLoggedIn,
-    authLoading,
-    userId,
-  });
-
-  const [createdDash, setCreatedDash] = useState();
+  const { refetchDashboardData, changeSelectedDashboard, dashboards } =
+    useDashboardData({
+      isLoggedIn,
+      authLoading,
+      userId,
+    });
 
   const isWindowSmall = useWindowSize(1000);
 
@@ -54,7 +54,8 @@ const OneClickGuestLogin = () => {
         throw new Error(loginData.message);
       }
 
-      await fetchAuthStatus();
+      // this was the fix to the async issue!! Removed fetchAuthStatus!!  fetchAuthStatus was causing this component to be unmounted early since this component is conditionally rendered based on auth status
+      // await fetchAuthStatus();
       toast.success("Guest account setup complete", {
         autoClose: 5000,
         position: "bottom-center",
@@ -66,11 +67,12 @@ const OneClickGuestLogin = () => {
         position: "bottom-center",
       });
 
-      const createdD = await createDashboard({
+      await createDashboard({
+        name: "Sample 2",
+      });
+      await createDashboard({
         name: "Sample 1",
       });
-      setCreatedDash(createdD);
-      console.log(createdD);
 
       // refetchDashboardData();
       setIsLoggedIn(true);
@@ -79,11 +81,11 @@ const OneClickGuestLogin = () => {
       // clear the demo queries and remove them
       queryClient.setQueryData(["dashboards", "user"], null);
       queryClient.setQueryData("widgets", null);
-      queryClient.removeQueries(["dashboards", "user"]);
-      queryClient.removeQueries("widgets");
+      /*       queryClient.removeQueries(["dashboards", "user"]);
+      queryClient.removeQueries("widgets"); */
 
       toast.dismiss(toastId);
-      toast.success("Sample dashboard created", {
+      toast.success("Sample dashboards created", {
         autoClose: 4000,
         position: "bottom-center",
       });
@@ -92,13 +94,6 @@ const OneClickGuestLogin = () => {
       toast.error(error.message);
     }
   };
-
-  // possible fix for async issue
-  useEffect(() => {
-    if (createdDash) {
-      changeSelectedDashboard(createdDash?.id);
-    }
-  }, [isLoggedIn]);
 
   return (
     <div>
