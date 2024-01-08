@@ -298,7 +298,7 @@ const DashboardEditor = () => {
               have 4 widgets per row ).
             </p>
             <p className="text-lg">
-              {`Click button below if you don't need a reponsive layout.`}
+              {`Click button below if you would like to still use the editor - widgets will not be responsive.`}
             </p>
           </section>
           <Button

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { toast } from "react-hot-toast";
+import { toast } from "react-toastify";
 import DashNavBar from "./DashNavigation";
 import { AuthContext } from "../../../contexts/auth.context";
 import Profile from "../../Profile";
@@ -7,19 +7,16 @@ import { twMerge } from "tailwind-merge";
 import { headerBg } from "../../../css/globalTailwindVars";
 import OneClickGuestLogin from "./OneClickGuestLogin";
 
-const DashboardHeader = () => {
+const DashHeader = () => {
   const { isLoggedIn, authLoading } = useContext(AuthContext);
 
   // show info toast about logging in as guest - show one time only
   useEffect(() => {
     const hasShownToast = localStorage.getItem("hasShownToast");
+    console.log(hasShownToast);
 
     if (!hasShownToast) {
-      console.log(hasShownToast);
-
-      toast(`"test", ${hasShownToast}`);
-
-      toast.success(
+      toast(
         <section className="text-slate-700">
           {`To create and save dashboards, click the "Guest
             Login" button on right to seamlessly sign in as a guest with one click and use all
@@ -36,7 +33,7 @@ const DashboardHeader = () => {
       setTimeout(() => {
         console.log("Toast has closed");
         localStorage.setItem("hasShownToast", "true");
-      }, 15000);
+      }, 500);
     }
   }, []);
 
@@ -65,4 +62,4 @@ const DashboardHeader = () => {
   );
 };
 
-export default DashboardHeader;
+export default DashHeader;
