@@ -14,11 +14,12 @@ function Footer() {
         </a>
 
         <span className="text-sm text-black/60">
-          Inventory Copilot 2023. Created by{" "}
+          Inventory Copilot 2024. Created by{" "}
           <a
             href="https://www.linkedin.com/in/clayton-breland"
             className="underline hover:text-black/80"
             target="_blank"
+            rel="noreferrer"
           >
             Clay Breland
           </a>
