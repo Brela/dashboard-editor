@@ -14,8 +14,16 @@ import { authenticateJWT } from "./modules/auth/authenticateJWT.js";
 
 const app = express();
 
+const allowedOrigins = process.env.CORS_ORIGINS.split(",");
+
 const corsOptions = {
-  origin: CORS_ORIGIN,
+  origin: function (origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
