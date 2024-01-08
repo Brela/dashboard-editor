@@ -26,12 +26,12 @@ const WidgetContent = ({ isEditMode, block, IconComponent }) => {
           )}
         </div>
         {/* <p className="ml-0 sm:ml-16 truncate text-sm font-medium text-gray-500"> */}
-        <p className="ml-0 sm:ml-16 whitespace-wrap text-md font-medium text-gray-800">
+        <p className="ml-0 sm:ml-16 whitespace-wrap text-sm font-medium tracking-wide text-gray-800">
           {block.name}
         </p>
       </dt>
       <dd className="ml-0 sm:ml-16 flex items-end pb-6 sm:pb-7">
-        <p className="text-2xl font-semibold text-gray-900 ">{block.value}</p>
+        <p className="text-2xl font-semibold text-gray-700 ">{block.value}</p>
         {block.error && (
           <div>
             <Tooltip
