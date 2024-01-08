@@ -10,20 +10,10 @@ export const authenticateUser = async () => {
       },
     );
 
-    const responseBody = response.data;
-
-    if (response.status === 401) {
-      if (responseBody.error === "TokenExpiredError") {
-        throw new Error("TokenExpired");
-      } else {
-        throw new Error("Unauthorized");
-      }
-    }
-
-    return responseBody;
+    return response.data;
   } catch (error) {
     console.error("Error during authentication:", error.message);
-    throw error;
+    throw new Error(error.response?.data?.message || "UnknownError");
   }
 };
 
@@ -39,6 +29,6 @@ export const getToken = async () => {
     return response.data.data;
   } catch (error) {
     console.error("Error fetching the token:", error.message);
-    throw new Error(error.response?.data?.error || "UnknownError");
+    throw new Error(error.response?.data?.message || "UnknownError");
   }
 };
