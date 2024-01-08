@@ -134,7 +134,7 @@ const DashboardEditor = () => {
   useEffect(() => {
     if (isWidgetsLoading || isDashboardsLoading) return;
     // I believe this was the culprit for endless loop, adding the if contitions mitigated the loop to only run a few times
-    console.log("pos culprit -----");
+    console.log("pos endless loop -----");
     if (!isWidgetsLoading && !isDashboardsLoading) {
       setUnsavedWidgets(widgetsFromDb);
     }

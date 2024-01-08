@@ -25,8 +25,7 @@ const useDashboardData = ({ isLoggedIn, authLoading, userId }) => {
       onSuccess: (data) => {
         // data will be the result of getDashboards or getDemoDashboards
         // Perform actions that depend on the updated dashboards data
-
-        console.log("-- 1 -- ON SUCESS queryKey and Data: ", data);
+        // console.log("-- 1 -- ON SUCESS queryKey and Data: ", data);
       },
     },
   );
@@ -44,7 +43,7 @@ const useDashboardData = ({ isLoggedIn, authLoading, userId }) => {
       enabled: !!dashboard && !authLoading, // the query will only run if dashboard is truthy.
       retries: 2,
       onSuccess: (data) => {
-        console.log("-- Widg -- ON SUCESS", data);
+        // console.log("-- Widg -- ON SUCESS", data);
       },
     },
   );
@@ -65,7 +64,6 @@ const useDashboardData = ({ isLoggedIn, authLoading, userId }) => {
   }, [dashboards]); */
 
   const refetchDashboardData = async () => {
-    console.log("here");
     await refetchDashboards();
     refetchWidgets();
   };
@@ -76,7 +74,6 @@ const useDashboardData = ({ isLoggedIn, authLoading, userId }) => {
   useEffect(() => {
     if (dashboards.length < 1) return;
     if (dashboards.length > 0) {
-      console.log("------- dashboards ------", dashboards);
       const storedDashboardId = localStorage.getItem("lastSelectedDashboardId");
       const foundDashboard = dashboards.find(
         (d) => d.id === JSON.parse(storedDashboardId),

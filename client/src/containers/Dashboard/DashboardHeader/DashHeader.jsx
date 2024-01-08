@@ -13,7 +13,6 @@ const DashHeader = () => {
   // show info toast about logging in as guest - show one time only
   useEffect(() => {
     const hasShownToast = localStorage.getItem("hasShownToast");
-    console.log(hasShownToast);
 
     if (!hasShownToast) {
       toast(
