@@ -76,10 +76,20 @@ export const getToken = async (req, res) => {
   try {
     const { refreshToken } = req.cookies;
 
-    if (!refreshToken) return res.sendStatus(HTTP_STATUS.UNAUTHORIZED);
+    if (!refreshToken) {
+      return res
+        .status(HTTP_STATUS.UNAUTHORIZED)
+        .json({ message: "Refresh token is missing" });
+    }
 
     jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, async (err, user) => {
-      if (err) return res.sendStatus(HTTP_STATUS.FORBIDDEN);
+      if (err) {
+        const message =
+          err.name === "TokenExpiredError"
+            ? "Refresh token expired"
+            : "Invalid refresh token";
+        return res.status(HTTP_STATUS.FORBIDDEN).json({ message });
+      }
 
       const accessToken = await generateAccessToken(user);
 
@@ -95,7 +105,7 @@ export const getToken = async (req, res) => {
   } catch (err) {
     return res
       .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
-      .json({ message: "Internal Server Error" });
+      .json({ message: "Error while processing the token" });
   }
 };
 
