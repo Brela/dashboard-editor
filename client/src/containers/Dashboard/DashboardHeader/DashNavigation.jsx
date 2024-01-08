@@ -23,7 +23,7 @@ const buttons = [
 const NavButton = ({ currentPath, button }) => {
   const { hasUnsavedChanges, setOpenConfirmUnsavedModal } =
     useContext(DashboardContext);
-  const isWindowSmall = useWindowSize(1530);
+  const isWindowSmall = useWindowSize(900);
 
   const navigate = useNavigate();
 
@@ -37,7 +37,7 @@ const NavButton = ({ currentPath, button }) => {
     <button
       key={button.value}
       className={twMerge(
-        "w-1/3 sm:w-auto  flex flex-col items-center sm:flex-row gap-1 sm:gap-0 px-1 sm:px-4 py-1",
+        "whitespace-nowrap w-1/3 sm:w-auto  flex flex-col items-center sm:flex-row gap-1 sm:gap-0 px-1 sm:px-4 py-1",
         isActive
           ? "text-cyan-800 text-md "
           : "text-zinc-500 hover:text-zinc-500/70 text-md",
@@ -63,7 +63,7 @@ const NavButton = ({ currentPath, button }) => {
 export default function DashNavBar() {
   const navigate = useNavigate();
   const location = useLocation();
-  const isWindowSmall = useWindowSize(1530);
+  const isWindowSmall = useWindowSize(900);
   const { hasUnsavedChanges, setOpenConfirmUnsavedModal } =
     useContext(DashboardContext);
 
@@ -98,7 +98,7 @@ export default function DashNavBar() {
               (pathSegments.length === 0 && button.value === "dashboard");
 
             return (
-              <li
+              <Popover.CloseOnClickItem
                 key={button.value}
                 onClick={() => {
                   if (hasUnsavedChanges && button.value === "dashboard") {
@@ -107,13 +107,17 @@ export default function DashNavBar() {
                     navigate(button.href);
                   }
                 }}
-                className={twMerge(
-                  " hover:cursor-pointer w-full",
-                  isActive ? "text-cyan-700" : "hover:text-gray-400",
-                )}
               >
-                {button.label}
-              </li>
+                <li
+                  key={button.value}
+                  className={twMerge(
+                    " hover:cursor-pointer w-full",
+                    isActive ? "text-cyan-700" : "hover:text-gray-400",
+                  )}
+                >
+                  {button.label}
+                </li>
+              </Popover.CloseOnClickItem>
             );
           })}
         </ul>
