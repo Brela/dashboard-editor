@@ -6,11 +6,22 @@ import {
   IS_DEV_MODE,
 } from "../../config/envConfig.js";
 import { HTTP_STATUS } from "../../config/constants.js";
-import { createToken } from "./authUtils.js";
 import { authenticateJWT } from "./authenticateJWT.js";
 import prisma from "../../config/prismaClient.js";
 
 const isDevMode = IS_DEV_MODE === "true";
+
+async function createToken(data, secret, expiry, type) {
+  const token = jwt.sign(data, secret, { expiresIn: expiry });
+  await prisma.token.create({
+    data: {
+      token: token,
+      type: type,
+      userId: data.id,
+    },
+  });
+  return token;
+}
 
 export const generateAccessToken = (user) =>
   createToken(user, ACCESS_TOKEN_SECRET, "1h", "ACCESS");
@@ -51,15 +62,15 @@ export const loginUser = async (req, res) => {
     return res
       .status(HTTP_STATUS.OK)
       .cookie("accessToken", accessToken, {
-        httpOnly: true,
+        /*  httpOnly: true,
         //  This attribute ensures that the cookie is sent only over HTTPS, which is a good security practice for production. In development, you might not have HTTPS set up, so it's set to false to allow cookies over HTTP.
         secure: true,
-        sameSite: "None",
+        sameSite: "None", */
       })
       .cookie("refreshToken", refreshToken, {
-        httpOnly: true,
+        /*   httpOnly: true,
         secure: true,
-        sameSite: "None",
+        sameSite: "None", */
       })
       .json({ user, accessToken });
   } catch (err) {
@@ -78,14 +89,14 @@ export const logoutUser = async (req, res) => {
   res
     .status(HTTP_STATUS.OK)
     .clearCookie("accessToken", {
-      httpOnly: true,
+      /*  httpOnly: true,
       secure: !isDevMode, // Only set secure flag in production
-      sameSite: isDevMode ? "Lax" : "None", // Important for cross-origin cookies
+      sameSite: isDevMode ? "Lax" : "None", // Important for cross-origin cookies */
     })
     .clearCookie("refreshToken", {
-      httpOnly: true,
+      /*    httpOnly: true,
       secure: !isDevMode, // Only set secure flag in production
-      sameSite: isDevMode ? "Lax" : "None", // Important for cross-origin cookies
+      sameSite: isDevMode ? "Lax" : "None", // Important for cross-origin cookies */
     })
     .json({ message: "Successfully logged out" });
 };

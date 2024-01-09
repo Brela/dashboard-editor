@@ -32,6 +32,7 @@ export const authenticateJWT = (req, res, next) => {
         }
       }
       req.user = user;
+      // iat and expires data/time converted to readable time
       req.user.iatReadable = new Date(user.iat * 1000).toUTCString();
       req.user.expires = new Date(user.exp * 1000).toUTCString();
       console.log("token expires -----1-1-1-1-1-1-1:", req.user.expires);
