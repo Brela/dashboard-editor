@@ -22,7 +22,8 @@ export const loginUser = async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    const user = await prisma.User.findUnique({
+    // latest change User to user
+    const user = await prisma.user.findUnique({
       where: { username },
       select: {
         id: true,
@@ -65,43 +66,6 @@ export const loginUser = async (req, res) => {
     return res
       .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
       .json({ message: "Internal Server Error" });
-  }
-};
-
-export const getToken = async (req, res) => {
-  try {
-    const { refreshToken } = req.cookies;
-
-    if (!refreshToken) {
-      return res
-        .status(HTTP_STATUS.UNAUTHORIZED)
-        .json({ message: "Refresh token is missing" });
-    }
-
-    jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, async (err, user) => {
-      if (err) {
-        const message =
-          err.name === "TokenExpiredError"
-            ? "Refresh token expired"
-            : "Invalid refresh token";
-        return res.status(HTTP_STATUS.FORBIDDEN).json({ message });
-      }
-
-      const accessToken = await generateAccessToken(user);
-
-      res
-        .status(HTTP_STATUS.OK)
-        .cookie("accessToken", accessToken, {
-          httpOnly: true,
-          secure: !isDevMode,
-          sameSite: isDevMode ? "Lax" : "None",
-        })
-        .json({ accessToken });
-    });
-  } catch (err) {
-    return res
-      .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
-      .json({ message: "Error while processing the token" });
   }
 };
 
