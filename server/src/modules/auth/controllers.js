@@ -11,6 +11,7 @@ import prisma from "../../config/prismaClient.js";
 
 const isDevMode = IS_DEV_MODE === "true";
 
+console.log("isDevMode", isDevMode);
 async function createToken(data, secret, expiry, type) {
   const token = jwt.sign(data, secret, { expiresIn: expiry });
   await prisma.token.create({
@@ -64,13 +65,13 @@ export const loginUser = async (req, res) => {
       .cookie("accessToken", accessToken, {
         httpOnly: true,
         //  This attribute ensures that the cookie is sent only over HTTPS, which is a good security practice for production. In development, you might not have HTTPS set up, so it's set to false to allow cookies over HTTP.
-        secure: true,
-        sameSite: "None",
+        secure: !isDevMode,
+        sameSite: isDevMode ? "Lax" : "None",
       })
       .cookie("refreshToken", refreshToken, {
         httpOnly: true,
-        secure: true,
-        sameSite: "None",
+        secure: !isDevMode,
+        sameSite: isDevMode ? "Lax" : "None",
       })
       .json({ user, accessToken });
   } catch (err) {

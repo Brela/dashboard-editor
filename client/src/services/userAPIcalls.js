@@ -42,6 +42,8 @@ export const createUser = async (username, password, isTempAccount) => {
         withCredentials: true,
       },
     );
+    // for testing no cookies being set on iPhone
+    console.log("Response Headers:", response.headers);
 
     return response.data;
   } catch (error) {
@@ -67,6 +69,9 @@ export const loginUser = async (username, password) => {
         },
       },
     );
+
+    // for testing no cookies being set on iPhone
+    console.log("Response Headers:", response.headers);
 
     return response.data;
   } catch (error) {

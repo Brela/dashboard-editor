@@ -36,10 +36,10 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use((req, res, next) => {
+/* app.use((req, res, next) => {
   res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
   next();
-});
+}); */
 
 app.use(cookieParser());
 // app.use(validateUser);

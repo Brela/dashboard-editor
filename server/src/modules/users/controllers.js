@@ -7,6 +7,8 @@ import {
   generateRefreshToken,
 } from "../auth/controllers.js";
 
+const isDevMode = process.env.IS_DEV_MODE === "true";
+
 export const getUsers = async (req, res) => {
   let users;
   try {
@@ -92,13 +94,13 @@ export const createUser = async (req, res) => {
     .cookie("accessToken", accessToken, {
       // adding these args to the create user was the fix for mobile???
       httpOnly: true,
-      secure: true,
-      sameSite: "None",
+      secure: !isDevMode,
+      sameSite: isDevMode ? "Lax" : "None",
     })
     .cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      secure: true,
-      sameSite: "None",
+      secure: !isDevMode,
+      sameSite: isDevMode ? "Lax" : "None",
     })
     .json(user);
 };
