@@ -14,11 +14,4 @@ async function createToken(data, secret, expiry, type) {
   return token;
 }
 
-function handleError(err, res, defaultMsg) {
-  console.error("Error:", err.message);
-  const message =
-    err.name === "TokenExpiredError" ? "Token Expired" : defaultMsg;
-  res.status(HTTP_STATUS.FORBIDDEN).json({ message });
-}
-
-export { createToken, handleError };
+export { createToken };

@@ -18,11 +18,6 @@ export const generateAccessToken = (user) =>
 export const generateRefreshToken = (user) =>
   createToken(user, REFRESH_TOKEN_SECRET, "7d", "REFRESH");
 
-export const authenticateUser = async (req, res, next) => {
-  await authenticateJWT(req, res, next);
-  res.json(req.user);
-};
-
 export const loginUser = async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -56,12 +51,13 @@ export const loginUser = async (req, res) => {
       .status(HTTP_STATUS.OK)
       .cookie("accessToken", accessToken, {
         httpOnly: true,
-        secure: !isDevMode,
+        //  This attribute ensures that the cookie is sent only over HTTPS, which is a good security practice for production. In development, you might not have HTTPS set up, so it's set to false to allow cookies over HTTP.
+        secure: false,
         sameSite: isDevMode ? "Lax" : "None",
       })
       .cookie("refreshToken", refreshToken, {
         httpOnly: true,
-        secure: !isDevMode,
+        secure: false,
         sameSite: isDevMode ? "Lax" : "None",
       })
       .json({ user, accessToken });

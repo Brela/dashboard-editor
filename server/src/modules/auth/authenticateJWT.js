@@ -5,12 +5,15 @@ import { HTTP_STATUS } from "../../config/constants.js";
 // figure out why frontend shows just 401 without message
 export const authenticateJWT = (req, res, next) => {
   try {
+    // for testing - remove this
+    // return res.status(HTTP_STATUS.FORBIDDEN).json({ message: "Invalid Token" });
+
     const accessToken = req.cookies.accessToken;
     // console.log("accessToken:", typeof accessToken);
     if (!accessToken) {
-      return res
-        .status(HTTP_STATUS.UNAUTHORIZED)
-        .json({ message: "Unauthorized" });
+      return res.status(HTTP_STATUS.UNAUTHORIZED).json({
+        message: "In authenticateJWT - no access token found in cookies ",
+      });
     }
     jwt.verify(accessToken, ACCESS_TOKEN_SECRET, (err, user) => {
       console.log("err:", err);
