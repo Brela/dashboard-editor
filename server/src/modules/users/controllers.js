@@ -95,12 +95,12 @@ export const createUser = async (req, res) => {
       // adding these args to the create user was the fix for mobile???
       httpOnly: true,
       secure: !isDevMode,
-      sameSite: isDevMode ? "Lax" : "None",
+      sameSite: isDevMode ? "Lax" : "Strict",
     })
     .cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: !isDevMode,
-      sameSite: isDevMode ? "Lax" : "None",
+      sameSite: isDevMode ? "Lax" : "Strict",
     })
     .json(user);
 };
