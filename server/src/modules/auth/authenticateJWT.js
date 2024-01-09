@@ -1,11 +1,9 @@
 import jwt from "jsonwebtoken";
-import { ACCESS_TOKEN_SECRET, IS_DEV_MODE } from "../../config/envConfig.js";
+import { ACCESS_TOKEN_SECRET } from "../../config/envConfig.js";
 import { HTTP_STATUS } from "../../config/constants.js";
 
 // figure out why frontend shows just 401 without message
 export const authenticateJWT = (req, res, next) => {
-  const isDevMode = IS_DEV_MODE === "true";
-  console.log(isDevMode);
   try {
     // for testing - remove this
     // return res.status(HTTP_STATUS.FORBIDDEN).json({ message: "Invalid Token" });

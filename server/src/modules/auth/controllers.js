@@ -65,12 +65,12 @@ export const loginUser = async (req, res) => {
         httpOnly: true,
         //  This attribute ensures that the cookie is sent only over HTTPS, which is a good security practice for production. In development, you might not have HTTPS set up, so it's set to false to allow cookies over HTTP.
         secure: true,
-        sameSite: "Lax",
+        sameSite: "None",
       })
       .cookie("refreshToken", refreshToken, {
         httpOnly: true,
         secure: true,
-        sameSite: "Lax",
+        sameSite: "None",
       })
       .json({ user, accessToken });
   } catch (err) {
