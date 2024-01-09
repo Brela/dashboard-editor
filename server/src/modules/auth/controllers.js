@@ -62,15 +62,15 @@ export const loginUser = async (req, res) => {
     return res
       .status(HTTP_STATUS.OK)
       .cookie("accessToken", accessToken, {
-        /*  httpOnly: true,
+        httpOnly: true,
         //  This attribute ensures that the cookie is sent only over HTTPS, which is a good security practice for production. In development, you might not have HTTPS set up, so it's set to false to allow cookies over HTTP.
         secure: true,
-        sameSite: "None", */
+        sameSite: "Lax",
       })
       .cookie("refreshToken", refreshToken, {
-        /*   httpOnly: true,
+        httpOnly: true,
         secure: true,
-        sameSite: "None", */
+        sameSite: "Lax",
       })
       .json({ user, accessToken });
   } catch (err) {
@@ -89,14 +89,14 @@ export const logoutUser = async (req, res) => {
   res
     .status(HTTP_STATUS.OK)
     .clearCookie("accessToken", {
-      /*  httpOnly: true,
-      secure: !isDevMode, // Only set secure flag in production
-      sameSite: isDevMode ? "Lax" : "None", // Important for cross-origin cookies */
+      httpOnly: true,
+      secure: true,
+      sameSite: "Lax",
     })
     .clearCookie("refreshToken", {
-      /*    httpOnly: true,
-      secure: !isDevMode, // Only set secure flag in production
-      sameSite: isDevMode ? "Lax" : "None", // Important for cross-origin cookies */
+      httpOnly: true,
+      secure: true,
+      sameSite: "Lax",
     })
     .json({ message: "Successfully logged out" });
 };

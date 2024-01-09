@@ -89,8 +89,17 @@ export const createUser = async (req, res) => {
 
   return res
     .status(202)
-    .cookie("accessToken", accessToken, { httpOnly: true })
-    .cookie("refreshToken", refreshToken, { httpOnly: true })
+    .cookie("accessToken", accessToken, {
+      // adding these args to the create user was the fix for mobile???
+      httpOnly: true,
+      secure: true,
+      sameSite: "Lax",
+    })
+    .cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "Lax",
+    })
     .json(user);
 };
 
