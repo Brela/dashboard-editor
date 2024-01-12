@@ -1,5 +1,6 @@
 import { API } from "./config";
 
+// this gets the dashboards for one specific test user to show to guests before they log in
 export const getDemoDashboards = async (queryParams) => {
   try {
     const response = await API("/dashboards/demo").get("/", {
