@@ -50,19 +50,6 @@ const useDashboardData = ({ isLoggedIn, authLoading, userId }) => {
   const dashboards = dashboardsData ? dashboardsData.items : [];
   const widgets = widgetsData ? widgetsData.items : [];
 
-  // Initialize with the first dashboard or from local storage when dashboards are loaded
-  /*   useEffect(() => {
-    if (dashboards.length < 1) return;
-    if (dashboards.length > 0) {
-      const storedDashboardId = localStorage.getItem("lastSelectedDashboardId");
-      const foundDashboard = dashboards.find(
-        (d) => d.id === JSON.parse(storedDashboardId),
-      );
-      const defaultDashboard = foundDashboard || dashboards[0];
-      setDashboard(defaultDashboard);
-    }
-  }, [dashboards]); */
-
   const refetchDashboardData = async () => {
     await refetchDashboards();
     refetchWidgets();

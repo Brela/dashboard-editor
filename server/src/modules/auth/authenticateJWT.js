@@ -7,9 +7,10 @@ export const authenticateJWT = (req, res, next) => {
   try {
     // for testing - remove this
     // return res.status(HTTP_STATUS.FORBIDDEN).json({ message: "Invalid Token" });
+    // console.log("accessToken:", accessToken);
 
     const accessToken = req.cookies.accessToken;
-    // console.log("accessToken:", typeof accessToken);
+    console.log("accessToken:", typeof accessToken);
     if (!accessToken) {
       return res.status(HTTP_STATUS.UNAUTHORIZED).json({
         message: "In authenticateJWT - no access token found in cookies ",
@@ -37,8 +38,10 @@ export const authenticateJWT = (req, res, next) => {
       next();
     });
   } catch (err) {
+    console.log("Error in authenticateJWT:", err);
     return res
       .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
+
       .json({ message: "Internal Server Error" });
   }
 };

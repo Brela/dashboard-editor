@@ -1,11 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button } from "../../../components";
 import { toast } from "react-hot-toast";
-import {
-  createSeedDataForUser,
-  createUser,
-  loginUser,
-} from "../../../services/userAPIcalls";
+import { createUser, loginUser } from "../../../services/userAPIcalls";
 import { v4 as uuid } from "uuid";
 import { AuthContext } from "../../../contexts/auth.context";
 import { useQueryClient } from "react-query";

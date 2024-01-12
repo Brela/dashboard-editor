@@ -9,46 +9,6 @@ import {
 
 const isDevMode = process.env.IS_DEV_MODE === "true";
 
-export const getUsers = async (req, res) => {
-  let users;
-  try {
-    users = await prisma.User.findMany({
-      /*     include: {
-      
-      }, */
-    });
-  } catch (error) {
-    console.log("Error Found: ", error);
-    return res.json(error);
-  }
-  return res.json(users);
-};
-
-export const getUser = async (req, res) => {
-  const { id } = req.params;
-  let user;
-  try {
-    const userData = await prisma.User.findUnique({
-      where: {
-        id: id,
-      },
-    });
-    user = userData;
-  } catch (err) {
-    console.log("Error Found: ", err);
-    return res
-      .status(500)
-      .json({ message: "Failed to create user", error: err });
-  }
-  if (user) {
-    return res.json(user);
-  } else {
-    return res.json({
-      message: `There are no users with the ID ${id}`,
-    });
-  }
-};
-
 const allowedOrigins = process.env.CORS_ORIGINS.split(",");
 
 export const createUser = async (req, res) => {
@@ -105,50 +65,6 @@ export const createUser = async (req, res) => {
     .json(user);
 };
 
-export const deleteUser = async (req, res) => {
-  const { id } = req.params;
-  try {
-    await prisma.User.delete({
-      where: {
-        id: id,
-      },
-    });
-  } catch (err) {
-    if (err.code === "P2025") {
-      return res.json({ message: "User not found" });
-    } else {
-      console.log("Error Found: ", err);
-      return res.json(err);
-    }
-  }
-  return res.json({ message: "User deleted!" });
-};
-
-export const updateUser = async (req, res) => {
-  const { id } = req.params;
-  const userInput = req.body;
-  let user;
-  try {
-    const updatedUser = await prisma.User.update({
-      where: {
-        id: id,
-      },
-      data: {
-        ...userInput,
-      },
-    });
-    user = updatedUser;
-  } catch (err) {
-    if (err.code === "P2025") {
-      return res.json({ message: "User not found" });
-    } else {
-      console.log("Error Found: ", err);
-      return res.json(err);
-    }
-  }
-  return res.json(user);
-};
-
 export const getLoggedInUser = async (req, res) => {
   try {
     const userData = await prisma.User.findUnique({
@@ -168,65 +84,4 @@ export const getLoggedInUser = async (req, res) => {
       .status(500)
       .json({ message: "Internal server error", error: err });
   }
-};
-
-export const createSeedDataForUser = async (req, res) => {
-  let userId = req?.user?.id;
-  const seedUserId = process.env.DEMO_USER_ID;
-
-  // Get all dashboards of the seed user
-  const seedDashboards = await prisma.dashboard.findMany({
-    where: {
-      userId: seedUserId,
-    },
-    include: {
-      widgets: true, // Include the widgets of each dashboard
-    },
-  });
-
-  console.log("seedDashboards: ", seedDashboards);
-  // For each dashboard of the seed user
-  for (const seedDashboard of seedDashboards) {
-    // Destructure the id property out of the seedDashboard object
-    const { id, ...dashboardWithoutId } = seedDashboard;
-
-    // Create a new dashboard for the new user
-    const newDashboard = await prisma.dashboard.create({
-      data: {
-        ...dashboardWithoutId,
-        user: {
-          connect: {
-            id: userId,
-          },
-        },
-      },
-    });
-    console.log("Created dashboard:", newDashboard);
-
-    // For each widget of the seed dashboard
-    for (const seedWidget of seedDashboard.widgets) {
-      // Destructure the id property out of the seedWidget object
-      const { id, ...widgetWithoutId } = seedWidget;
-
-      // Create a new widget for the new dashboard
-      const newWidget = await prisma.widget.create({
-        data: {
-          ...widgetWithoutId,
-          dashboard: {
-            connect: {
-              id: newDashboard.id,
-            },
-          },
-          user: {
-            connect: {
-              id: userId,
-            },
-          },
-        },
-      });
-
-      console.log("Created widget:", newWidget);
-    }
-  }
-  res.json({ message: "Seed data created successfully" });
 };
