@@ -1,7 +1,5 @@
 import prisma from "../../config/prismaClient.js";
 import argon2 from "argon2";
-import { createMockProducts } from "../../utils/createMockProducts.js";
-import { createManyInventoryItemsInternally } from "../inventory/controllers.js";
 import {
   generateAccessToken,
   generateRefreshToken,
@@ -36,14 +34,6 @@ export const createUser = async (req, res) => {
     return res.json(err);
   }
   console.log(user.username);
-
-  try {
-    const mockProducts = createMockProducts(user?.id);
-    await createManyInventoryItemsInternally(mockProducts, user);
-  } catch (err) {
-    console.log("Error Found while creating inventory items: ", err);
-    return res.json(err);
-  }
 
   // Generate tokens for automatic login after sign up
   const accessToken = await generateAccessToken(user);

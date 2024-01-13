@@ -2,22 +2,16 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { CORS_ORIGINS, PORT } from "./config/envConfig.js";
-import { validateUser } from "./middleware/validateUser.js";
-
-import inventoryRoutes from "./modules/inventory/routes.js";
-import ordersRoutes from "./modules/orders/routes.js";
 import userRoutes from "./modules/users/routes.js";
 import authenticationRoutes from "./modules/auth/routes.js";
 import dashboardRoutes from "./modules/dashboards/routes.js";
-import customWidgetRoutes from "./modules/customWidgets/routes.js";
-import { authenticateJWT } from "./modules/auth/authenticateJWT.js";
 
 const app = express();
 
 const allowedOrigins = CORS_ORIGINS.split(",");
 
 const corsOptions = {
-  // temporarily allow all origins - this didn't resolve iPhone issue
+  // this will temporarily allow all origins - this didn't resolve iPhone issue
   /*    origin: function (origin, callback) {
     callback(null, true); // Allow all origins
   }, */
@@ -45,16 +39,9 @@ app.use(cookieParser());
 
 app.use("/authentication", authenticationRoutes);
 
-// for some reason, orders doesn't work when it is after authenticateJWT middleware
-app.use("/orders", ordersRoutes);
-
 // dashboard routes get authenticated separately, since get req is public for users to view demo
 app.use("/dashboards", dashboardRoutes);
 app.use("/user", userRoutes);
-
-app.use(authenticateJWT);
-app.use("/customWidgets", customWidgetRoutes);
-app.use("/inventory", inventoryRoutes);
 
 app.listen(PORT, () => {
   console.log(`server is running on port: ${PORT}`);
