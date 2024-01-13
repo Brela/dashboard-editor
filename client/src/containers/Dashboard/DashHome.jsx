@@ -17,6 +17,8 @@ const DashboardHome = () => {
     changeSelectedDashboard,
   } = useDashboardData({ isLoggedIn, authLoading, userId });
 
+  document.title = `Dashboard: ${dashboard?.name}`;
+
   return (
     <>
       <div className="mx-auto w-[90vw] lg:w-[85vw] pb-10">
