@@ -2,9 +2,7 @@ import { useContext } from "react";
 import DashboardWidgetsLayout from "./DashWidgetsLayout";
 import { AuthContext } from "../../contexts/auth.context";
 import { Select } from "../../components";
-
-import DashboardHeader from "./DashboardHeader/DashHeader";
-import useDashboardData from "./hooks/useDashboardData";
+import useDashboardData from "../../hooks/useDashboardData";
 
 const DashboardHome = () => {
   const { isLoggedIn, authLoading, userId } = useContext(AuthContext);

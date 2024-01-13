@@ -22,14 +22,14 @@ const ConfirmUnsavedChanges = ({
   const handleContinueWithoutSaving = () => {
     closeModal();
     resetUnsavedChangesState();
-    navigate("/dashboard");
+    navigate("/");
   };
 
   const handleSave = () => {
     setLoading(true);
     onSave()
       .then((successMessage) => {
-        navigate("/dashboard");
+        navigate("/");
         closeModal();
       })
       .catch((error) => {

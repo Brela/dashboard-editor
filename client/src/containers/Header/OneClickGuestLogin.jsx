@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Button } from "../../../components";
+import { Button } from "../../components";
 import { toast } from "react-hot-toast";
-import { createUser, loginUser } from "../../../services/userAPIcalls";
+import { createUser, loginUser } from "../../services/userAPIcalls";
 import { v4 as uuid } from "uuid";
-import { AuthContext } from "../../../contexts/auth.context";
+import { AuthContext } from "../../contexts/auth.context";
 import { useQueryClient } from "react-query";
-import { createDashboard } from "../../../services/dashboardAPIcalls";
-import useDashboardData from "../hooks/useDashboardData";
-import useWindowSize from "../../../hooks/useWindowSize";
+import { createDashboard } from "../../services/dashboardAPIcalls";
+import useDashboardData from "../../hooks/useDashboardData";
+import useWindowSize from "../../hooks/useWindowSize";
 import { create } from "lodash";
 
 const OneClickGuestLogin = () => {

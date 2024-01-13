@@ -1,22 +1,15 @@
-import {
-  faChevronUp,
-  faChevronDown,
-  faUser,
-  faGear,
-  faSignOutAlt,
-} from "@fortawesome/free-solid-svg-icons";
+import { faUser, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { AuthContext } from "../../contexts/auth.context";
+import { AuthContext } from "../../../contexts/auth.context";
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
-import { logoutUser } from "../../services/userAPIcalls";
+import { logoutUser } from "../../../services/userAPIcalls";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import ProfileContent from "./ProfileContent";
-import SettingsContent from "./SettingsContent";
 import HeaderModal from "./HeaderModal";
-import NavigationBar from "../../pages/InventoryCopilot/NavigationBar";
-import { Popover, Modal, Spinner } from "../../components";
+
+import { Popover, Modal, Spinner } from "../../../components";
 import { useQueryClient } from "react-query";
 
 const Profile = () => {
@@ -28,11 +21,6 @@ const Profile = () => {
   const closeModal = () => setShowModal(false);
 
   const queryClient = useQueryClient();
-
-  const openSettingsModal = () => {
-    setModalContent(<SettingsContent />);
-    setShowModal(true);
-  };
 
   // this is used for the dashboard demo
   /*   useEffect(() => {

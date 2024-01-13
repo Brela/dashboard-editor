@@ -2,13 +2,11 @@ import React, { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useLocation, useNavigate } from "react-router-dom";
 import { faBox, faTable } from "@fortawesome/free-solid-svg-icons";
-import useWindowSize from "../../../hooks/useWindowSize.js";
+import useWindowSize from "../../hooks/useWindowSize.js";
 import { twMerge } from "tailwind-merge";
-import { DashboardContext } from "../../../contexts/dash.context.jsx";
-import ConfirmUnsavedChanges from "../DashboardEditor/dashboardModals/ConfirmUnsavedChanges.jsx";
-import Popover from "../../../components/Popover.jsx";
+import { DashboardContext } from "../../contexts/dash.context.jsx";
+import Popover from "../../components/Popover.jsx";
 import { Bars3Icon } from "@heroicons/react/24/solid";
-import { startCase } from "lodash";
 
 const buttons = [
   { label: "Dashboard", icon: faBox, value: "dashboard", href: `/dashboard` },
@@ -16,7 +14,7 @@ const buttons = [
     label: "Dashboard Editor",
     icon: faTable,
     value: "editor",
-    href: `/dashboard/editor`,
+    href: `/editor`,
   },
 ];
 

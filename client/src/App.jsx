@@ -4,7 +4,7 @@ import { Toaster } from "react-hot-toast";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { DashboardProvider } from "./contexts/dash.context.jsx";
-import DashboardHeaderRouting from "./containers/Dashboard/index.jsx";
+import DashboardRouting from "./Routing.jsx";
 
 const App = () => {
   return (
@@ -12,7 +12,7 @@ const App = () => {
       <DashboardProvider>
         <Router>
           <Routes>
-            <Route path="/dashboard/*" element={<DashboardHeaderRouting />} />
+            <Route path="/*" element={<DashboardRouting />} />
           </Routes>
         </Router>
       </DashboardProvider>

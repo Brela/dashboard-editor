@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from "react";
 import { toast } from "react-toastify";
 import DashNavBar from "./DashNavigation";
-import { AuthContext } from "../../../contexts/auth.context";
-import Profile from "../../Profile";
+import { AuthContext } from "../../contexts/auth.context";
+import Profile from "./Profile";
 import { twMerge } from "tailwind-merge";
-import { headerBg } from "../../../css/globalTailwindVars";
+import { headerBg } from "../../css/globalTailwindVars";
 import OneClickGuestLogin from "./OneClickGuestLogin";
 
 const DashHeader = () => {

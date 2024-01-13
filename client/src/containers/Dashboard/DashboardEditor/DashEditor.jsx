@@ -1,22 +1,15 @@
 // for now, only going to allow the first dashboard's adjustments to save to local storage, but can hit reset button to start over
 import React, { useContext, useEffect, useState } from "react";
-
 import { useNavigate } from "react-router-dom";
 
 import {
   PencilSquareIcon,
   TrashIcon,
   PlusIcon,
-  ArrowLeftCircleIcon,
 } from "@heroicons/react/24/outline";
 
 import { useQueryClient, useQuery } from "react-query";
-import {
-  getDashboardWidgets,
-  getDashboards,
-  getDemoDashboards,
-  updateManyWidgets,
-} from "../../../services/dashboardAPIcalls.js";
+import { updateManyWidgets } from "../../../services/dashboardAPIcalls.js";
 
 import { chartDisplayTypes } from "./WidgetsSidebar/widgetsLibrary.js";
 import { v4 as uuidv4 } from "uuid";
@@ -38,12 +31,10 @@ import useWindowSize from "../../../hooks/useWindowSize.js";
 import { getNewXandYCoords } from "../helpers/layoutUtils.js";
 import WidgetsSidebar from "./WidgetsSidebar/WidgetsSidebar.jsx";
 import ConfirmUnsavedChanges from "./dashboardModals/ConfirmUnsavedChanges.jsx";
-import DashboardHeader from "../DashboardHeader/DashHeader.jsx";
 import { AuthContext } from "../../../contexts/auth.context.jsx";
 import { DashboardContext } from "../../../contexts/dash.context.jsx";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
-import useDashboardData from "../hooks/useDashboardData.js";
-import { headerBg, primaryColor } from "../../../css/globalTailwindVars.js";
+import useDashboardData from "../../../hooks/useDashboardData.js";
 
 const DashboardEditor = () => {
   const { isLoggedIn, authLoading, userId } = useContext(AuthContext);
@@ -315,19 +306,7 @@ const DashboardEditor = () => {
       <div className="w-full px-7">
         <section className="flex justify-between items-end py-1 px-3">
           <div className="invisible basis-1/3"></div>
-          {/*  <button
-            onClick={() => {
-              hasUnsavedChanges
-                ? setModal({ name: "confirmUnsaved" })
-                : navigate("/dashboard");
-            }}
-            className="z-50 bg-gray-200  border rounded-md px-2 m-2 py-1 text-slate-700 font-medium text-sm hover:text-slate-60 hover:bg-white"
-          >
-            <div className="flex items-center gap-1">
-              <ArrowLeftCircleIcon className="h-4 w-4" />
-              Exit
-            </div>
-          </button> */}
+
           <div className="md:pl-8 basis-1/3 relative flex items-center md:justify-center pt-4 pb-2">
             <Select
               key={dashboards.length}
