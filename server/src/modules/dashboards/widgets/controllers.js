@@ -149,7 +149,7 @@ const updateManyWidgets = async (req, res) => {
       const widgetsToUpdate = dbWidgets.filter(
         (dbWidget) =>
           widgetUpdates[dbWidget.id] &&
-          !widgetsToAdd.find((w) => w.id === dbWidget.id),
+          !widgetsToAdd?.find((w) => w.id === dbWidget.id),
       );
 
       // Identify IDs of widgets to remove

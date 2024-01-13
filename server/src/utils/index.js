@@ -121,7 +121,7 @@ function extractStackTraceInfo(error) {
 
 function withRelationalOrder(orderBy, relationalOrderField) {
   return orderBy.map((order) => {
-    const referentialOrder = relationalOrderField.find((refOrder) =>
+    const referentialOrder = relationalOrderField?.find((refOrder) =>
       Object.keys(order).includes(refOrder),
     );
 

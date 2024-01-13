@@ -28,7 +28,7 @@ const Select = ({
   onChange,
   isPastel,
 }) => {
-  const selectedOption = options.find((option) => option.value == value);
+  const selectedOption = options?.find((option) => option.value == value);
 
   return (
     <div className={twMerge("mt-3 w-full relative", className)}>

@@ -62,7 +62,7 @@ const useDashboardData = ({ isLoggedIn, authLoading, userId }) => {
     if (dashboards.length < 1) return;
     if (dashboards.length > 0) {
       const storedDashboardId = localStorage.getItem("lastSelectedDashboardId");
-      const foundDashboard = dashboards.find(
+      const foundDashboard = dashboards?.find(
         (d) => d.id === JSON.parse(storedDashboardId),
       );
       const defaultDashboard = foundDashboard || dashboards[0];
@@ -72,7 +72,7 @@ const useDashboardData = ({ isLoggedIn, authLoading, userId }) => {
 
   // Update local state when a new dashboard is selected
   const changeSelectedDashboard = (id) => {
-    const newDashboard = dashboards.find((item) => item.id === id);
+    const newDashboard = dashboards?.find((item) => item.id === id);
     if (newDashboard) {
       setDashboard(newDashboard); // Update local state
       localStorage.setItem(

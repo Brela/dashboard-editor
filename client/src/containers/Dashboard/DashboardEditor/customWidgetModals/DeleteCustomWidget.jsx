@@ -13,7 +13,7 @@ const DeleteCustomWidgetModal = ({
   setNotification,
 }) => {
   const widgetId = modal.id;
-  const widget = customWidgets.find((w) => w.id === widgetId);
+  const widget = customWidgets?.find((w) => w.id === widgetId);
 
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState({

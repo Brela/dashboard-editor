@@ -207,7 +207,7 @@ const DashboardEditor = () => {
     // here, loop runs many times - problem is somewhere that needs to run the below check
     if (dashboards.length < 1) return;
     // here it only runs once
-    if (!dashboard || !dashboards.find((d) => d.id === dashboard.id)) {
+    if (!dashboard || !dashboards?.find((d) => d.id === dashboard.id)) {
       const storedDashboardId = localStorage.getItem("lastSelectedDashboardId");
       const storedDashboardExists = dashboards.some(
         (d) => d.id === JSON.parse(storedDashboardId),
@@ -230,7 +230,7 @@ const DashboardEditor = () => {
 
   const handleWidgetMoved = (movedWidgets) => {
     let updatedWidgets = movedWidgets.map((movedWidget) => {
-      const originalWidget = widgets.find(
+      const originalWidget = widgets?.find(
         (widget) => widget.i === movedWidget.i,
       );
       return {
