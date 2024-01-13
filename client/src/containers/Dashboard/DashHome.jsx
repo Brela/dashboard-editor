@@ -17,7 +17,7 @@ const DashboardHome = () => {
     changeSelectedDashboard,
   } = useDashboardData({ isLoggedIn, authLoading, userId });
 
-  document.title = `Dashboard: ${dashboard?.name}`;
+  document.title = `Dashboard - ${dashboard?.name}`;
 
   return (
     <>

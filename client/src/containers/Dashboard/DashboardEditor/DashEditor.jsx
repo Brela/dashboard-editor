@@ -119,7 +119,7 @@ const DashboardEditor = () => {
     changeSelectedDashboard,
   } = useDashboardData({ isLoggedIn, authLoading, userId });
 
-  document.title = `Editing Dashboard: ${dashboard?.name}`;
+  document.title = `Editing Dashboard - ${dashboard?.name}`;
 
   // Update localWidgets state ( which will hold the edited widgets ) when widgetsData ( widgets from database ) changes
   useEffect(() => {
