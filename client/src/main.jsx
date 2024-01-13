@@ -19,9 +19,9 @@ const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById("root")).render(
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
-      {/* <ErrorBoundary> */}
-      <App />
-      {/* </ErrorBoundary> */}
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
     </AuthProvider>
   </QueryClientProvider>,
 );
