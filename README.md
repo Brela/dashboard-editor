@@ -3,9 +3,9 @@
 <h1 align="center">Dashboard Editor - Create a Custom Dashboard</h1>
 
 <section align="center">
-<!-- <a href="https://orderlyapp.netlify.app/" target="_blank" rel="noreferrer"> -->
+ <a href="https://dasheditor.netlify.app/" target="_blank" rel="noreferrer"> 
   <img src="client/public/Dashboard.png" width="700" height="430"/>
-<!-- </a> -->
+ </a> 
   </section>
   
 <h2 align="center">Features</h2>
