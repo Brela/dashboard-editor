@@ -1,50 +1,18 @@
-import React, { useState, useContext } from "react";
-import {
-  Navigate,
-  Route,
-  BrowserRouter as Router,
-  Routes,
-} from "react-router-dom";
-import {
-  InventoryProvider,
-  InventoryContext,
-} from "./contexts/inventory.context";
-import { AuthProvider } from "./contexts/auth.context";
-import { AuthContext } from "./contexts/auth.context.jsx";
+import React from "react";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import InventoryCopilotRoutes from "./InventoryCopilotRoutes.jsx";
-import LoginPage from "./pages/LoginPage.jsx";
-import DashboardHome from "./containers/Dashboard/DashHome";
-import DashboardEditor from "./containers/Dashboard/DashboardEditor/DashEditor";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { DashboardProvider } from "./contexts/dash.context.jsx";
 import DashboardHeaderRouting from "./containers/Dashboard/index.jsx";
 
 const App = () => {
-  const { isLoggedIn } = useContext(AuthContext);
   return (
     <>
       <DashboardProvider>
         <Router>
           <Routes>
-            {/* dashboard editor routes */}
-
             <Route path="/dashboard/*" element={<DashboardHeaderRouting />} />
-            <Route path="/" element={<Navigate to="/copilot" />} />
-
-            {/* inventory copilot routes */}
-            {isLoggedIn ? (
-              <Route path="/copilot/*" element={<InventoryCopilotRoutes />} />
-            ) : (
-              <>
-                <Route path="/copilot/login" element={<LoginPage />} />
-                <Route
-                  path="/copilot/*"
-                  element={<Navigate to="/copilot/login" />}
-                />
-              </>
-            )}
           </Routes>
         </Router>
       </DashboardProvider>
