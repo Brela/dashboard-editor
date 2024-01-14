@@ -1,38 +1,29 @@
 import { faUser, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { AuthContext } from "../../../contexts/auth.context";
+import { AuthContext } from "../../../contexts/AuthContext";
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 import { logoutUser } from "../../../services/userAPIcalls";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import ProfileContent from "./ProfileContent";
-import HeaderModal from "./HeaderModal";
+import DetailsModal from "./DetailsModal";
+import ModalContainer from "./ModalContainer";
 
 import { Popover, Modal, Spinner } from "../../../components";
 import { useQueryClient } from "react-query";
 
 const Profile = () => {
-  const [loggedInUser, setLoggedInUser] = useState({ username: "" });
-
-  const { isLoggedIn, setIsLoggedIn, authLoading } = useContext(AuthContext);
+  const { user, logoutUser, authLoading } = useContext(AuthContext);
   const [modalContent, setModalContent] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const closeModal = () => setShowModal(false);
 
   const queryClient = useQueryClient();
 
-  // this is used for the dashboard demo
-  /*   useEffect(() => {
-    setIsLoggedIn(true);
-  }, []); */
-
   const handleLogoutUser = async () => {
     try {
       await logoutUser();
 
-      setIsLoggedIn(false);
-      setLoggedInUser({ username: "" });
       localStorage.removeItem("lastSelectedDashboardId");
 
       // clear the demo queries and remove them
@@ -46,15 +37,16 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    if (!isLoggedIn) {
+    if (!user) {
       queryClient.removeQueries("dashboards");
       queryClient.removeQueries("widgets");
     }
-  }, [isLoggedIn]);
+  }, [user]);
 
-  // console.log(loggedInUser?.id);
+  // console.log(user?.id);
 
-  useEffect(() => {
+  // todo - this was how we were fetching the user before we had appWrite
+  /*   useEffect(() => {
     const fetchUser = async () => {
       try {
         const response = await axios.get(`${API_URL}/user/me`, {
@@ -68,7 +60,7 @@ const Profile = () => {
     };
 
     fetchUser();
-  }, []);
+  }, []); */
 
   return (
     <div className="">
@@ -80,8 +72,8 @@ const Profile = () => {
                 <Spinner size="medium" />
               </div>
             ) : (
-              <span className="text-xl font-bold uppercase text-white">
-                {loggedInUser?.username?.charAt(0)}
+              <span className="text-lg font-bold uppercase text-white">
+                {user?.username?.charAt(0) || "A"}
               </span>
             )}
           </div>
@@ -92,7 +84,7 @@ const Profile = () => {
             <Popover.CloseOnClickItem
               className="hover:text-gray-500"
               onClick={() => {
-                setModalContent(<ProfileContent loggedInUser={loggedInUser} />);
+                setModalContent(<DetailsModal user={user} />);
                 setShowModal(true);
               }}
             >
@@ -113,9 +105,9 @@ const Profile = () => {
         }
       />
 
-      <HeaderModal show={showModal} onClose={closeModal}>
+      <ModalContainer show={showModal} onClose={closeModal}>
         {modalContent}
-      </HeaderModal>
+      </ModalContainer>
     </div>
   );
 };

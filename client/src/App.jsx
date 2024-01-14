@@ -3,7 +3,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { DashboardProvider } from "./contexts/dash.context.jsx";
+import { DashboardProvider } from "./contexts/DashContext.jsx";
 import DashboardRouting from "./Routing.jsx";
 
 const App = () => {

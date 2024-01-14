@@ -1,11 +1,11 @@
 import { useContext } from "react";
 import DashboardWidgetsLayout from "./DashWidgetsLayout";
-import { AuthContext } from "../../contexts/auth.context";
+import { AuthContext } from "../../contexts/AuthContext";
 import { Select } from "../../components";
 import useDashboardData from "../../hooks/useDashboardData";
 
 const DashboardHome = () => {
-  const { isLoggedIn, authLoading, userId } = useContext(AuthContext);
+  const { user, authLoading } = useContext(AuthContext);
 
   const {
     dashboard,
@@ -15,7 +15,7 @@ const DashboardHome = () => {
     widgets,
     isWidgetsLoading,
     changeSelectedDashboard,
-  } = useDashboardData({ isLoggedIn, authLoading, userId });
+  } = useDashboardData({ user, authLoading });
 
   document.title = `Dashboard - ${dashboard?.name}`;
 

@@ -7,7 +7,8 @@ import {
 } from "../services/dashboardAPIcalls";
 
 // this customm hook was created to share this data between the dashboard home and dashboard editor
-const useDashboardData = ({ isLoggedIn, authLoading, userId }) => {
+const useDashboardData = ({ user, authLoading }) => {
+  // selected dashboard for select field on both pages
   const [dashboard, setDashboard] = useState();
 
   const {
@@ -16,9 +17,9 @@ const useDashboardData = ({ isLoggedIn, authLoading, userId }) => {
     refetch: refetchDashboards,
     error: dashboardError,
   } = useQuery(
-    ["dashboards", isLoggedIn, userId],
+    ["dashboards", !!user, user?.id],
     // get demo dashboards gets the dashboards from a user defined in env
-    () => (!isLoggedIn ? getDemoDashboards() : getDashboards()),
+    () => (!user ? getDemoDashboards() : getDashboards()),
     {
       enabled: !authLoading,
       retries: 2,
@@ -68,7 +69,7 @@ const useDashboardData = ({ isLoggedIn, authLoading, userId }) => {
       const defaultDashboard = foundDashboard || dashboards[0];
       setDashboard(defaultDashboard);
     }
-  }, [dashboards, isLoggedIn, authLoading]);
+  }, [dashboards, user, authLoading]);
 
   // Update local state when a new dashboard is selected
   const changeSelectedDashboard = (id) => {

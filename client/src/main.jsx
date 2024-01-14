@@ -6,8 +6,7 @@ import App from "./App";
 import "./css/index.css";
 import ErrorBoundary from "./containers/Errors/ErrorBoundary";
 
-import { AuthProvider } from "./contexts/auth.context.jsx";
-import { DashboardProvider } from "./contexts/dash.context.jsx";
+import { AuthProvider } from "./contexts/AuthContext.jsx";
 
 // this is for sending emails to me when there's an error
 /* Sentry.init({

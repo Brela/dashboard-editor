@@ -1,14 +1,14 @@
 import React, { useContext, useEffect } from "react";
 import { toast } from "react-toastify";
 import DashNavBar from "./DashNavigation";
-import { AuthContext } from "../../contexts/auth.context";
+import { AuthContext } from "../../contexts/AuthContext";
 import Profile from "./Profile";
 import { twMerge } from "tailwind-merge";
 import { headerBg } from "../../css/globalTailwindVars";
 import OneClickGuestLogin from "./OneClickGuestLogin";
 
 const DashHeader = () => {
-  const { isLoggedIn, authLoading } = useContext(AuthContext);
+  const { user, authLoading } = useContext(AuthContext);
 
   // show info toast about logging in as guest - show one time only
   useEffect(() => {
@@ -54,7 +54,7 @@ const DashHeader = () => {
           <DashNavBar />
         </div>
         <section className="basis-1/3 flex items-center justify-end">
-          {isLoggedIn ? <Profile /> : <OneClickGuestLogin />}
+          {user ? <Profile /> : <OneClickGuestLogin />}
         </section>
       </div>
     </>

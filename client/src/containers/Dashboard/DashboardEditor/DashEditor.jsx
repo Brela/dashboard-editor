@@ -31,13 +31,13 @@ import useWindowSize from "../../../hooks/useWindowSize.js";
 import { getNewXandYCoords } from "../helpers/layoutUtils.js";
 import WidgetsSidebar from "./WidgetsSidebar/WidgetsSidebar.jsx";
 import ConfirmUnsavedChanges from "./dashboardModals/ConfirmUnsavedChanges.jsx";
-import { AuthContext } from "../../../contexts/auth.context.jsx";
-import { DashboardContext } from "../../../contexts/dash.context.jsx";
+import { AuthContext } from "../../../contexts/AuthContext.jsx";
+import { DashboardContext } from "../../../contexts/DashContext.jsx";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 import useDashboardData from "../../../hooks/useDashboardData.js";
 
 const DashboardEditor = () => {
-  const { isLoggedIn, authLoading, userId } = useContext(AuthContext);
+  const { user, authLoading } = useContext(AuthContext);
   const {
     hasUnsavedChanges,
     setHasUnsavedChanges,
@@ -76,7 +76,7 @@ const DashboardEditor = () => {
   }, []);
 
   const handleSave = async () => {
-    if (!isLoggedIn) return toast("Please log in to save a dashboard.  ➡️");
+    if (!user) return toast("Please log in to save a dashboard.  ➡️");
     setLoading(true);
     try {
       const widgetUpdates = {};
@@ -117,7 +117,7 @@ const DashboardEditor = () => {
     widgets: widgetsFromDb,
     isWidgetsLoading,
     changeSelectedDashboard,
-  } = useDashboardData({ isLoggedIn, authLoading, userId });
+  } = useDashboardData({ user, authLoading });
 
   document.title = `Editing Dashboard - ${dashboard?.name}`;
 
