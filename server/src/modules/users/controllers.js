@@ -143,10 +143,6 @@ export const loginUser = async (req, res) => {
 };
 
 export const logoutUser = async (req, res) => {
-  const { refreshToken } = req.cookies;
-
-  if (!refreshToken) return res.sendStatus(401);
-
   // Clear the cookies
   res
     .status(200)
