@@ -16,8 +16,6 @@ import {
 } from "./widgets/controllers.js";
 
 import { dashboardIdProvided } from "./middleware.js";
-import { authenticateJWT } from "../auth/authenticateJWT.js";
-import { addUserToReq } from "../auth/addUserToReq.js";
 import { validateSession } from "../../middleware/validateSession.js";
 
 // authenticate all routes except for get dashboards and get widgets

@@ -19,7 +19,7 @@ const useDashboardData = ({ user, authLoading }) => {
   } = useQuery(
     ["dashboards", !!user, user?.id],
     // get demo dashboards gets the dashboards from a user defined in env
-    () => (!user ? getDemoDashboards() : getDashboards()),
+    () => (!user ? getDemoDashboards() : getDashboards(user?.id)),
     {
       enabled: !authLoading,
       retries: 2,

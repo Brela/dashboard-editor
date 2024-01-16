@@ -2,6 +2,7 @@ import { createContext, useState, useEffect, useContext } from "react";
 import { account } from "../../appwriteConfig";
 import { useNavigate } from "react-router-dom";
 import { ID } from "appwrite";
+import { v4 as uuid } from "uuid";
 
 export const AuthContext = createContext();
 
@@ -33,14 +34,19 @@ export const AuthProvider = ({ children }) => {
       // if (user) {
       await logoutUser();
       // }
-      await account.createAnonymousSession();
 
-      /*       const randomId = Math.floor(Math.random() * 100);
-      await account.createEmailSession(
-        `claybreland${randomId}@gmail.com`,
-        "77777777",
-      );
- */
+      // await account.createAnonymousSession();
+
+      const randomId = Math.floor(Math.random() * 100);
+      console.log(randomId);
+      const email = `Guest${String(uuid()).slice(0, 4)}@gmail.com`;
+      const password = String(uuid()).slice(0, 9);
+      // register
+      await account.create(ID.unique(), email, password);
+
+      // login
+      await account.createEmailSession(email, password);
+
       let accountDetails = await account.get();
       console.log("account details: ", accountDetails);
       setUser(accountDetails);

@@ -1,11 +1,5 @@
 import { API } from "./config";
 
-function getCookie(name) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(";").shift();
-}
-
 // this gets the dashboards for one specific test user to show to guests before they log in
 export const getDemoDashboards = async (queryParams) => {
   try {
@@ -20,14 +14,10 @@ export const getDemoDashboards = async (queryParams) => {
   }
 };
 
-export const getDashboards = async (queryParams) => {
+export const getDashboards = async (userId) => {
   try {
-    const sessionToken = getCookie("a_session_console");
     const response = await API("/dashboards").get("/", {
-      params: queryParams,
-      headers: {
-        Authorization: `Bearer ${sessionToken}`, // Add the session token to the request headers
-      },
+      userId: userId,
     });
     return response.data;
   } catch (error) {

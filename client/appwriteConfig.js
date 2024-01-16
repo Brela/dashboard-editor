@@ -11,4 +11,6 @@ const client = new Client()
 
 export const account = new Account(client);
 
+export const userJwt = await account.createJWT();
+
 export default client;

@@ -1,59 +1,9 @@
 import prisma from "../../config/prismaClient.js";
 import argon2 from "argon2";
-import {
-  generateAccessToken,
-  generateRefreshToken,
-} from "../auth/controllers.js";
 
 const isDevMode = process.env.IS_DEV_MODE === "true";
 
 const allowedOrigins = process.env.CORS_ORIGINS.split(",");
-
-export const createUser = async (req, res) => {
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-    res.setHeader("Access-Control-Allow-Origin", origin);
-  }
-
-  const { username, password, isTempAccount } = req.body;
-  const hashedPassword = await argon2.hash(password);
-  console.log(username, hashedPassword);
-  let user;
-
-  try {
-    const createUser = await prisma.User.create({
-      data: {
-        username: username,
-        password: hashedPassword,
-        isTempAccount: isTempAccount,
-      },
-    });
-    user = createUser;
-  } catch (err) {
-    console.log("Error Found: ", err);
-    return res.json(err);
-  }
-  console.log(user.username);
-
-  // Generate tokens for automatic login after sign up
-  const accessToken = await generateAccessToken(user);
-  const refreshToken = await generateRefreshToken(user);
-
-  return res
-    .status(202)
-    .cookie("accessToken", accessToken, {
-      // adding these args to the create user was the fix for mobile???
-      httpOnly: true,
-      secure: !isDevMode,
-      sameSite: isDevMode ? "Lax" : "None",
-    })
-    .cookie("refreshToken", refreshToken, {
-      httpOnly: true,
-      secure: !isDevMode,
-      sameSite: isDevMode ? "Lax" : "None",
-    })
-    .json(user);
-};
 
 export const getLoggedInUser = async (req, res) => {
   try {
