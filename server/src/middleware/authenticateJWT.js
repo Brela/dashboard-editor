@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { ACCESS_TOKEN_SECRET } from "../../config/envConfig.js";
+import { ACCESS_TOKEN_SECRET } from "../config/envConfig.js";
 
 // figure out why frontend shows just 401 without message
 export const authenticateJWT = (req, res, next) => {

@@ -5,7 +5,7 @@ const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 export const createUser = async (username, password, isTempAccount) => {
   try {
     const response = await axios.post(
-      `${API_URL}/user/`,
+      `${API_URL}/user/register`,
       {
         username,
         password,
@@ -33,7 +33,7 @@ export const createUser = async (username, password, isTempAccount) => {
 export const loginUser = async (username, password) => {
   try {
     const response = await axios.post(
-      `${API_URL}/authentication/login`,
+      `${API_URL}/user/login`,
       {
         username,
         password,
@@ -63,7 +63,7 @@ export const loginUser = async (username, password) => {
 export const logoutUser = async () => {
   try {
     const response = await axios.post(
-      `${API_URL}/authentication/logout`,
+      `${API_URL}/user/logout`,
       {},
       {
         headers: {

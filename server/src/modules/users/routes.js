@@ -1,10 +1,17 @@
 import express from "express";
-import * as usersController from "./controllers.js";
-import { authenticateJWT } from "../auth/authenticateJWT.js";
+import { authenticateJWT } from "../../middleware/authenticateJWT.js";
+import {
+  loginUser,
+  logoutUser,
+  getLoggedInUser,
+  registerUser,
+} from "./controllers.js";
 
 const router = express();
 
-router.get("/me", authenticateJWT, usersController.getLoggedInUser);
-router.post("/", usersController.createUser);
+router.post("/register", registerUser);
+router.post("/login", loginUser);
+router.post("/logout", logoutUser);
+router.get("/me", authenticateJWT, getLoggedInUser);
 
 export default router;

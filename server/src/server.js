@@ -11,7 +11,7 @@ const app = express();
 const allowedOrigins = CORS_ORIGINS.split(",");
 
 const corsOptions = {
-  // this will temporarily allow all origins - this didn't resolve iPhone issue
+  // allowed all origins to test mobile no ckkies/login bug - didn't work
   /*    origin: function (origin, callback) {
     callback(null, true); // Allow all origins
   }, */
@@ -22,7 +22,6 @@ const corsOptions = {
       callback(new Error("Not allowed by CORS"));
     }
   },
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
 };
@@ -38,8 +37,6 @@ app.use((req, res, next) => {
 app.use(cookieParser());
 
 app.use("/authentication", authenticationRoutes);
-
-// dashboard routes get authenticated separately, since get req is public for users to view demo
 app.use("/dashboards", dashboardRoutes);
 app.use("/user", userRoutes);
 

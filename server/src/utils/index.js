@@ -34,31 +34,6 @@ const verifyToken = (token) => {
   }
 };
 
-/* const firebaseUploadFile = async (filename, data, metadata) => {
-  const storageRef = ref(
-    storage,
-    `/files/feeds/${filename}_${new Date().getTime()}`,
-  );
-  return await uploadBytes(storageRef, data)
-    .then(async (snapshot) => {
-      console.log("SNAPSHOT", snapshot);
-      const url = await getDownloadURL(snapshot.ref).then(
-        async (downloadURL) => {
-          return downloadURL;
-        },
-      );
-      return url;
-    })
-    .catch((error) => {
-      console.log(error);
-      return error.response;
-    });
-}; */
-
-// This is according to the pagination design in the UI
-// Example:
-// Showing 1 to 10 of 100 entries
-// Showing {from} to {to} of {total_filtered} entries
 function generateMeta(total_filtered, page, size, count, orderBy, search) {
   const last_page = Math.ceil(total_filtered / size);
   const from = last_page < page ? 0 : (page - 1) * size + 1;
