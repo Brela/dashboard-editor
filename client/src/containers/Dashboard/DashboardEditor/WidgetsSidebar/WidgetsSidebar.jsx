@@ -13,7 +13,7 @@ import {
 import DeleteCustomWidgetModal from "../customWidgetModals/DeleteCustomWidget";
 import AddCustomWidgetModal from "../customWidgetModals/AddCustomWidget";
 import EditWidgetPopover from "../customWidgetModals/WidgetOptionsPopover";
-import { getCustomWidgets } from "../../../../services/dashboardAPIcalls";
+import { getCustomWidgets } from "../../../../api/dashboardAPI";
 import { twMerge } from "tailwind-merge";
 import { headerBg } from "../../../../css/globalTailwindVars";
 

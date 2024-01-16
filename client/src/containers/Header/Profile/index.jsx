@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
-import { logoutUser } from "../../../services/userAPIcalls";
+import { logoutUser } from "../../../api/userAPI";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import ProfileContent from "./ProfileContent";

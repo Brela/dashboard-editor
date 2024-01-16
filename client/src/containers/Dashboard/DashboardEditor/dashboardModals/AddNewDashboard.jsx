@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { createDashboard } from "../../../../services/dashboardAPIcalls";
+import { createDashboard } from "../../../../api/dashboardAPI";
 import { Modal, InfoCard, Button, Input } from "../../../../components";
 import { notifySuccess } from "../../../../utils/notificationWrapper";
 import { useQueryClient } from "react-query";

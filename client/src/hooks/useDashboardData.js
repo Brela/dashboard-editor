@@ -4,7 +4,7 @@ import {
   getDashboardWidgets,
   getDashboards,
   getDemoDashboards,
-} from "../services/dashboardAPIcalls";
+} from "../api/dashboardAPI";
 
 // this customm hook was created to share this data between the dashboard home and dashboard editor
 const useDashboardData = ({ isLoggedIn, authLoading, userId }) => {

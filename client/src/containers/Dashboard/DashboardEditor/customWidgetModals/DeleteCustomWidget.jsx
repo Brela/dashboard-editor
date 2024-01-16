@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { InfoCard, Modal, Button } from "../../../../components";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-import { deleteCustomWidget } from "../../../../services/dashboardAPIcalls";
+import { deleteCustomWidget } from "../../../../api/dashboardAPI";
 
 const DeleteCustomWidgetModal = ({
   open,

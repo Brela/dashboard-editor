@@ -9,7 +9,7 @@ import {
 } from "@heroicons/react/24/outline";
 
 import { useQueryClient, useQuery } from "react-query";
-import { updateManyWidgets } from "../../../services/dashboardAPIcalls.js";
+import { updateManyWidgets } from "../../../api/dashboardAPI.js";
 
 import { chartDisplayTypes } from "./WidgetsSidebar/widgetsLibrary.js";
 import { v4 as uuidv4 } from "uuid";

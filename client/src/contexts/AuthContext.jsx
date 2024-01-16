@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useQuery } from "react-query";
-import { authenticateUser } from "../services/authenticationAPIcalls";
+import { authenticateUser } from "../api/authAPI";
 
 export const AuthContext = createContext({
   isLoggedIn: false,

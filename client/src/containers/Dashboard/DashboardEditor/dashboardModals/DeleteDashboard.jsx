@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal, InfoCard, Button } from "../../../../components";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-import { deleteDashboard } from "../../../../services/dashboardAPIcalls";
+import { deleteDashboard } from "../../../../api/dashboardAPI";
 import { useQueryClient } from "react-query";
 import { notifySuccess } from "../../../../utils/notificationWrapper";
 
