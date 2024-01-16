@@ -7,7 +7,7 @@ import { logoutUser } from "../../../api/userAPI";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import ProfileContent from "./ProfileContent";
-import HeaderModal from "./HeaderModal";
+import ModalContainer from "./ModalContainer";
 
 import { Popover, Modal, Spinner } from "../../../components";
 import { useQueryClient } from "react-query";
@@ -16,7 +16,6 @@ const Profile = () => {
   const [loggedInUser, setLoggedInUser] = useState({ username: "" });
 
   const { isLoggedIn, setIsLoggedIn, authLoading } = useContext(AuthContext);
-  const [modalContent, setModalContent] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const closeModal = () => setShowModal(false);
 
@@ -92,7 +91,6 @@ const Profile = () => {
             <Popover.CloseOnClickItem
               className="hover:text-gray-500"
               onClick={() => {
-                setModalContent(<ProfileContent loggedInUser={loggedInUser} />);
                 setShowModal(true);
               }}
             >
@@ -113,9 +111,9 @@ const Profile = () => {
         }
       />
 
-      <HeaderModal show={showModal} onClose={closeModal}>
-        {modalContent}
-      </HeaderModal>
+      <ModalContainer show={showModal} onClose={closeModal}>
+        {<ProfileContent user={loggedInUser} />}
+      </ModalContainer>
     </div>
   );
 };
