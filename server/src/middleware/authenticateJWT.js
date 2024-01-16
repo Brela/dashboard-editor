@@ -8,12 +8,20 @@ export const authenticateJWT = (req, res, next) => {
     // return res.status(HTTP_STATUS.FORBIDDEN).json({ message: "Invalid Token" });
     // console.log("accessToken:", accessToken);
 
-    console.log("req.user:", req.user);
-    const accessToken = req.cookies.accessToken;
-    console.log("accessToken:", accessToken);
+    let accessToken = req.cookies.accessToken;
+    // console.log("accessToken:", accessToken);
+    // Check Authorization header if the token is not in cookies
+    if (!accessToken) {
+      const authHeader = req.headers.authorization;
+      if (authHeader && authHeader.startsWith("Bearer ")) {
+        accessToken = authHeader.split(" ")[1];
+      }
+    }
+
+    // If no token is found in both cookies and Authorization header
     if (!accessToken) {
       return res.status(401).json({
-        message: "In authenticateJWT - no access token found in cookies ",
+        message: "No access token found",
       });
     }
     jwt.verify(accessToken, ACCESS_TOKEN_SECRET, (err, user) => {

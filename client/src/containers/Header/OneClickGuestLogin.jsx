@@ -39,13 +39,12 @@ const OneClickGuestLogin = () => {
       const userData = await createUser(username, password, true); // isTempAccount = true - flag to delete account later
       toast.dismiss(toastId);
 
-      if (!userData.username) {
+      if (!userData?.user?.username) {
         throw new Error(userData.message);
       }
 
       // ------ login to guest account ------
       const loginData = await loginUser(username, password);
-
       if (!loginData.user) {
         throw new Error(loginData.message);
       }

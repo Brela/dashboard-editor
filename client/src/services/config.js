@@ -3,11 +3,14 @@ import axios from "axios";
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
 export const API = (url) => {
+  const accessToken = localStorage.getItem("accessToken");
+
   return axios.create({
     baseURL: API_URL + url,
     headers: {
       "Content-Type": "application/json",
       //   "Access-Control-Allow-Origin": API_URL,
+      ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
     },
     withCredentials: true,
   });

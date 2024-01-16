@@ -42,14 +42,14 @@ export const registerUser = async (req, res) => {
   let user;
 
   try {
-    const registerUser = await prisma.User.create({
+    const newUser = await prisma.User.create({
       data: {
         username: username,
         password: hashedPassword,
         isTempAccount: isTempAccount,
       },
     });
-    user = registerUser;
+    user = newUser;
   } catch (err) {
     console.log("Error Found: ", err);
     return res.json(err);
@@ -73,7 +73,7 @@ export const registerUser = async (req, res) => {
       secure: !isDevMode,
       sameSite: isDevMode ? "Lax" : "None",
     })
-    .json(user);
+    .json({ user, accessToken, refreshToken });
 };
 
 export const getLoggedInUser = async (req, res) => {
@@ -136,7 +136,7 @@ export const loginUser = async (req, res) => {
         secure: !isDevMode,
         sameSite: isDevMode ? "Lax" : "None",
       })
-      .json({ user, accessToken });
+      .json({ user, accessToken, refreshToken });
   } catch (err) {
     return res.status(500).json({ message: "Internal Server Error" });
   }

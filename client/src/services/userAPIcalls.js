@@ -18,8 +18,8 @@ export const createUser = async (username, password, isTempAccount) => {
         withCredentials: true,
       },
     );
-    // for testing no cookies being set on iPhone
-    console.log("Response Headers:", response.headers);
+
+    setTokensInStorage(response.data);
 
     return response.data;
   } catch (error) {
@@ -46,8 +46,7 @@ export const loginUser = async (username, password) => {
       },
     );
 
-    // for testing no cookies being set on iPhone
-    console.log("Response Headers:", response.headers);
+    setTokensInStorage(response.data);
 
     return response.data;
   } catch (error) {
@@ -75,6 +74,8 @@ export const logoutUser = async () => {
 
     toast.success("Logged out successfully. 👋", { position: "bottom-center" });
 
+    removeTokensFromStorage();
+
     return response.data;
   } catch (error) {
     if (error.response) {
@@ -86,4 +87,20 @@ export const logoutUser = async () => {
     }
     throw error;
   }
+};
+
+// although accessToken and refreshToken are set with cookies from backend response, there is a bug on mobile where cookies are not being set -
+// this is a temp solution to use local storage to store tokens
+const setTokensInStorage = (data) => {
+  const { accessToken, refreshToken } = data;
+  console.log(accessToken);
+  if (accessToken && refreshToken) {
+    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("refreshToken", refreshToken);
+  }
+};
+
+const removeTokensFromStorage = () => {
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
 };
