@@ -152,13 +152,13 @@ export const logoutUser = async (req, res) => {
     .status(200)
     .clearCookie("accessToken", {
       httpOnly: true,
-      secure: true,
-      sameSite: "Lax",
+      secure: !isDevMode,
+      sameSite: isDevMode ? "Lax" : "None",
     })
     .clearCookie("refreshToken", {
       httpOnly: true,
-      secure: true,
-      sameSite: "Lax",
+      secure: !isDevMode,
+      sameSite: isDevMode ? "Lax" : "None",
     })
     .json({ message: "Successfully logged out" });
 };
