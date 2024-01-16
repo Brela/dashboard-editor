@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
 import { ACCESS_TOKEN_SECRET } from "../../config/envConfig.js";
-import { HTTP_STATUS } from "../../config/constants.js";
 
 // figure out why frontend shows just 401 without message
 export const authenticateJWT = (req, res, next) => {
@@ -10,9 +9,9 @@ export const authenticateJWT = (req, res, next) => {
     // console.log("accessToken:", accessToken);
 
     const accessToken = req.cookies.accessToken;
-    console.log("accessToken:", typeof accessToken);
+    console.log("accessToken:", accessToken);
     if (!accessToken) {
-      return res.status(HTTP_STATUS.UNAUTHORIZED).json({
+      return res.status(401).json({
         message: "In authenticateJWT - no access token found in cookies ",
       });
     }
@@ -20,14 +19,12 @@ export const authenticateJWT = (req, res, next) => {
       console.log("err:", err);
       if (err) {
         if (err.name === "TokenExpiredError") {
-          return res.status(HTTP_STATUS.UNAUTHORIZED).json({
+          return res.status(401).json({
             message: "Token expired",
             expiredAt: err.expiredAt,
           });
         } else {
-          return res
-            .status(HTTP_STATUS.FORBIDDEN)
-            .json({ message: "Invalid Token" });
+          return res.status(403).json({ message: "Invalid Token" });
         }
       }
       req.user = user;
@@ -40,7 +37,7 @@ export const authenticateJWT = (req, res, next) => {
   } catch (err) {
     console.log("Error in authenticateJWT:", err);
     return res
-      .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
+      .status(500)
 
       .json({ message: "Internal Server Error" });
   }
