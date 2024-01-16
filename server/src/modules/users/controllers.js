@@ -7,14 +7,6 @@ import {
   IS_DEV_MODE,
 } from "../../config/envConfig.js";
 
-const HTTP_STATUS = {
-  // changed from 202 to 200
-  OK: 200,
-  UNAUTHORIZED: 401,
-  FORBIDDEN: 403,
-  INTERNAL_SERVER_ERROR: 500,
-};
-
 const isDevMode = process.env.IS_DEV_MODE === "true";
 
 console.log("isDevMode", isDevMode);
@@ -69,7 +61,7 @@ export const registerUser = async (req, res) => {
   const refreshToken = await generateRefreshToken(user);
 
   return res
-    .status(202)
+    .status(201)
     .cookie("accessToken", accessToken, {
       // adding these args to the create user was the fix for mobile???
       httpOnly: true,
@@ -120,23 +112,19 @@ export const loginUser = async (req, res) => {
     });
 
     if (!user) {
-      return res
-        .status(HTTP_STATUS.NOT_FOUND)
-        .json({ message: "That username doesn't exist" });
+      return res.status(404).json({ message: "That username doesn't exist" });
     }
 
     const valid = await argon2.verify(user.password, password);
     if (!valid) {
-      return res
-        .status(HTTP_STATUS.UNAUTHORIZED)
-        .json({ message: "Incorrect password" });
+      return res.status(401).json({ message: "Incorrect password" });
     }
 
     const accessToken = await generateAccessToken(user);
     const refreshToken = await generateRefreshToken(user);
 
     return res
-      .status(HTTP_STATUS.OK)
+      .status(200)
       .cookie("accessToken", accessToken, {
         httpOnly: true,
         //  This attribute ensures that the cookie is sent only over HTTPS, which is a good security practice for production. In development, you don't have HTTPS set up, so it's set to false to allow cookies over HTTP.
@@ -150,20 +138,18 @@ export const loginUser = async (req, res) => {
       })
       .json({ user, accessToken });
   } catch (err) {
-    return res
-      .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
-      .json({ message: "Internal Server Error" });
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
 export const logoutUser = async (req, res) => {
   const { refreshToken } = req.cookies;
 
-  if (!refreshToken) return res.sendStatus(HTTP_STATUS.UNAUTHORIZED);
+  if (!refreshToken) return res.sendStatus(401);
 
   // Clear the cookies
   res
-    .status(HTTP_STATUS.OK)
+    .status(200)
     .clearCookie("accessToken", {
       httpOnly: true,
       secure: true,
