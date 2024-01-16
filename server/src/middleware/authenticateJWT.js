@@ -8,6 +8,7 @@ export const authenticateJWT = (req, res, next) => {
     // return res.status(HTTP_STATUS.FORBIDDEN).json({ message: "Invalid Token" });
     // console.log("accessToken:", accessToken);
 
+    console.log("req.user:", req.user);
     const accessToken = req.cookies.accessToken;
     console.log("accessToken:", accessToken);
     if (!accessToken) {

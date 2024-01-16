@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { faBox, faTable } from "@fortawesome/free-solid-svg-icons";
 import useWindowSize from "../../hooks/useWindowSize.js";
 import { twMerge } from "tailwind-merge";
-import { DashboardContext } from "../../contexts/dash.context.jsx";
+import { DashboardContext } from "../../contexts/DashContext.jsx";
 import Popover from "../../components/Popover.jsx";
 import { Bars3Icon } from "@heroicons/react/24/solid";
 

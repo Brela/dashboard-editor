@@ -31,8 +31,8 @@ import useWindowSize from "../../../hooks/useWindowSize.js";
 import { getNewXandYCoords } from "../helpers/layoutUtils.js";
 import WidgetsSidebar from "./WidgetsSidebar/WidgetsSidebar.jsx";
 import ConfirmUnsavedChanges from "./dashboardModals/ConfirmUnsavedChanges.jsx";
-import { AuthContext } from "../../../contexts/auth.context.jsx";
-import { DashboardContext } from "../../../contexts/dash.context.jsx";
+import { AuthContext } from "../../../contexts/AuthContext.jsx";
+import { DashboardContext } from "../../../contexts/DashContext.jsx";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 import useDashboardData from "../../../hooks/useDashboardData.js";
 

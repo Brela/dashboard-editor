@@ -3,7 +3,7 @@ import { Button } from "../../components";
 import { toast } from "react-hot-toast";
 import { createUser, loginUser } from "../../services/userAPIcalls";
 import { v4 as uuid } from "uuid";
-import { AuthContext } from "../../contexts/auth.context";
+import { AuthContext } from "../../contexts/AuthContext";
 import { useQueryClient } from "react-query";
 import { createDashboard } from "../../services/dashboardAPIcalls";
 import useDashboardData from "../../hooks/useDashboardData";

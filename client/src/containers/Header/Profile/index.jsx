@@ -1,7 +1,7 @@
 import { faUser, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { AuthContext } from "../../../contexts/auth.context";
+import { AuthContext } from "../../../contexts/AuthContext";
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 import { logoutUser } from "../../../services/userAPIcalls";
 import axios from "axios";

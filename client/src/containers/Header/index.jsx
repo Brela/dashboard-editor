@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { toast } from "react-toastify";
 import DashNavBar from "./DashNavigation";
-import { AuthContext } from "../../contexts/auth.context";
+import { AuthContext } from "../../contexts/AuthContext";
 import Profile from "./Profile";
 import { twMerge } from "tailwind-merge";
 import { headerBg } from "../../css/globalTailwindVars";

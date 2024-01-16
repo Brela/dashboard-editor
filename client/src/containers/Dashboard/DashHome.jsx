@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import DashboardWidgetsLayout from "./DashWidgetsLayout";
-import { AuthContext } from "../../contexts/auth.context";
+import { AuthContext } from "../../contexts/AuthContext";
 import { Select } from "../../components";
 import useDashboardData from "../../hooks/useDashboardData";
 
