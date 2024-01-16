@@ -8,6 +8,7 @@ import {
 } from "../../config/envConfig.js";
 
 const HTTP_STATUS = {
+  // changed from 202 to 200
   OK: 200,
   UNAUTHORIZED: 401,
   FORBIDDEN: 403,
@@ -73,12 +74,12 @@ export const registerUser = async (req, res) => {
       // adding these args to the create user was the fix for mobile???
       httpOnly: true,
       secure: !isDevMode,
-      // sameSite: isDevMode ? "Lax" : "None",
+      sameSite: isDevMode ? "Lax" : "None",
     })
     .cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: !isDevMode,
-      // sameSite: isDevMode ? "Lax" : "None",
+      sameSite: isDevMode ? "Lax" : "None",
     })
     .json(user);
 };
@@ -140,12 +141,12 @@ export const loginUser = async (req, res) => {
         httpOnly: true,
         //  This attribute ensures that the cookie is sent only over HTTPS, which is a good security practice for production. In development, you don't have HTTPS set up, so it's set to false to allow cookies over HTTP.
         secure: !isDevMode,
-        // sameSite: isDevMode ? "Lax" : "None",
+        sameSite: isDevMode ? "Lax" : "None",
       })
       .cookie("refreshToken", refreshToken, {
         httpOnly: true,
         secure: !isDevMode,
-        // sameSite: isDevMode ? "Lax" : "None",
+        sameSite: isDevMode ? "Lax" : "None",
       })
       .json({ user, accessToken });
   } catch (err) {
