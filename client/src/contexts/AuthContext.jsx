@@ -35,6 +35,12 @@ export const AuthProvider = ({ children }) => {
       // }
       await account.createAnonymousSession();
 
+      /*       const randomId = Math.floor(Math.random() * 100);
+      await account.createEmailSession(
+        `claybreland${randomId}@gmail.com`,
+        "77777777",
+      );
+ */
       let accountDetails = await account.get();
       console.log("account details: ", accountDetails);
       setUser(accountDetails);

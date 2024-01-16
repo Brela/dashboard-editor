@@ -18,21 +18,22 @@ import {
 import { dashboardIdProvided } from "./middleware.js";
 import { authenticateJWT } from "../auth/authenticateJWT.js";
 import { addUserToReq } from "../auth/addUserToReq.js";
+import { validateSession } from "../../middleware/validateSession.js";
 
 // authenticate all routes except for get dashboards and get widgets
 // dashboard routes
 router.get("/demo", getDemoDashboards);
-router.get("/", authenticateJWT, getAllDashboards);
-router.post("/", authenticateJWT, createDashboard);
+router.get("/", validateSession, getAllDashboards);
+router.post("/", validateSession, createDashboard);
 router.patch(
   "/:dashboardId",
-  authenticateJWT,
+  validateSession,
   dashboardIdProvided,
   updateDashboard,
 );
 router.delete(
   "/:dashboardId",
-  authenticateJWT,
+  validateSession,
   dashboardIdProvided,
   deleteDashboard,
 );
@@ -42,7 +43,7 @@ router.get("/:dashboardId", dashboardIdProvided, getOneDashboard);
 router.get("/:dashboardId/widgets", dashboardIdProvided, getWidgetsByDashboard);
 router.patch(
   "/:dashboardId/widgets",
-  authenticateJWT,
+  validateSession,
   dashboardIdProvided,
   updateManyWidgets,
 );

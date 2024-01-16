@@ -99,7 +99,7 @@ const getAllDashboards = async (req, res) => {
         tx,
       );
 
-      console.log("items", items);
+      // console.log("items", items);
 
       return { items, total_filtered };
     });
