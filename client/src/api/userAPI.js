@@ -1,23 +1,13 @@
-import axios from "axios";
 import { toast } from "react-hot-toast";
-const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
+import { API } from "./config";
 
 export const createUser = async (username, password, isTempAccount) => {
   try {
-    const response = await axios.post(
-      `${API_URL}/user/register`,
-      {
-        username,
-        password,
-        isTempAccount: isTempAccount ? true : false,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      },
-    );
+    const response = await API("/user").post("/register", {
+      username,
+      password,
+      isTempAccount: isTempAccount ? true : false,
+    });
 
     setTokensInStorage(response.data);
 
@@ -32,19 +22,10 @@ export const createUser = async (username, password, isTempAccount) => {
 
 export const loginUser = async (username, password) => {
   try {
-    const response = await axios.post(
-      `${API_URL}/user/login`,
-      {
-        username,
-        password,
-      },
-      {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      },
-    );
+    const response = await API("/user").post("/login", {
+      username,
+      password,
+    });
 
     setTokensInStorage(response.data);
 
@@ -61,16 +42,7 @@ export const loginUser = async (username, password) => {
 
 export const logoutUser = async () => {
   try {
-    const response = await axios.post(
-      `${API_URL}/user/logout`,
-      {},
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      },
-    );
+    const response = await API("/user").post("/logout");
 
     toast.success("Logged out successfully. 👋", { position: "bottom-center" });
 

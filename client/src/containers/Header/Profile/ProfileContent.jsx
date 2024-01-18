@@ -10,12 +10,13 @@ const DetailsModal = ({ user }) => (
       <div className="grid grid-cols-2 gap-4">
         <p className="text-base">Username:</p>
         <p className="text-base font-bold">
-          {user ? startCase(user.username) : "Guest"}
+          {user ? startCase(user.username.replace(/\s+/g, "")) : "Guest"}
         </p>
+
         <p className="text-base">Account Created:</p>
         <p className="text-base font-bold">
           {user
-            ? new Date(user?.createdAt)
+            ? new Date(user?.iatReadable)
                 .toLocaleDateString()
                 .replaceAll("/", "-")
             : new Date().toLocaleDateString().replaceAll("/", "-")}

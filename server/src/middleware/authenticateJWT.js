@@ -8,8 +8,8 @@ export const authenticateJWT = (req, res, next) => {
     // return res.status(HTTP_STATUS.FORBIDDEN).json({ message: "Invalid Token" });
     // console.log("accessToken:", accessToken);
 
-    let accessToken = req.cookies.accessToken;
-    // console.log("accessToken:", accessToken);
+    let accessToken = req.cookies?.accessToken;
+    // console.log("accessToken from Cookie:", accessToken);
     // Check Authorization header if the token is not in cookies
     if (!accessToken) {
       const authHeader = req.headers.authorization;
@@ -17,6 +17,8 @@ export const authenticateJWT = (req, res, next) => {
         accessToken = authHeader.split(" ")[1];
       }
     }
+
+    // console.log("accessToken LocalStorage:", accessToken);
 
     // If no token is found in both cookies and Authorization header
     if (!accessToken) {

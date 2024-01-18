@@ -11,6 +11,7 @@ export const AuthContext = createContext({
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState(null);
+  const [user, setUser] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
 
   const fetchAuthStatus = async () => {
@@ -18,6 +19,7 @@ export const AuthProvider = ({ children }) => {
       const authenticatedUser = await authenticateUser();
       setIsLoggedIn(true);
       setUserId(authenticatedUser.id);
+      setUser(authenticatedUser);
     } catch (error) {
       console.error("Error during authentication:", error.message);
       setIsLoggedIn(false);
@@ -27,7 +29,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    // console.log(isLoggedIn);
+    // console.log(userId);
   }, [isLoggedIn]);
 
   useEffect(() => {
@@ -40,6 +42,8 @@ export const AuthProvider = ({ children }) => {
         isLoggedIn,
         setIsLoggedIn,
         userId,
+        user,
+        setUser,
         authLoading,
         fetchAuthStatus,
       }}

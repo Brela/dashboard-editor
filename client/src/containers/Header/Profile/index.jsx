@@ -13,9 +13,14 @@ import { Popover, Modal, Spinner } from "../../../components";
 import { useQueryClient } from "react-query";
 
 const Profile = () => {
-  const [loggedInUser, setLoggedInUser] = useState({ username: "" });
-
-  const { isLoggedIn, setIsLoggedIn, authLoading } = useContext(AuthContext);
+  const {
+    isLoggedIn,
+    setIsLoggedIn,
+    authLoading,
+    fetchAuthStatus,
+    user,
+    setUser,
+  } = useContext(AuthContext);
   const [showModal, setShowModal] = useState(false);
   const closeModal = () => setShowModal(false);
 
@@ -31,7 +36,7 @@ const Profile = () => {
       await logoutUser();
 
       setIsLoggedIn(false);
-      setLoggedInUser({ username: "" });
+      setUser(null);
       localStorage.removeItem("lastSelectedDashboardId");
 
       // clear the demo queries and remove them
@@ -54,19 +59,7 @@ const Profile = () => {
   // console.log(loggedInUser?.id);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await axios.get(`${API_URL}/user/me`, {
-          headers: {},
-          withCredentials: true,
-        });
-        setLoggedInUser(response.data);
-      } catch (error) {
-        console.error("Error fetching user:", error);
-      }
-    };
-
-    fetchUser();
+    fetchAuthStatus();
   }, []);
 
   return (
@@ -80,7 +73,7 @@ const Profile = () => {
               </div>
             ) : (
               <span className="text-xl font-bold uppercase text-white">
-                {loggedInUser?.username?.charAt(0)}
+                {user?.username?.charAt(0) || "G"}
               </span>
             )}
           </div>
@@ -112,7 +105,7 @@ const Profile = () => {
       />
 
       <ModalContainer show={showModal} onClose={closeModal}>
-        {<ProfileContent user={loggedInUser} />}
+        {<ProfileContent user={user} />}
       </ModalContainer>
     </div>
   );

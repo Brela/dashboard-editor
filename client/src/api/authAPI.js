@@ -6,7 +6,8 @@ export const authenticateUser = async () => {
     return response.data;
   } catch (error) {
     throw new Error(
-      error.response?.data?.message || "Error During Authentication",
+      `AuthenticateUser FE: ${error.response?.data?.message}` ||
+        "Error During Authentication",
     );
   }
 };
