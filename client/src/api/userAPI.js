@@ -65,7 +65,6 @@ export const logoutUser = async () => {
 // this is a temp solution to use local storage to store tokens
 const setTokensInStorage = (data) => {
   const { accessToken, refreshToken } = data;
-  console.log(accessToken);
   if (accessToken && refreshToken) {
     localStorage.setItem("accessToken", accessToken);
     localStorage.setItem("refreshToken", refreshToken);

@@ -125,7 +125,7 @@ const DashboardEditor = () => {
   useEffect(() => {
     if (isWidgetsLoading || isDashboardsLoading) return;
     // I believe this was the culprit for endless loop, adding the if contitions mitigated the loop to only run a few times
-    console.log("pos endless loop -----");
+    // console.log("pos endless loop -----");
     if (!isWidgetsLoading && !isDashboardsLoading) {
       setUnsavedWidgets(widgetsFromDb);
     }
@@ -388,7 +388,7 @@ const DashboardEditor = () => {
           </div>
           {/* <div className="invisible"></div> */}
         </section>
-        <div className="grid grid-cols-12 h-[80vh]">
+        <div className="grid grid-cols-12 h-full">
           <div className="col-span-12 md:col-span-4 lg:col-span-2">
             <WidgetsSidebar
               handleAddItem={handleAddItem}

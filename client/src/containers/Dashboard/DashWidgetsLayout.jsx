@@ -88,7 +88,7 @@ const DashWidgetsLayout = ({
   return (
     <section
       className={twMerge(
-        "col-span-12 md:col-span-8 lg:col-span-10 mr-3 mt-1 ml-1 rounded-md ",
+        "col-span-12 md:col-span-8 lg:col-span-10 mr-3 mt-1 ml-1 rounded-md h-full",
         isEditMode && dashboardBg,
       )}
       style={
@@ -208,7 +208,7 @@ const DashWidgetsLayout = ({
             })}
         </ResponsiveGridLayout>
       ) : (
-        <div className="flex justify-center items-center h-full">
+        <div className="flex justify-center items-center h-full min-h-[240px]">
           Add some widgets from left sidebar.
         </div>
       )}
