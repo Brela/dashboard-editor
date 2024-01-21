@@ -22,6 +22,8 @@ import {
   generateSearchQueries,
 } from "../../../utils/index.js";
 
+import { sendNotification } from "../../../rabbitmq/producer.js";
+
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();

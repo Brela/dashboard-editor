@@ -27,7 +27,7 @@ export const authenticateJWT = (req, res, next) => {
       });
     }
     jwt.verify(accessToken, ACCESS_TOKEN_SECRET, (err, user) => {
-      console.log("err:", err);
+      // console.log("err:", err);
       if (err) {
         if (err.name === "TokenExpiredError") {
           return res.status(401).json({
@@ -42,7 +42,7 @@ export const authenticateJWT = (req, res, next) => {
       // iat and expires data/time converted to readable time
       req.user.iatReadable = new Date(user.iat * 1000).toUTCString();
       req.user.expires = new Date(user.exp * 1000).toUTCString();
-      console.log("token expires -----1-1-1-1-1-1-1:", req.user.expires);
+      // console.log("token expires -----1-1-1-1-1-1-1:", req.user.expires);
       next();
     });
   } catch (err) {

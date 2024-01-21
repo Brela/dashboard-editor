@@ -12,6 +12,7 @@ import {
 
 import { validateWidgetArraySchema } from "./validators.js";
 import { getOneDashboardQuery } from "../dashboards/repository.js";
+import { sendNotification } from "../../../rabbitmq/producer.js";
 
 const getWidgetsByDashboard = async (req, res) => {
   const userId = req?.userId;
@@ -191,6 +192,10 @@ const updateManyWidgets = async (req, res) => {
 
       return true;
     });
+
+    sendNotification(
+      `Widgets updated for dashboard: ${existingDashboard?.name}`,
+    );
 
     const message = `Widgets replaced successfully`;
     return res.status(200).json({ message });

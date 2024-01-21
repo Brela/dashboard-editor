@@ -7,3 +7,4 @@ export const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET;
 export const CORS_ORIGINS = process.env.CORS_ORIGINS;
 export const PORT = process.env.PORT;
 export const IS_DEV_MODE = process.env.IS_DEV_MODE;
+export const RABBITMQ_URL = process.env.RABBITMQ_URL;

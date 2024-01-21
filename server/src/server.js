@@ -6,6 +6,8 @@ import userRoutes from "./modules/users/routes.js";
 import authenticationRoutes from "./modules/auth/routes.js";
 import dashboardRoutes from "./modules/dashboards/routes.js";
 
+import startConsumer from "./rabbitmq/consumer.js";
+
 const app = express();
 
 const allowedOrigins = CORS_ORIGINS.split(",");
@@ -33,8 +35,8 @@ app.use((req, res, next) => {
   res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
   next();
 });
-
 app.use(cookieParser());
+startConsumer();
 
 app.use("/authentication", authenticationRoutes);
 app.use("/dashboards", dashboardRoutes);
