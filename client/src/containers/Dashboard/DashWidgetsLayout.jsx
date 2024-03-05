@@ -2,10 +2,7 @@ import React, { useState, useEffect } from "react";
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import { Responsive, WidthProvider } from "react-grid-layout";
-import {
-  generateThreeColumnLayout,
-  generateTwoColumnLayout,
-} from "./helpers/layoutUtils";
+import { generateNumColumnsLayout } from "./helpers/layoutUtils";
 import { twMerge } from "tailwind-merge";
 
 import WidgetContent from "./components/WidgetContent";
@@ -43,8 +40,8 @@ const DashWidgetsLayout = ({
   useEffect(() => {
     if (isDashboardsLoading || isWidgetsLoading) return;
     if (widgets && widgets.length > 0) {
-      setSmLayout(generateThreeColumnLayout(widgets));
-      setXxsLayout(generateTwoColumnLayout(widgets));
+      setXxsLayout(generateNumColumnsLayout(widgets, 2));
+      setSmLayout(generateNumColumnsLayout(widgets, 3));
     }
 
     /*     console.log("fresh widgets: -----");

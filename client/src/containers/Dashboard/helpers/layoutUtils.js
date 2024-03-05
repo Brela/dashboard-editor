@@ -1,25 +1,9 @@
-export function generateTwoColumnLayout(layout) {
-  let currentY = [0, 0]; // Array to keep track of the current y value for each column
+// this function is for creating the small/ medium screen size layout for react-grid-layout and ensure large layout is 4 cols before saving
+export function generateNumColumnsLayout(layout, numColumns) {
+  const currentY = Array(numColumns).fill(0); // Array to keep track of the current y value for each column
 
   return layout.map((item, index) => {
-    const column = index % 2; // Current column (0 or 1)
-    const newItem = {
-      ...item,
-      x: column * item.w, // Adjust x to account for the width of the item
-      y: currentY[column],
-    };
-
-    currentY[column] += item.h; // Update the y value for the current column
-
-    return newItem;
-  });
-}
-
-export function generateThreeColumnLayout(layout) {
-  let currentY = [0, 0, 0]; // Array to keep track of the current y value for each column
-
-  return layout.map((item, index) => {
-    const column = index % 3; // Current column (0, 1 or 2)
+    const column = index % numColumns; // Current column
     const newItem = {
       ...item,
       x: column * item.w, // Adjust x to account for the width of the item
@@ -37,7 +21,7 @@ export function getNewXandYCoords(
   widgetsPerRow,
   isChart,
   regularDims,
-  chartDims
+  chartDims,
 ) {
   const grid = new Array(1000) // max rows
     .fill(null)

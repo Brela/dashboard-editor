@@ -28,7 +28,10 @@ import DeleteDashboardModal from "./dashboardModals/DeleteDashboard.jsx";
 import { toast } from "react-hot-toast";
 import useWindowSize from "../../../hooks/useWindowSize.js";
 
-import { getNewXandYCoords } from "../helpers/layoutUtils.js";
+import {
+  generateNumColumnsLayout,
+  getNewXandYCoords,
+} from "../helpers/layoutUtils.js";
 import WidgetsSidebar from "./WidgetsSidebar/WidgetsSidebar.jsx";
 import ConfirmUnsavedChanges from "./dashboardModals/ConfirmUnsavedChanges.jsx";
 import { AuthContext } from "../../../contexts/AuthContext.jsx";
@@ -78,9 +81,13 @@ const DashboardEditor = () => {
   const handleSave = async () => {
     if (!isLoggedIn) return toast("Please log in to save a dashboard.  ➡️");
     setLoading(true);
+
+    // this will ensure 4 col layout, even if user made layout in mobile view ( 2 or 3 cols )
+    const fixedWidgets = generateNumColumnsLayout(widgets, 4);
+
     try {
       const widgetUpdates = {};
-      widgets.forEach((widget) => {
+      fixedWidgets.forEach((widget) => {
         widgetUpdates[widget.id] = {
           x: widget.x,
           y: widget.y,
@@ -88,7 +95,7 @@ const DashboardEditor = () => {
         };
       });
 
-      await updateManyWidgets(dashboard?.id, widgets, widgetUpdates);
+      await updateManyWidgets(dashboard?.id, fixedWidgets, widgetUpdates);
 
       // Invalidate and refetch widgets to update the local cache
       queryClient.invalidateQueries(["widgets", dashboard?.id]);
